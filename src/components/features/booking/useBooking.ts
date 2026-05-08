@@ -14,7 +14,6 @@ export default function useBooking() {
   const params = useParams();
 
   const bookingId = typeof params?.id === "string" ? params.id : "";
-  console.log("params =>", params);
 
   // public booking
   const {

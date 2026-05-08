@@ -1,4 +1,4 @@
-export interface ArticleProps {
+export interface ArticleInfo {
   id: string;
   title: string;
   slug: string;
@@ -7,14 +7,17 @@ export interface ArticleProps {
   coverUrl: string;
   tags: string[];
   status?: string;
-  publishedAt: string | null;
+  publishedAt?: Date | null;
+  author?: {
+    displayName: string | null;
+  };
 }
 
 export interface ArticlesResponse {
   page: number;
   limit: number;
   total: number;
-  items: ArticleProps[];
+  items: ArticleInfo[];
 }
 
 // Admin

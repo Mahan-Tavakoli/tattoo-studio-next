@@ -22,8 +22,8 @@ export default function useArticle() {
 
   // get single article by slug
   const {
-    isLoading: getArticleBySlugIsLoading,
-    isError: getArticleBySlugIsError,
+    isLoading: singleArticleIsLoading,
+    isError: singleArticleIsError,
     data: singleArticleData,
   } = useQuery({
     queryKey: ["article", slug],
@@ -36,8 +36,8 @@ export default function useArticle() {
     articlesIsLoading,
     articlesIsError,
     articles,
-    getArticleBySlugIsLoading,
-    getArticleBySlugIsError,
+    singleArticleIsLoading,
+    singleArticleIsError,
     singleArticleData,
   };
 }

@@ -3,9 +3,10 @@
 import Link from "next/link";
 import useArticle from "./useArticle";
 import Image from "next/image";
+import BlurImage from "@/components/templates/skeleton/BlurImage";
 
 function ArticlesList() {
-  const { articles } = useArticle();
+  const { articles, articlesIsError, articlesIsLoading } = useArticle();
   console.log("articles =>", articles);
 
   return (
@@ -14,13 +15,14 @@ function ArticlesList() {
         <Link
           href={`/articles/${article.slug}`}
           key={article.id}
-          className="relative h-70 overflow-hidden rounded-2xl"
+          className="relative overflow-hidden rounded-2xl w-full aspect-3/4 bg-onyx transition-all duration-500 ease-in-out hover:z-10 group/card cursor-pointer hover:opacity-100! border border-snow/20 shadow shadow-alabaster/20 hover:shadow-md"
         >
-          <Image
-            //src={article.coverUrl}
-            src="/images/gallery/IMG_0265.JPG"
+          <BlurImage
+            src={article.coverUrl}
             alt={article.title}
             fill
+            preload
+            blurDataURL="/images/placeholder.png"
             className="object-cover grayscale"
           />
 

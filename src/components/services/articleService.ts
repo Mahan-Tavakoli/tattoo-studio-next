@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import {
   ArticleFormDataProps,
+  ArticleInfo,
   ArticlesResponse,
 } from "../schema & types/article/article.types";
 import http from "./httpService";
@@ -13,10 +14,10 @@ export default function getArticlesApi(): Promise<ArticlesResponse> {
 }
 
 // get article by slug
-export function getArticleBySlugApi(slug: string): Promise<any> {
+export function getArticleBySlugApi(slug: string): Promise<ArticleInfo> {
   return http
     .get(`/public/articles/${slug}`)
-    .then(({ data }: AxiosResponse<any>) => data);
+    .then(({ data }: AxiosResponse<ArticleInfo>) => data);
 }
 
 // get all articles (published & draft)
