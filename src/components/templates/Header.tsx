@@ -36,7 +36,8 @@ function Header() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname === path;
+  const isActive = (path: string) =>
+    pathname === path || pathname.startsWith(path + "/");
 
   const logoutHandler = () => {
     logout();
@@ -54,7 +55,7 @@ function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 z-50 w-full flex items-center justify-between text-lg font-roboto_condensed font-semibold uppercase px-[5%] transition-all duration-500 ease-in-out ${isScrolled ? "py-3 bg-onyx backdrop-blur-md shadow-md shadow-black" : "py-6 bg-transparent"}
+        className={`fixed top-0 left-0 z-50 w-full flex items-center justify-between text-lg font-roboto_condensed font-semibold uppercase px-[5%] transition-all duration-500 ease-in-out border-b border-snow/3 py-3 ${isScrolled ? " bg-onyx backdrop-blur-md shadow-md shadow-black" : " bg-transparent"}
   `}
       >
         {/* small devices menu */}
@@ -69,17 +70,16 @@ function Header() {
         {/* Admin Login Modal & Logo */}
 
         {currentUserIsLoading ? (
-          <div className="w-24 h-10 bg-snow/10 animate-pulse rounded-md" />
+          <div className="lg:w-18 lg:h-18 w-14 h-14 bg-snow/10 animate-pulse rounded-full" />
         ) : !user ? (
           <button
-            className="relative w-18 h-18 order-1 lg:order-0"
+            className="relative lg:w-18 lg:h-18 w-14 h-14 order-1 lg:order-0"
             onClick={() => setIsModalOpen((prev) => !prev)}
           >
             <BlurImage
               src="/images/Logo.png"
               alt="Logo"
               fill
-              quality={75}
               preload
               blurDataURL="/images/placeholder.png"
               className="object-cover"
@@ -87,7 +87,7 @@ function Header() {
           </button>
         ) : (
           <DropdownMenu dir="ltr">
-            <DropdownMenuTrigger className="focus:outline-none">
+            <DropdownMenuTrigger className="focus:outline-none py-3">
               <div className="p-1 border border-snow/20 rounded-md hover:bg-transparent/50 hover:border-snow/50 transition-colors duration-200 w-24 flex items-center justify-between bg-transparent">
                 <PiUser className="size-7" />
 

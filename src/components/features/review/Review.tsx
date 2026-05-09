@@ -22,10 +22,6 @@ function Review() {
 
   const skeletonSlides = [...Array(3)];
 
-  if (reviewsIsError) {
-    toast.error("Failed to fetch reviews from Google");
-  }
-
   return (
     <section className="mt-10 border border-snow/20 rounded-xl shadow shadow-alabaster/20 bg-onyx">
       <div className="flex flex-col lg:flex-row gap-6 py-5 lg:py-10 px-4">

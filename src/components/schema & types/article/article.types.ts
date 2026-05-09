@@ -7,7 +7,7 @@ export interface ArticleInfo {
   coverUrl: string;
   tags: string[];
   status?: string;
-  publishedAt?: Date | null;
+  publishedAt: Date /* | null */;
   author?: {
     displayName: string | null;
   };

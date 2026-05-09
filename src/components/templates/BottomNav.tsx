@@ -29,7 +29,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
   return (
     <>
       {/* Navbar */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-onyx backdrop-blur-md border-t border-snow/20 z-50">
+      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-onyx backdrop-blur-md border-t border-snow/10 z-50">
         <ul className="flex items-center py-2">
           {visibleItems.map((item) => (
             <li key={item.id} className="flex-1">

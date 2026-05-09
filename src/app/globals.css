@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "yet-another-react-lightbox/styles.css";
+@plugin "@tailwindcss/typography";
 
 @font-face {
   font-family: "Blakely";
