@@ -76,7 +76,7 @@
 
 @layer components {
   .btn {
-    @apply flex items-center justify-between max-w-3xs rounded-lg text-onyx bg-dried-mustard p-2 hover:bg-amber-600 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-75 disabled:hover:bg-dried-mustard;
+    @apply flex items-center justify-between max-w-3xs rounded-lg bg-onyx text-snow/75 px-4 text-xs py-2 text-center hover:bg-black transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-75 disabled:hover:bg-onyx border border-snow/10 hover:border-snow/25;
   }
   .submit-btn {
     @apply bg-dried-mustard text-onyx max-w-lg rounded-lg p-2.5 hover:bg-amber-600 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-75 disabled:hover:bg-dried-mustard;

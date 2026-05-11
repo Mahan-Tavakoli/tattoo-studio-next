@@ -73,7 +73,6 @@ function Home() {
                   className="object-cover transition-transform duration-500 group-hover:blur-sm grayscale"
                 />
 
-                {/* Name Badge (Top Left) */}
                 <div className="absolute inset-0 flex items-center justify-center p-6 bg-linear-to-t from-onyx via-onyx/40 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ">
                   <span className="text-xl sm:text-2xl lg:text-3xl">
                     {c.title}

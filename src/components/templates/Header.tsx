@@ -39,6 +39,11 @@ function Header() {
   const isActive = (path: string) =>
     pathname === path || pathname.startsWith(path + "/");
 
+  const hideBorder =
+    pathname === "/" ||
+    pathname.startsWith("/articles/") ||
+    pathname.startsWith("/admin");
+
   const logoutHandler = () => {
     logout();
   };
@@ -55,7 +60,7 @@ function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 z-50 w-full flex items-center justify-between text-lg font-roboto_condensed font-semibold uppercase px-[5%] transition-all duration-500 ease-in-out border-b border-snow/3 py-3 ${isScrolled ? " bg-onyx backdrop-blur-md shadow-md shadow-black" : " bg-transparent"}
+        className={`fixed top-0 left-0 z-50 w-full flex items-center justify-between text-lg font-roboto_condensed font-semibold uppercase px-[5%] transition-all duration-400 ease-in-out py-3 ${isScrolled ? " bg-onyx backdrop-blur-md shadow-md border-b border-snow/10 shadow-black" : hideBorder ? "bg-transparent border-b border-transparent" : "bg-transparent border-b border-snow/3"}
   `}
       >
         {/* small devices menu */}

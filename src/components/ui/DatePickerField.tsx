@@ -1,9 +1,10 @@
+"use client";
+
 import { Control, Controller, FieldError, Path } from "react-hook-form";
 import { DayPicker, Matcher, DateRange } from "react-day-picker";
 import { format } from "date-fns";
 import { useState } from "react";
 import useOutsideClick from "@/components/hook/useOutsideClick";
-//import "react-day-picker/dist/style.css";
 
 interface DatePickerProps<T extends Record<string, any>> {
   label: string;
@@ -20,6 +21,7 @@ interface DatePickerProps<T extends Record<string, any>> {
   currentMonth?: Date;
   onMonthChange?: (date: Date) => void;
   disabled?: boolean;
+  inline?: boolean;
 }
 
 function DatePickerField<T extends Record<string, any>>({
@@ -37,6 +39,7 @@ function DatePickerField<T extends Record<string, any>>({
   currentMonth,
   onMonthChange,
   disabled,
+  inline = false,
 }: DatePickerProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
@@ -48,6 +51,7 @@ function DatePickerField<T extends Record<string, any>>({
 
   const monthToUse = currentMonth ?? internalMonthState;
   const today = new Date();
+
   const disabledMatchers: Matcher[] = [];
 
   if (disablePast) disabledMatchers.push({ before: new Date() });
@@ -58,7 +62,7 @@ function DatePickerField<T extends Record<string, any>>({
     disabledMatchers.push({ dayOfWeek: excludeDays });
   }
 
-  if (disabledDates && disabledDates.length > 0) {
+  if (disabledDates?.length) {
     disabledMatchers.push(disabledDates);
   }
 
@@ -74,6 +78,7 @@ function DatePickerField<T extends Record<string, any>>({
         render={({ field: { onChange, value } }) => {
           const handleInputClick = () => {
             const dateValue = value as any;
+
             if (dateValue instanceof Date) {
               if (onMonthChange) {
                 onMonthChange(value);
@@ -81,6 +86,7 @@ function DatePickerField<T extends Record<string, any>>({
                 setInternalMonthState(value);
               }
             }
+
             setIsOpen((prev) => !prev);
           };
 
@@ -105,12 +111,15 @@ function DatePickerField<T extends Record<string, any>>({
 
           const getDisplayValue = () => {
             if (!value) return "";
+
             if (mode === "single") {
               const dateValue = value as any;
+
               if (dateValue instanceof Date) {
                 return format(dateValue, "PPP");
               }
             }
+
             if (mode === "range") {
               const range = value as DateRange;
 
@@ -122,60 +131,77 @@ function DatePickerField<T extends Record<string, any>>({
                 return `${format(range.from, "dd MMM")} - ...`;
               }
             }
+
             return "";
           };
 
-          return (
-            <>
-              <div className="relative">
-                <input
-                  readOnly
-                  value={getDisplayValue()}
-                  onClick={handleInputClick}
-                  placeholder=" "
-                  disabled={disabled}
-                  className="block w-full px-3 pb-2.5 pt-4 text-sm bg-transparent border border-onyx/50 hover:border-onyx/75 focus:border-onyx transition-all duration-300 cursor-pointer peer rounded-lg outline-none"
-                />
-                <label className="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-1.5 z-10 opacity-75 origin-left bg-alabaster px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1.5 peer-focus:scale-75 peer-focus:-translate-y-4 inset-s-1 pointer-events-none transition-all">
-                  <span>{label}</span>
-                  {required && <span className="text-red-700 ml-1">*</span>}
-                </label>
-              </div>
+          const isInlineRange = inline && mode === "range";
 
-              {isOpen && (
-                <div className="mb-2 z-50 p-4 bg-onyx border border-alabaster/10 rounded-2xl duration-2000 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-                  <DayPicker
-                    captionLayout="dropdown"
-                    mode={mode as any}
-                    selected={value}
-                    onSelect={handleSelect}
-                    month={monthToUse}
-                    onDayMouseEnter={setHoveredDate}
-                    onMonthChange={(date) => {
-                      if (onMonthChange) {
-                        onMonthChange(date);
-                      } else {
-                        setInternalMonthState(date);
-                      }
-                    }}
-                    fromYear={disableFuture ? 1940 : undefined}
-                    toYear={disablePast ? today.getFullYear() + 1 : undefined}
-                    disabled={
-                      disabledMatchers.length ? disabledMatchers : undefined
+          const calendar = (
+            <DayPicker
+              captionLayout="dropdown"
+              mode={mode as any}
+              selected={value}
+              onSelect={handleSelect}
+              month={monthToUse}
+              onDayMouseEnter={setHoveredDate}
+              onMonthChange={(date) => {
+                if (onMonthChange) {
+                  onMonthChange(date);
+                } else {
+                  setInternalMonthState(date);
+                }
+              }}
+              fromYear={disableFuture ? 1940 : undefined}
+              toYear={disablePast ? today.getFullYear() + 1 : undefined}
+              disabled={disabledMatchers.length ? disabledMatchers : undefined}
+              modifiers={{
+                range_preview:
+                  mode === "range" && value?.from && !value?.to && hoveredDate
+                    ? { from: value.from, to: hoveredDate }
+                    : undefined,
+              }}
+              modifiersClassNames={{
+                range_preview: "bg-dried-mustard/20",
+              }}
+              classNames={
+                isInlineRange
+                  ? {
+                      // NEW INLINE RANGE STYLES
+                      root: "w-full",
+                      months: "w-full",
+                      month: "w-full",
+                      month_caption:
+                        "flex justify-center pt-1 pb-2 relative items-center gap-1",
+                      caption_label: "hidden",
+                      dropdowns: "flex justify-center gap-2",
+                      dropdown:
+                        "px-2 py-1 rounded border border-alabaster/40 text-xs bg-onyx text-snow outline-none cursor-pointer appearance-none custom-select-arrow",
+                      nav: "flex items-center",
+                      button_previous:
+                        "absolute left-5 top-5 z-30 h-6 w-6 flex items-center justify-center bg-snow/30 rounded-full hover:bg-snow/60 transition-colors",
+                      button_next:
+                        "absolute right-5 top-5 z-30 h-6 w-6 flex items-center justify-center bg-snow/30 rounded-full hover:bg-snow/60 transition-colors",
+                      month_grid: "w-full border-collapse",
+                      weekdays: "flex w-full",
+                      weekday:
+                        "flex-1 text-center text-snow/50 font-normal text-[11px] pb-1",
+                      week: "flex w-full",
+                      day: "flex-1 h-8 flex items-center justify-center text-xs text-snow/75 hover:bg-dried-mustard/20 hover:text-dried-mustard rounded-lg transition-colors cursor-pointer",
+                      selected:
+                        "bg-dried-mustard! text-onyx! hover:bg-dried-mustard hover:text-onyx",
+                      range_start: "bg-dried-mustard! text-onyx! rounded-lg!",
+                      range_end: "bg-dried-mustard! text-onyx! rounded-lg!",
+                      range_middle:
+                        "bg-dried-mustard/20! text-snow! rounded-none!",
+                      today:
+                        "text-dried-mustard! font-bold underline underline-offset-2",
+                      outside: "text-snow/25 opacity-40",
+                      disabled: "text-snow/20 opacity-25 cursor-not-allowed",
+                      hidden: "invisible",
                     }
-                    modifiers={{
-                      range_preview:
-                        mode === "range" &&
-                        value?.from &&
-                        !value?.to &&
-                        hoveredDate
-                          ? { from: value.from, to: hoveredDate }
-                          : undefined,
-                    }}
-                    modifiersClassNames={{
-                      range_preview: "bg-dried-mustard/20",
-                    }}
-                    classNames={{
+                  : {
+                      // YOUR ORIGINAL STYLES (UNCHANGED)
                       months: "flex flex-col space-y-4",
                       month: "space-y-4",
                       month_caption:
@@ -202,16 +228,51 @@ function DatePickerField<T extends Record<string, any>>({
                       outside: "text-snow/40 opacity-50",
                       disabled: "text-snow/40 opacity-30 cursor-not-allowed",
                       hidden: "invisible",
-                    }}
+                    }
+              }
+            />
+          );
+
+          return (
+            <>
+              {!inline && (
+                <div className="relative">
+                  <input
+                    readOnly
+                    value={getDisplayValue()}
+                    onClick={handleInputClick}
+                    placeholder=" "
+                    disabled={disabled}
+                    className="block w-full px-3 pb-2.5 pt-4 text-sm bg-transparent border border-onyx/50 hover:border-onyx/75 focus:border-onyx transition-all duration-300 cursor-pointer peer rounded-lg outline-none"
                   />
+
+                  <label className="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-1.5 z-10 opacity-75 origin-left bg-alabaster px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1.5 peer-focus:scale-75 peer-focus:-translate-y-4 inset-s-1 pointer-events-none transition-all">
+                    <span>{label}</span>
+
+                    {required && <span className="text-red-700 ml-1">*</span>}
+                  </label>
                 </div>
+              )}
+
+              {inline ? (
+                <div className="rounded-xl bg-onyx px-2 py-3 w-full">
+                  {calendar}
+                </div>
+              ) : (
+                isOpen && (
+                  <div className="mb-2 z-50 p-4 bg-onyx border border-alabaster/10 rounded-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    {calendar}
+                  </div>
+                )
               )}
             </>
           );
         }}
       />
+
       {errors && <p className="text-red-700 text-xs mt-1">{errors.message}</p>}
     </div>
   );
 }
+
 export default DatePickerField;

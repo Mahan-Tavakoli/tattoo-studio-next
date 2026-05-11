@@ -5,10 +5,8 @@ import DatePickerField from "@/components/ui/DatePickerField";
 import SelectBox from "@/components/ui/SelectBox";
 import { GuestArtistBookingAppointment } from "@/components/schema & types/guest-artist/guest-artist.schema";
 import { useEffect } from "react";
-import { GuestArtistDaysAvailability } from "@/components/schema & types/guest-artist/guest-artist.types";
 import useGuestArtistBooking from "../useGuestArtistBooking";
-import ReadOnlyField from "@/components/ui/ReadOnlyField";
-import DotsLoader from "@/components/ui/DotsLoader";
+import { format } from "date-fns";
 
 interface AvailabilityProps {
   onNext: () => void;
@@ -26,17 +24,13 @@ function Availability({ onNext }: AvailabilityProps) {
   const startDate = watch("startDate");
   const endDate = watch("endDate");
   const range = watch("dateRange");
-  const numberOfTables = watch("numberOfTables");
 
   const {
     tableAvailability,
     tableAvailabilityIsError,
     tableAvailabilityIsLoading,
-    tablePricePerDay,
-    monthlyDiscountPercent,
   } = useGuestArtistBooking({ startDate, endDate });
 
-  // availability logic
   const maxTablesAvailable =
     tableAvailability?.length > 0
       ? Math.min(...tableAvailability.map((d) => d.availableTables))
@@ -48,20 +42,24 @@ function Availability({ onNext }: AvailabilityProps) {
 
   useEffect(() => {
     if (range?.from) {
-      setValue("startDate", range.from, { shouldValidate: true });
+      setValue("startDate", range.from, {
+        shouldValidate: true,
+      });
     }
 
     if (range?.to) {
-      setValue("endDate", range.to, { shouldValidate: true });
+      setValue("endDate", range.to, {
+        shouldValidate: true,
+      });
     }
   }, [range, setValue]);
 
-  // disable fully booked dates
   const disabledDates =
     tableAvailability
       ?.filter((d) => d.availableTables === 0)
       .map((d) => {
         const [y, m, day] = d.date.split("-");
+
         return new Date(Number(y), Number(m) - 1, Number(day));
       }) || [];
 
@@ -76,45 +74,11 @@ function Availability({ onNext }: AvailabilityProps) {
         }))
       : [];
 
-  const getDays = () => {
-    if (!startDate || !endDate) return 0;
-
-    const diff = endDate.getTime() - startDate.getTime();
-    return Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1;
-  };
-
-  const totalDays = getDays();
-
-  const basePrice = totalDays * tablePricePerDay * Number(numberOfTables || 0);
-
-  const isMonthly = totalDays >= 30;
-
-  const discountAmount = isMonthly
-    ? (basePrice * monthlyDiscountPercent) / 100
-    : 0;
-
-  const finalPrice = basePrice - discountAmount;
-
-  const basePriceText = `${basePrice.toFixed(2)}€`;
-
-  const discountText = `-${discountAmount.toFixed(2)}€ (${monthlyDiscountPercent}%)`;
-
-  const finalPriceText = `${finalPrice.toFixed(2)}€`;
-
-  const showPricing =
-    !tableAvailabilityIsLoading && totalDays > 0 && numberOfTables;
-
-  const availabilityContent = tableAvailabilityIsLoading
-    ? `Checking availability ${(<DotsLoader />)}`
-    : tableAvailabilityIsError
-      ? "Error loading availability"
-      : maxTablesAvailable > 0
-        ? `${maxTablesAvailable} Tables available`
-        : "No tables available";
-
   return (
     <div
-      className={`flex flex-col gap-4 ${tableAvailabilityIsLoading && "opacity-70 pointer-events-none"}`}
+      className={`flex flex-col gap-4 ${
+        tableAvailabilityIsLoading && "opacity-70 pointer-events-none"
+      }`}
     >
       <DatePickerField<GuestArtistBookingAppointment>
         label="Select Dates"
@@ -125,24 +89,62 @@ function Availability({ onNext }: AvailabilityProps) {
         disablePast
         disabledDates={disabledDates}
         excludeDays={[0]}
+        inline
       />
 
-      {/* Availability */}
-      {isDateSelected && (
-        <ReadOnlyField label="Availability" value={availabilityContent} />
+      {!range?.from ? (
+        <p className="text-center text-xs text-onyx/45">
+          Select a start date on the calendar
+        </p>
+      ) : !range.to || range.from.getTime() === range.to.getTime() ? (
+        <p className="text-center text-xs text-onyx/60">
+          <span className="font-medium text-onyx">
+            {format(range.from, "dd MMM yyyy")}
+          </span>
+
+          <span className="text-onyx/30 mx-1.5">→</span>
+
+          <span className="text-onyx/40 italic">pick an end date</span>
+        </p>
+      ) : (
+        <p className="text-center text-xs text-onyx/60">
+          <span className="font-medium text-onyx">
+            {format(range.from, "dd MMM yyyy")}
+          </span>
+
+          <span className="text-onyx/30 mx-1.5">→</span>
+
+          <span className="font-medium text-onyx">
+            {format(range.to, "dd MMM yyyy")}
+          </span>
+        </p>
       )}
 
-      {/* Tables */}
+      {isDateSelected && (
+        <div className="rounded-lg border border-onyx/12 bg-onyx/5 px-3 py-2 text-xs">
+          {tableAvailabilityIsLoading ? (
+            <span className="text-onyx/45">Checking availability...</span>
+          ) : tableAvailabilityIsError ? (
+            <span className="text-red-500">Could not load availability.</span>
+          ) : maxTablesAvailable > 0 ? (
+            <span className="text-onyx">
+              <span className="font-semibold text-dried-mustard">
+                {maxTablesAvailable}
+              </span>{" "}
+              {maxTablesAvailable === 1 ? "table" : "tables"} available
+            </span>
+          ) : (
+            <span className="text-red-500">No tables available.</span>
+          )}
+        </div>
+      )}
+
       <SelectBox<GuestArtistBookingAppointment>
         label="Number of Tables"
         name="numberOfTables"
         register={register}
         errors={errors.numberOfTables}
-        options={
-          tableAvailabilityIsLoading
-            ? [{ id: 0, label: "Loading ...", value: "" }]
-            : tableOptions
-        }
+        options={tableOptions}
         disabled={
           !isDateSelected ||
           tableAvailabilityIsLoading ||
@@ -150,28 +152,10 @@ function Availability({ onNext }: AvailabilityProps) {
         }
       />
 
-      {showPricing && !isMonthly && (
-        <ReadOnlyField label="Total Price" value={basePriceText} />
-      )}
-
-      {totalDays > 0 && numberOfTables && isMonthly && (
-        <>
-          <ReadOnlyField label="Total Price" value={basePriceText} />
-
-          <ReadOnlyField
-            label={`Discount (${monthlyDiscountPercent}%)`}
-            value={discountText}
-          />
-
-          <ReadOnlyField label="Final Price" value={finalPriceText} />
-        </>
-      )}
-
-      {/* Next */}
       <button
         type="button"
         onClick={onNext}
-        disabled={!isDateSelected || maxTablesAvailable === 0 || !isValid}
+        disabled={!isDateSelected || maxTablesAvailable === 0}
         className="submit-btn"
       >
         Continue

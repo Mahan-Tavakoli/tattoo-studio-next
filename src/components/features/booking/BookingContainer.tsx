@@ -77,15 +77,13 @@ function BookingContainer() {
     }
     console.log("files =>", file);
 
-    try {
-      await bookingAppointment(formData);
-      reset();
-      setStep(1);
-    } catch (error) {}
+    await bookingAppointment(formData);
+    reset();
+    setStep(1);
   };
 
   return (
-    <div className="py-10 px-4 flex justify-center">
+    <div className="pt-15 px-4 flex justify-center">
       <div className="w-full max-w-sm bg-alabaster text-onyx rounded-2xl p-5 shadow-md">
         <h1 className="text-2xl font-bold mb-6">Tattoo Request</h1>
 

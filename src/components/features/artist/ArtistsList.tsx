@@ -43,7 +43,7 @@ function ArtistsList() {
 
               {/* Name Badge (Top Left) */}
               <div className="absolute top-4 left-4 z-20">
-                <span className="bg-onyx/80 text-snow/75 px-4 py-1.5 rounded-2xl text-base font-medium backdrop-blur-md hover:text-snow transition-colors hover:bg-carbon-black">
+                <span className="bg-onyx text-snow/75 px-3 py-1.5 text-base font-medium backdrop-blur-md hover:text-snow transition-colors hover:bg-carbon-black border border-snow/20 rounded-lg">
                   {artist.displayName}
                 </span>
               </div>

@@ -59,7 +59,7 @@ function GuestArtistContainer() {
   };
 
   return (
-    <div className="py-10 px-4 flex justify-center">
+    <div className="pt-15 px-4 flex justify-center">
       <div className="w-full max-w-sm bg-alabaster text-onyx rounded-2xl p-5 shadow-md">
         <h1 className="text-2xl font-bold mb-1">Guest Artist Request</h1>
         <p className="text-onyx/50 text-xs mb-5">
