@@ -66,7 +66,7 @@ function Header() {
         {/* small devices menu */}
         <div className="lg:hidden flex items-center justify-center order-2">
           <button
-            className="group relative h-14 w-14 flex items-center justify-center rounded-full bg-snow border border-onyx/20 transition-all duration-300 hover:scale-110 active:scale-95 z-50"
+            className="group relative h-14 w-14 flex items-center justify-center rounded-full bg-snow border border-onyx/20 transition-all duration-300 z-50"
             onClick={() => setIsDrawerOpen(true)}
           >
             <LuMenu size={22} className="text-onyx" />
@@ -78,7 +78,7 @@ function Header() {
           <div className="lg:w-18 lg:h-18 w-14 h-14 bg-snow/10 animate-pulse rounded-full" />
         ) : !user ? (
           <button
-            className="relative lg:w-18 lg:h-18 w-14 h-14 order-1 lg:order-0"
+            className="relative lg:w-18 lg:h-18 w-16 h-16 order-1 lg:order-0"
             onClick={() => setIsModalOpen((prev) => !prev)}
           >
             <BlurImage

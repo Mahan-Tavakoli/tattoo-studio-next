@@ -47,15 +47,17 @@ function GuestArtistContainer() {
   const onSubmit: SubmitHandler<GuestArtistBookingAppointment> = (data) => {
     console.log("data =>", data);
 
-    guestArtistBooking({
+    const guestArtistBookingData = {
       name: data.name,
       phone: data.phone,
       email: data.email,
       startDate: formatDate(data.startDate),
       endDate: formatDate(data.endDate),
-      numberOfTables: Number(data.numberOfTables),
+      numberOfTables: data.numberOfTables,
       acknowledgment: data.acknowledgment,
-    });
+    };
+    console.log("guestData =>", guestArtistBookingData);
+    guestArtistBooking(guestArtistBookingData);
   };
 
   return (

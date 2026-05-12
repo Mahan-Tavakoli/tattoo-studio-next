@@ -35,7 +35,7 @@ function TattooArtistsForm({ onClose, artistToEdit }: TattooArtistFormProps) {
   const {
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
     register,
     watch,
     setValue,
@@ -45,6 +45,17 @@ function TattooArtistsForm({ onClose, artistToEdit }: TattooArtistFormProps) {
     resolver: zodResolver(TattooArtistValidationSchema as any),
     mode: "onChange",
     reValidateMode: "onChange",
+
+    defaultValues: {
+      displayName: "",
+      email: "",
+      phone: "",
+      handle: "",
+      bio: "",
+      worksMeta: [],
+      cover: undefined,
+      works: [],
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -57,15 +68,20 @@ function TattooArtistsForm({ onClose, artistToEdit }: TattooArtistFormProps) {
   useEffect(() => {
     if (artistToEdit?.id) {
       reset({
-        displayName: artistToEdit.displayName,
-        email: artistToEdit.email,
-        phone: artistToEdit.phone,
-        handle: artistToEdit.handle,
-        bio: artistToEdit.bio,
-        worksMeta: artistToEdit.works.map((w) => ({
-          title: w.title,
-          tags: w.tags,
-        })),
+        displayName: artistToEdit.displayName || "",
+        email: artistToEdit.email || "",
+        phone: artistToEdit.phone || "",
+        handle: artistToEdit.handle || "",
+        bio: artistToEdit.bio || "",
+
+        worksMeta:
+          artistToEdit.works.map((w) => ({
+            title: w.title,
+            tags: w.tags,
+          })) || [],
+
+        cover: undefined,
+        works: [],
       });
     }
   }, [reset, artistToEdit]);
@@ -102,10 +118,7 @@ function TattooArtistsForm({ onClose, artistToEdit }: TattooArtistFormProps) {
     const formData = new FormData();
 
     formData.append("displayName", data.displayName);
-    formData.append(
-      "handle",
-      data.handle.replace(/^@/, "").replace(/[._]/g, "-"),
-    );
+    formData.append("handle", data.handle.replace(/^@/, ""));
     formData.append("email", data.email);
     formData.append("phone", data.phone);
     formData.append("bio", data.bio);
@@ -274,7 +287,12 @@ function TattooArtistsForm({ onClose, artistToEdit }: TattooArtistFormProps) {
 
       <button
         type="submit"
-        disabled={createNewArtistIsPending || editArtistIsPending || !isValid}
+        disabled={
+          createNewArtistIsPending ||
+          editArtistIsPending ||
+          !isValid ||
+          (artistToEdit ? !isDirty : false)
+        }
         className="submit-btn"
       >
         {createNewArtistIsPending || editArtistIsPending ? (

@@ -1,5 +1,7 @@
 import { HomePageContent } from "@/components/constants/Navigation";
 import Review from "@/components/features/review/Review";
+import StudioIntro from "@/components/templates/home/StudioIntro";
+import StudioMarquee from "@/components/templates/home/StudioMarquee";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
 import Link from "next/link";
 import { MdArrowRightAlt } from "react-icons/md";
@@ -54,8 +56,13 @@ function Home() {
           </div>
         </div>
       </div>
+
+      {/* Statement & Stats */}
+      <StudioIntro />
+      {/* <StudioMarquee /> */}
+
       {/* main */}
-      <div className="py-16 px-[5%]">
+      <div className="py-24 px-[5%] ">
         <div className="container mx-auto">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {HomePageContent.map((c) => (
@@ -73,13 +80,12 @@ function Home() {
                   className="object-cover transition-transform duration-500 group-hover:blur-sm grayscale"
                 />
 
-                <div className="absolute inset-0 flex items-center justify-center p-6 bg-linear-to-t from-onyx via-onyx/40 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ">
-                  <span className="text-xl sm:text-2xl lg:text-3xl">
-                    {c.title}
-                  </span>
-                </div>
-                <div className="absolute bottom-0 px-4 py-2 text-center text-lg sm:text-xl lg:text-2xl bg-onyx w-full group-hover:hidden">
-                  {c.title}
+                <div className="absolute inset-0 bg-linear-to-t from-onyx via-onyx/40 to-transparent">
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 group-hover:bottom-1/2 group-hover:translate-y-1/2 transition-all duration-500 ease-in-out">
+                    <span className="text-lg sm:text-xl lg:text-2xl text-center whitespace-nowrap">
+                      {c.title}
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}

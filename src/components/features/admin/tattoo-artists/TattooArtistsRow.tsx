@@ -60,30 +60,66 @@ function TattooArtistsRow({ artist, index, onEdit }: TattooArtistsRowProps) {
         </a>
       </td>
       <td>
-        <a href={`email:${artist.email}`} className="btn text-xs mx-auto">
+        <a href={`mailto:${artist.email}`} className="btn text-xs mx-auto">
           {artist.email}
         </a>
       </td>
       <td>
-        <button
-          type="button"
-          disabled={editArtistStatusIsPending}
-          onClick={handleActiveToggle}
-          className={`relative w-11 h-6 rounded-full transition-colors ${
-            artist.status === "ACTIVE" ? "bg-green-600" : "bg-gray-300"
-          } ${editArtistStatusIsPending && "opacity-70 cursor-not-allowed"}`}
-        >
+        <div className="flex items-center justify-center gap-3">
+          {/* Status Text */}
           <span
-            className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${
-              artist.status === "INACTIVE" ? "translate-x-5" : ""
-            }`}
+            className={`text-xs font-medium tracking-wide transition-colors duration-300
+      ${artist.status === "ACTIVE" ? "text-green-400" : "text-snow/40"}`}
           >
-            {editArtistStatusIsPending ? <DotsLoader /> : null}
+            {artist.status === "ACTIVE" ? "Active" : "Inactive"}
           </span>
-        </button>
+
+          {/* Toggle */}
+          <button
+            type="button"
+            role="switch"
+            aria-checked={artist.status === "ACTIVE"}
+            disabled={editArtistStatusIsPending}
+            onClick={handleActiveToggle}
+            className={`
+        relative flex items-center w-14 h-7 rounded-full
+        transition-all duration-300 ease-in-out
+        ${
+          artist.status === "ACTIVE"
+            ? "bg-green-500/20 border border-green-500/30"
+            : "bg-snow/10 border border-snow/10"
+        }
+        ${editArtistStatusIsPending && "opacity-60 cursor-not-allowed"}
+      `}
+          >
+            <span
+              className={`
+          absolute left-1 flex items-center justify-center
+          w-6 h-6 rounded-full bg-snow
+          transition-all duration-300 ease-in-out
+          ${artist.status === "ACTIVE" ? "translate-x-6" : "translate-x-0"}
+        `}
+            >
+              {editArtistStatusIsPending ? (
+                <DotsLoader />
+              ) : (
+                <span
+                  className={`w-2 h-2 rounded-full ${
+                    artist.status === "ACTIVE" ? "bg-green-500" : "bg-gray-400"
+                  }`}
+                />
+              )}
+            </span>
+          </button>
+        </div>
       </td>
       <td>
-        <a href={`instagram/${artist.handle}`} className="btn text-xs mx-auto">
+        <a
+          href={`https://instagram.com/${artist.handle}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn text-xs mx-auto"
+        >
           @{artist.handle}
         </a>
       </td>
