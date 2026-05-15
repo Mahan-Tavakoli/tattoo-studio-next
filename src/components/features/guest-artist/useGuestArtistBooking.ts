@@ -50,8 +50,8 @@ export default function useGuestArtistBooking({
         }
       },
 
-      onError: (error) => {
-        toast.error(error?.message);
+      onError: () => {
+        toast.error("Something went wrong");
       },
     });
 

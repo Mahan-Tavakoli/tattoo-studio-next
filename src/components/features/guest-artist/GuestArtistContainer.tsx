@@ -26,7 +26,7 @@ function GuestArtistContainer() {
     mode: "onTouched",
   });
 
-  const { handleSubmit, watch, setValue, trigger } = methods;
+  const { handleSubmit, watch, setValue, trigger, reset } = methods;
 
   const startDate = watch("startDate");
   const endDate = watch("endDate");
@@ -44,7 +44,9 @@ function GuestArtistContainer() {
 
   const prevStep = () => setStep(1);
 
-  const onSubmit: SubmitHandler<GuestArtistBookingAppointment> = (data) => {
+  const onSubmit: SubmitHandler<GuestArtistBookingAppointment> = async (
+    data,
+  ) => {
     console.log("data =>", data);
 
     const guestArtistBookingData = {
@@ -53,11 +55,15 @@ function GuestArtistContainer() {
       email: data.email,
       startDate: formatDate(data.startDate),
       endDate: formatDate(data.endDate),
-      numberOfTables: data.numberOfTables,
+      numberOfTables: Number(data.numberOfTables),
       acknowledgment: data.acknowledgment,
     };
-    console.log("guestData =>", guestArtistBookingData);
+    console.log("payload", JSON.stringify(guestArtistBookingData, null, 2));
     guestArtistBooking(guestArtistBookingData);
+
+    await new Promise((r) => setTimeout(r, 150));
+    reset();
+    setStep(1);
   };
 
   return (

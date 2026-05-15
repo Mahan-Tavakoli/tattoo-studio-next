@@ -1,12 +1,20 @@
-import { BookingStatus } from "@/components/schema & types/booking/booking-appointment.types";
-import { bookingStatusStyles } from "./statusStyles";
-
-interface StatusBadgeProps {
-  status: BookingStatus;
+interface StatusBadgeProps<T extends string> {
+  status: T;
+  styles: Record<
+    T,
+    {
+      label: string;
+      className: string;
+      icon: React.ReactNode;
+    }
+  >;
 }
 
-function StatusBadge({ status }: StatusBadgeProps) {
-  const config = bookingStatusStyles[status];
+function StatusBadge<T extends string>({
+  status,
+  styles,
+}: StatusBadgeProps<T>) {
+  const config = styles[status];
 
   if (!config) return null;
 

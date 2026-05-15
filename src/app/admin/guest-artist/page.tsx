@@ -1,9 +1,7 @@
+import GuestArtistContainer from "@/components/features/admin/guest-artist/GuestArtistContainer";
+
 function AdminGuestArtist() {
-  return (
-    <div>
-      <h1>AdminGuestArtist</h1>
-    </div>
-  );
+  return <GuestArtistContainer />;
 }
 
 export default AdminGuestArtist;

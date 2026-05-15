@@ -11,7 +11,7 @@ const stats = [
     label: "Tattoos",
   },
   {
-    number: 8,
+    number: 10,
     suffix: "+",
     label: "Years Experience",
   },

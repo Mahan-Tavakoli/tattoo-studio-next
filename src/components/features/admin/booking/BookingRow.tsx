@@ -2,7 +2,8 @@ import {
   BookingInfo,
   BookingStatus,
 } from "@/components/schema & types/booking/booking-appointment.types";
-import StatusBadge from "@/components/templates/admin/booking/StatusBadge";
+import { bookingStatusStyles } from "@/components/templates/admin/booking/bookingStatusStyles";
+import StatusBadge from "@/components/templates/admin/StatusBadge";
 import Table from "@/components/ui/Table";
 import formattedDate, {
   formatBookingStatus,
@@ -38,13 +39,13 @@ function BookingRow({ booking, index, onEdit }: BookingRowProps) {
         </a>
       </td>
       <td>
-        <StatusBadge status={booking.status as BookingStatus} />
+        <StatusBadge status={booking.status} styles={bookingStatusStyles} />
       </td>
       <td>{formatBudgetRange(booking.budgetRange)}</td>
       <td>{formattedDate(booking.consultDate)}</td>
       <td>
         <Link href={`/admin/booking/${booking.id}`} className="btn">
-          Booking Details
+          View Details
         </Link>
       </td>
       <td>
@@ -52,16 +53,19 @@ function BookingRow({ booking, index, onEdit }: BookingRowProps) {
         booking?.status === "COMPLETED" ||
         booking?.status === "CONSULT_NO_SHOW" ? (
           <span className="gap-x-2">
-            No Operation -{" "}
+            {/* No Operation -
             {booking?.status === "CANCELLED"
               ? "Booking Cancelled"
               : booking?.status === "COMPLETED"
                 ? "Booking Completed"
-                : "Client Not Show"}
+                : "Client Not Show"} */}
+            -
           </span>
         ) : (
-          <button className="btn flex gap-x-2 mx-auto" onClick={onEdit}>
-            <span>Update Status</span>
+          <button
+            className="flex items-center justify-center size-9 rounded-xl border border-snow/10 hover:bg-black bg-onyx text-snow/75 text-center transition-all duration-300 hover:border-snow/25"
+            onClick={onEdit}
+          >
             <CiEdit className="size-5" />
           </button>
         )}

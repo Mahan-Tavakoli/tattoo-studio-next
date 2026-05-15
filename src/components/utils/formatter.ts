@@ -31,6 +31,10 @@ export function formatMonth(date: Date) {
   return date.toISOString().slice(0, 7);
 }
 
+export function formatPrice(price: number) {
+  return new Intl.NumberFormat("en-US").format(price);
+}
+
 export function formatBudgetRange(value?: string | null): string {
   if (!value) return "-";
   return budgetMap[value] || value;

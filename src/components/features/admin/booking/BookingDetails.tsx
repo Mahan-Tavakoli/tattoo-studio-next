@@ -1,21 +1,19 @@
 "use client";
 
-import formattedDate, {
-  formatBookingStatus,
-  formatBudgetRange,
-} from "@/components/utils/formatter";
+import formattedDate, { formatBudgetRange } from "@/components/utils/formatter";
 import useBooking from "../../booking/useBooking";
-import Image from "next/image";
 import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { CiEdit } from "react-icons/ci";
 import Modal from "@/components/ui/Modal";
 import UpdateBookingStatusForm from "./UpdateBookingStatusForm";
-import StatusBadge from "@/components/templates/admin/booking/StatusBadge";
-import { BookingStatus } from "@/components/schema & types/booking/booking-appointment.types";
+import StatusBadge from "@/components/templates/admin/StatusBadge";
 import { toast } from "react-toastify";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
+import { bookingStatusStyles } from "@/components/templates/admin/booking/bookingStatusStyles";
+import Link from "next/link";
+import { BsArrowLeft } from "react-icons/bs";
 
 function BookingDetails() {
   const { singleBooking, singleBookingIsLoading, singleBookingIsError } =
@@ -94,7 +92,8 @@ function BookingDetails() {
                 value={
                   singleBooking?.status && (
                     <StatusBadge
-                      status={singleBooking.status as BookingStatus}
+                      status={singleBooking.status}
+                      styles={bookingStatusStyles}
                     />
                   )
                 }
@@ -159,6 +158,15 @@ function BookingDetails() {
               <p className="text-sm text-snow/50">No images uploaded</p>
             )}
           </div>
+        </div>
+
+        {/* BACK BUTTON */}
+
+        <div>
+          <Link href="/admin/booking" className="btn text-sm mt-10">
+            <BsArrowLeft className="size-5" />
+            Back to Bookings
+          </Link>
         </div>
       </div>
 
