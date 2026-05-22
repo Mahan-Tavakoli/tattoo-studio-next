@@ -6,10 +6,13 @@ export interface ArticleInfo {
   content: string;
   coverUrl: string;
   tags: string[];
-  status?: string;
+  status: ArticleStatus;
   publishedAt: Date /* | null */;
+  createdAt: Date;
+  updatedAt: Date;
   author?: {
     displayName: string | null;
+    authorId: string;
   };
 }
 
@@ -26,7 +29,11 @@ export interface ArticleFormDataProps {
   title: string;
   excerpt: string;
   content: string;
-  status: string;
+  status: ArticleStatus;
   cover: File;
   tags: string[];
 }
+
+export const ARTICLE_STATUS = ["PUBLISHED", "DRAFT"] as const;
+
+export type ArticleStatus = (typeof ARTICLE_STATUS)[number];

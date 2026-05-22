@@ -39,3 +39,17 @@ export function createNewArticleApi(
     })
     .then(({ data }: AxiosResponse<ArticleFormDataProps>) => data);
 }
+
+// get article by id
+export function getArticleByIdApi(articleId: string): Promise<ArticleInfo> {
+  return http
+    .get(`/admin/articles/${articleId}`)
+    .then(({ data }: AxiosResponse<ArticleInfo>) => data);
+}
+
+// delete article
+export function deleteArticleApi(articelId: string): Promise<ArticleInfo> {
+  return http
+    .delete(`/admin/articles/${articelId}`)
+    .then(({ data }: AxiosResponse<ArticleInfo>) => data);
+}

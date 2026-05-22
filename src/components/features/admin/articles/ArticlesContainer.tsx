@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { PiPlus } from "react-icons/pi";
+import ArticlesTable from "./ArticlesTable";
 
 function ArticlesContainer() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -27,7 +28,7 @@ function ArticlesContainer() {
         </div>
       </div>
       <div className="w-full h-[0.5px] my-10 bg-snow/30"></div>
-      {/* <TattooArtistsTable /> */}
+      <ArticlesTable />
       {/* Add New Category */}
       {/* {isOpen && (
         <Modal title="Creating new Artist" onClose={handleClose}>
