@@ -6,6 +6,7 @@ import {
   BookingStatusProps,
   SingleBookingResponse,
   TattooScheduledProps,
+  WalkInResponseProps,
 } from "@/components/schema & types/booking/booking-appointment.types";
 
 // public booking
@@ -27,14 +28,14 @@ export default function bookingAppointmentApi(
 // walk-in booking
 export function walkInBookingAppointmentApi(
   newWalkInBooking: FormData,
-): Promise<BookingAppointmentProps> {
+): Promise<WalkInResponseProps> {
   return http
     .post("/admin/bookings/walk-in", newWalkInBooking, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     })
-    .then(({ data }: AxiosResponse<BookingAppointmentProps>) => data);
+    .then(({ data }: AxiosResponse<WalkInResponseProps>) => data);
 }
 
 // get all bookings

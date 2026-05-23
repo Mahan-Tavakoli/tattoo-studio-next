@@ -44,10 +44,10 @@ export default function useBooking() {
       queryClient.invalidateQueries({
         queryKey: ["booking"],
       });
-      toast.success("Booking request submitted!");
+      toast.success("Walk-In booking recorded successfully!");
     },
     onError: () => {
-      toast.error("Failed to submit booking. Please try again.");
+      toast.error("Failed to submit walk-in record. Please try again.");
     },
   });
 

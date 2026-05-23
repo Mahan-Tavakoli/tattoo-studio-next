@@ -107,3 +107,10 @@ export interface TattooScheduledProps {
   durationNote: string;
   notes?: string;
 }
+
+export interface WalkInResponseProps {
+  bookingId: string;
+  uploadToken: string;
+  clientId: string;
+  tattooDate: Date;
+}

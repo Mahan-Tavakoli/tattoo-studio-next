@@ -2,7 +2,7 @@ import * as z from "zod";
 
 // validation schema
 
-// client info validation
+// Shared Client validation base rules
 
 export const ClientInfoValidationSchema = z.object({
   firstName: z
@@ -32,7 +32,7 @@ export const ClientInfoValidationSchema = z.object({
   //   .transform((date) => date.toISOString()),
 });
 
-// Booking Request Validation
+// 1. PUBLIC BOOKING SCHEMAS
 
 export const BookingRequestValidationSchema = z.object({
   description: z
@@ -152,3 +152,26 @@ export const BookingAppointmentSchema = z.object({
 export type BookingAppointmentFormData = z.infer<
   typeof BookingAppointmentSchema
 >;
+
+// 2. WALK-IN REGISTER SCHEMAS (Admin Kiosk)
+export const WalkInRequestValidationSchema = z.object({
+  description: z
+    .string()
+    .min(1, "Tattoo description is required")
+    .max(2000, "You can describe at most 2000 characters"),
+  placement: z
+    .string()
+    .min(1, "Placement is required")
+    .max(120, "You can describe at most 120 characters"),
+  tattooDate: z.date({ message: "Tattoo schedule date is required" }),
+  artistId: z
+    .string({ message: "Please assign an artist" })
+    .min(1, "Artist selection is required"),
+});
+
+export const WalkInBookingSchema = z.object({
+  client: ClientInfoValidationSchema,
+  bookingRequest: WalkInRequestValidationSchema,
+});
+
+export type WalkInBookingFormData = z.infer<typeof WalkInBookingSchema>;
