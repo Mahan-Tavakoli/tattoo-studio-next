@@ -187,6 +187,16 @@ function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
             errors={bookingErrors?.tattooDate}
             required
           />
+
+          <SelectBox
+            label="Budget Range"
+            name="bookingRequest.budgetRange"
+            register={register}
+            errors={bookingErrors?.budgetRange}
+            options={PublicBudgetRange}
+            required
+          />
+
           <SelectBox
             label="Assign Artist"
             name="bookingRequest.artistId"

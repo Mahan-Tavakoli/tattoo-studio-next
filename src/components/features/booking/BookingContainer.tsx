@@ -1,32 +1,33 @@
 "use client";
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ClientInfo from "./client/ClientInfo";
 import {
-  BookingAppointmentFormData,
   BookingAppointmentSchema,
   WalkInBookingSchema,
 } from "@/components/schema & types/booking/booking-appointement.schema";
 import BookingRequest from "./booking-request/BookingRequest";
 import useBooking from "./useBooking";
-import MedicalDeclaration from "./medical-declaration/MedicalDeclaration";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormStepper from "@/components/ui/FormStepper";
 import { formatDate } from "@/components/utils/formatter";
 import DotsLoader from "@/components/ui/DotsLoader";
 import useCurrentUser from "../auth/useCurrentUser";
+import { getBookingByIdApi } from "@/components/services/bookingService"; // Explicitly pulled for long polling
+import { toast } from "react-toastify";
 
 const BOOKING_STEPS = [
-  { id: 1, label: "Client Info" /* fields: ["client"] */ },
-  { id: 2, label: "Tattoo Details" /* fields: ["bookingRequest"] */ },
+  { id: 1, label: "Client Info" },
+  { id: 2, label: "Tattoo Details" },
 ];
 
 function BookingContainer() {
   const [step, setStep] = useState<number>(1);
   const [uploadToken, setUploadToken] = useState<string | null>(null);
+  const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
 
-  const { user, currentUserIsError, currentUserIsLoading } = useCurrentUser();
+  const { user } = useCurrentUser();
   const isWalkIn = !!user;
 
   const {
@@ -53,72 +54,64 @@ function BookingContainer() {
     formState: { isValid },
   } = methods;
 
+  // ── DETECT MOBILE UPLOAD LONG POLLING ENGINE ───────────────────────
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    if (uploadToken && activeBookingId) {
+      // Begin background validation check execution
+      intervalId = setInterval(async () => {
+        try {
+          const bookingDetail = await getBookingByIdApi(activeBookingId);
+
+          // Check if references have landed in the backend attachment array
+          if (
+            bookingDetail &&
+            bookingDetail.uploads &&
+            bookingDetail.uploads.length > 0
+          ) {
+            toast.success("Mobile uploaded references received successfully!");
+            clearInterval(intervalId);
+            closeQrModal(); // Auto-shutdown view modal panel safely
+          }
+        } catch (err) {
+          console.error("Error pooling upload synchronization updates:", err);
+        }
+      }, 3000); // Evaluates updates loop every 3 seconds
+    }
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [uploadToken, activeBookingId]);
+
   const nextStep = async (fields: any[]) => {
     const isValid = await trigger(fields);
     if (!isValid) return;
-
     await new Promise((r) => setTimeout(r, 150));
     setStep((prev) => prev + 1);
   };
 
   const prevStep = () => setStep((prev) => prev - 1);
 
-  // const onSubmit: SubmitHandler<any> = async (data) => {
-  //   console.log("data =>", data);
-  //   const formData = new FormData();
-
-  //   // const formatDate = (date: string | Date) => {
-  //   //   const d = new Date(date);
-  //   //   return d.toISOString().split("T")[0];
-  //   // };
-
-  //   const { file } = data?.bookingRequest;
-
-  //   // Client
-  //   formData.append("firstName", data.client.firstName);
-  //   formData.append("lastName", data.client.lastName);
-  //   formData.append("email", data.client.email);
-  //   formData.append("phone", data.client.phone);
-
-  //   // Booking
-  //   formData.append("consultDate", formatDate(data.bookingRequest.consultDate));
-  //   formData.append("description", data.bookingRequest.description);
-  //   formData.append("budgetRange", data.bookingRequest.budgetRange);
-  //   formData.append("bookingType", data.bookingRequest.bookingType);
-  //   formData.append("placement", data.bookingRequest.placement || "");
-
-  //   if (file && file.length > 0) {
-  //     file.forEach((f) => {
-  //       formData.append("images", f);
-  //     });
-  //   }
-  //   console.log("images =>", file);
-
-  //   await bookingAppointment(formData);
-  //   reset();
-  //   setStep(1);
-  // };
-
   const onSubmit: SubmitHandler<any> = async (data) => {
     const formData = new FormData();
 
-    // ── Append Common Client Properties ─────────────────────────────────
     formData.append("firstName", data.client.firstName);
     formData.append("lastName", data.client.lastName);
     formData.append("email", data.client.email || "");
     formData.append("phone", data.client.phone || "");
 
-    // ── Append Workflow Specific Data Parameters ────────────────────────
     formData.append("description", data.bookingRequest.description);
     formData.append("placement", data.bookingRequest.placement || "");
 
     if (isWalkIn) {
-      // Walk-In Payload
       formData.append(
         "tattooDate",
         data.bookingRequest.tattooDate.toISOString(),
       );
       formData.append("artistId", data.bookingRequest.artistId);
+      formData.append("budgetRange", data.bookingRequest.budgetRange);
       if (data.bookingRequest.stationId)
         formData.append("stationId", data.bookingRequest.stationId);
       if (data.bookingRequest.durationNote)
@@ -129,18 +122,15 @@ function BookingContainer() {
         formData.append("styleNotes", data.bookingRequest.styleNotes);
 
       try {
-        // Execute walk-in registration mutation
         const response = await walkInAppointment(formData);
-        console.log("response =>", response);
-
         if (response && response.uploadToken) {
+          setActiveBookingId(response.bookingId);
           setUploadToken(response.uploadToken);
         }
       } catch (err) {
         console.error("Walk-in submission failed:", err);
       }
     } else {
-      // Public Booking Payload
       formData.append(
         "consultDate",
         formatDate(data.bookingRequest.consultDate),
@@ -151,7 +141,7 @@ function BookingContainer() {
       const { file } = data?.bookingRequest;
       if (file && file.length > 0) {
         file.forEach((f: File) => {
-          formData.append("images", f); // Maps onto backend's accepted FilesInterceptor label
+          formData.append("images", f);
         });
       }
 
@@ -163,78 +153,16 @@ function BookingContainer() {
 
   const closeQrModal = () => {
     setUploadToken(null);
+    setActiveBookingId(null);
     reset();
     setStep(1);
   };
 
+  // Environment switching layout matching local interface configuration targets
+  const targetHostBase = "http://10.73.77.86:3000";
   const customerMobileUploadUrl = uploadToken
-    ? `${window.location.origin}/upload-reference?token=${uploadToken}`
+    ? `${targetHostBase}/upload-reference?token=${uploadToken}`
     : "";
-
-  // return (
-  //   <div className="pt-15 px-4 flex justify-center">
-  //     <div className="w-full max-w-sm bg-alabaster text-onyx rounded-2xl p-5 shadow-md">
-  //       <h1 className="text-2xl font-bold mb-6">Tattoo Request</h1>
-
-  //       {/* Stepper */}
-  //       <FormStepper<BookingAppointmentFormData>
-  //         step={step}
-  //         setStep={setStep}
-  //         trigger={trigger}
-  //         steps={BOOKING_STEPS}
-  //       />
-
-  //       <FormProvider {...methods}>
-  //         <form
-  //           className={`grid grid-cols-1 items-center justify-center gap-5 md:gap-6 ${bookingAppointmentIsPending && "opacity-70 pointer-events-none"}`}
-  //           onSubmit={handleSubmit(onSubmit)}
-  //         >
-  //           {step === 1 ? (
-  //             <ClientInfo onNext={() => nextStep(["client"])} />
-  //           ) : (
-  //             <>
-  //               <BookingRequest onBack={prevStep} />
-  //               <button
-  //                 type="submit"
-  //                 disabled={bookingAppointmentIsPending || !isValid}
-  //                 className="submit-btn"
-  //               >
-  //                 {bookingAppointmentIsPending ? (
-  //                   <>
-  //                     Submitting <DotsLoader />
-  //                   </>
-  //                 ) : (
-  //                   "Submit Booking"
-  //                 )}
-  //               </button>
-  //             </>
-  //           )}
-  //           {/* {step === 1 ? (
-  //                   <ClientInfo onNext={() => nextStep(["client"])} />
-  //                 ) : step === 2 ? (
-  //                   <BookingRequest
-  //                     onNext={() => nextStep(["bookingRequest"])}
-  //                     onBack={prevStep}
-  //                   />
-  //                 ) : (
-  //                   <>
-  //                     <MedicalDeclaration onBack={prevStep} />
-  //                     <button
-  //                       type="submit"
-  //                       disabled={bookingAppointmentIsPending}
-  //                       className="submit-btn"
-  //                     >
-  //                       {bookingAppointmentIsPending
-  //                         ? "Submitting ..."
-  //                         : "Submit Booking"}
-  //                     </button>
-  //                   </>
-  //                 )} */}
-  //         </form>
-  //       </FormProvider>
-  //     </div>
-  //   </div>
-  // );
 
   return (
     <div className="pt-15 px-4 flex justify-center">
@@ -243,7 +171,6 @@ function BookingContainer() {
           {isWalkIn ? "Walk-In Registration" : "Tattoo Request"}
         </h1>
 
-        {/* Stepper Panel */}
         <FormStepper
           step={step}
           setStep={setStep}
@@ -281,36 +208,37 @@ function BookingContainer() {
           </form>
         </FormProvider>
 
-        {/* ── INTERACTIVE TABLET HUB OVERLAY MODAL ───────────────────────── */}
+        {/* ── AUTOMATED POOLING INTERACTIVE MODAL OVERLAY ───────────────── */}
         {uploadToken && (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 animate-fadeIn">
             <div className="bg-white rounded-2xl p-6 max-w-sm w-full text-center shadow-xl space-y-4">
               <h2 className="text-xl font-bold text-gray-900">
-                Walk-In Booked Successfully!
+                Walk-In Logged!
               </h2>
               <p className="text-sm text-gray-600">
-                Scan this QR code with your smartphone camera to upload your
-                tattoo references instantly.
+                Scan with your phone to upload references. This modal clears
+                automatically once transmission starts.
               </p>
 
               <div className="flex justify-center p-3 bg-gray-50 rounded-xl border border-gray-100">
                 <img
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(customerMobileUploadUrl)}`}
-                  alt="Mobile Reference Upload Target Route"
+                  alt="Dynamic Session Destination"
                   className="w-48 h-48"
                 />
               </div>
 
-              <div className="text-xs text-gray-400 select-all truncate bg-gray-100 p-2 rounded">
-                {customerMobileUploadUrl}
+              <div className="flex items-center justify-center gap-2 text-xs font-medium text-amber-600 bg-amber-50 py-2 rounded-lg">
+                <span className="w-2 h-2 bg-amber-500 rounded-full animate-ping" />
+                Waiting for mobile device uploads...
               </div>
 
               <button
                 type="button"
                 onClick={closeQrModal}
-                className="w-full bg-onyx text-white py-2.5 rounded-xl font-medium hover:bg-opacity-90 transition-all"
+                className="w-full text-xs text-gray-400 hover:text-gray-600 transition-colors pt-2 underline"
               >
-                Done / Next Customer
+                Skip / No Images to Upload
               </button>
             </div>
           </div>
@@ -319,4 +247,5 @@ function BookingContainer() {
     </div>
   );
 }
+
 export default BookingContainer;

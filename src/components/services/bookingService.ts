@@ -79,3 +79,10 @@ export function createTattooScheduleApi({
     .post(`/admin/bookings/${bookingId}/schedule-tattoo`, newTattooSchedule)
     .then(({ data }: AxiosResponse<TattooScheduledProps>) => data);
 }
+
+// check-in
+export function checkInBookingApi(bookingId: string) {
+  return http
+    .post(`/admin/booking-requests/${bookingId}/check-in`)
+    .then(({ data }) => data);
+}

@@ -1,4 +1,5 @@
 import bookingAppointmentApi, {
+  checkInBookingApi,
   createTattooScheduleApi,
   getAllBookingsApi,
   getBookingByIdApi,
@@ -82,7 +83,7 @@ export default function useBooking() {
     mutationFn: updateBookingStatusApi,
     onSuccess: (data) => {
       console.log("onSuccessData =>", data);
-      queryClient.invalidateQueries({ queryKey: ["booking"] });
+      queryClient.invalidateQueries({ queryKey: ["booking", bookingId] });
       queryClient.invalidateQueries({ queryKey: ["single-booking"] });
       toast.success("Status updated successfully");
     },
@@ -99,6 +100,25 @@ export default function useBooking() {
         queryClient.invalidateQueries({ queryKey: ["booking"] });
         queryClient.invalidateQueries({ queryKey: ["single-booking"] });
         toast.success("Tattoo scheduled successfully");
+      },
+    });
+
+  const { isPending: checkInBookingIsPending, mutate: checkInBooking } =
+    useMutation({
+      mutationFn: checkInBookingApi,
+
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["single-booking", bookingId],
+        });
+        queryClient.invalidateQueries({ queryKey: ["booking"] });
+        toast.success("Client checked in");
+      },
+
+      onError: () => {
+        toast.error(
+          "There is problem for checking in the client, try again later",
+        );
       },
     });
 

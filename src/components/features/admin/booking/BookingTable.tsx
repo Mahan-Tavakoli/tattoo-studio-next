@@ -15,6 +15,9 @@ function BookingTable() {
   const [bookingToUpdateStatus, setBookingToUpdateStatus] =
     useState<BookingInfo | null>(null);
 
+  const [checkInClientBooking, setCheckInClientBooking] =
+    useState<BookingInfo | null>(null);
+
   if (bookingIsError) {
     toast.error("Failed to load bookings, try again");
     return (
@@ -61,6 +64,7 @@ function BookingTable() {
                 //index={(currentPage - 1) * 6 + index}
                 index={index}
                 onEdit={() => setBookingToUpdateStatus(booking)}
+                onCheckIn={() => setCheckInClientBooking(booking)}
               />
             ))
           )}
@@ -74,7 +78,7 @@ function BookingTable() {
                 />
               </div> */}
 
-      {/* Edit Course */}
+      {/* Edit Status */}
       {bookingToUpdateStatus && (
         <Modal
           onClose={() => setBookingToUpdateStatus(null)}
@@ -84,6 +88,16 @@ function BookingTable() {
             booking={bookingToUpdateStatus}
             onClose={() => setBookingToUpdateStatus(null)}
           />
+        </Modal>
+      )}
+
+      {/* Check in */}
+      {checkInClientBooking && (
+        <Modal
+          onClose={() => setCheckInClientBooking(null)}
+          title="Client Check in"
+        >
+          Check in
         </Modal>
       )}
     </>
