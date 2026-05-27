@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useCallback, ReactNode } from "react";
 import { HiOutlineX } from "react-icons/hi";
 import useOutsideClick from "@/components/hook/useOutsideClick";
@@ -7,9 +9,11 @@ interface ModalProps {
   title?: string;
   onClose: () => void;
   children: ReactNode;
+
+  large?: boolean;
 }
 
-function Modal({ onClose, children, title }: ModalProps) {
+function Modal({ onClose, children, title, large = false }: ModalProps) {
   const ref = useOutsideClick(onClose);
 
   // Close on Escape key
@@ -22,24 +26,44 @@ function Modal({ onClose, children, title }: ModalProps) {
 
   useEffect(() => {
     document.addEventListener("keydown", escFunction);
+
     document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", escFunction);
+
       document.body.style.overflow = "auto";
     };
   }, [escFunction]);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-screen z-50 bg-onyx/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
+    <div className="fixed inset-0 z-50 bg-onyx/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
       <div
         ref={ref}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        className={`
+          fixed top-1/2 left-1/2
+          -translate-x-1/2 -translate-y-1/2
           rounded-lg text-onyx bg-alabaster
-          p-4 shadow-lg transition-all duration-500 ease-out
-          w-[calc(100vw-25%)] md:max-w-lg max-h-[calc(100vh-25%)] overflow-y-auto"
+          shadow-lg transition-all duration-500 ease-out
+          flex flex-col
+
+          ${
+            large
+              ? `
+                w-[95vw]
+                max-w-6xl
+                h-[90vh]
+              `
+              : `
+                w-[calc(100vw-25%)]
+                md:max-w-lg
+                max-h-[calc(100vh-25%)]
+              `
+          }
+        `}
       >
-        <div className="flex items-center justify-between border-b border-onyx/20 pb-2 mb-6">
+        {/* HEADER */}
+        <div className="flex items-center justify-between border-b border-onyx/20 p-4 shrink-0">
           {title ? (
             <div className="flex items-center gap-x-2">
               <div className="relative w-10 h-10">
@@ -52,6 +76,7 @@ function Modal({ onClose, children, title }: ModalProps) {
                   className="object-cover"
                 />
               </div>
+
               <h1 className="font-semibold text-sm md:text-lg">{title}</h1>
             </div>
           ) : (
@@ -66,7 +91,8 @@ function Modal({ onClose, children, title }: ModalProps) {
           </button>
         </div>
 
-        {children}
+        {/* BODY */}
+        <div className="overflow-y-auto p-4 flex-1">{children}</div>
       </div>
     </div>
   );

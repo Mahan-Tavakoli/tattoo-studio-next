@@ -159,7 +159,7 @@ function BookingContainer() {
   };
 
   // Environment switching layout matching local interface configuration targets
-  const targetHostBase = "http://10.73.77.86:3000";
+  const targetHostBase = "http://192.168.1.60:3000";
   const customerMobileUploadUrl = uploadToken
     ? `${targetHostBase}/upload-reference?token=${uploadToken}`
     : "";

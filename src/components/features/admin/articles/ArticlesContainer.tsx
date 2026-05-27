@@ -3,6 +3,8 @@
 import { useCallback, useState } from "react";
 import { PiPlus } from "react-icons/pi";
 import ArticlesTable from "./ArticlesTable";
+import Modal from "@/components/ui/Modal";
+import ArticleForm from "./ArticleForm";
 
 function ArticlesContainer() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -30,11 +32,11 @@ function ArticlesContainer() {
       <div className="w-full h-[0.5px] my-10 bg-snow/30"></div>
       <ArticlesTable />
       {/* Add New Category */}
-      {/* {isOpen && (
-        <Modal title="Creating new Artist" onClose={handleClose}>
-          <TattooArtistsForm onClose={handleClose} />
+      {isOpen && (
+        <Modal title="Creating New Article" onClose={handleClose} large>
+          <ArticleForm onClose={handleClose} />
         </Modal>
-      )} */}
+      )}
     </div>
   );
 }

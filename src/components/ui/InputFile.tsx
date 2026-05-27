@@ -1,12 +1,18 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FieldError, Path, PathValue, UseFormSetValue } from "react-hook-form";
+import {
+  FieldErrorsImpl,
+  FieldError,
+  Merge,
+  Path,
+  UseFormSetValue,
+} from "react-hook-form";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
 interface InputFileProps<T extends Record<string, any>> {
   label: string;
   name: Path<T>;
-  errors?: FieldError;
+  errors?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
   setValue: UseFormSetValue<T>;
   accept?: string;
   showPreview?: boolean;
@@ -154,7 +160,9 @@ function InputFile<T extends Record<string, any>>({
           })}
         </div>
       )}
-      {errors && <p className="text-red-700 text-xs mt-1">{errors.message}</p>}
+      {errors?.message && (
+        <p className="text-red-700 text-xs mt-1">{String(errors.message)}</p>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import getArticlesApi, {
+  createNewArticleApi,
   deleteArticleApi,
   getAllArticlesApi,
   getArticleByIdApi,
@@ -81,6 +82,28 @@ export default function useArticle() {
       },
     });
 
+  // create article
+  const { mutateAsync: createArticle, isPending: createArticleIsPending } =
+    useMutation({
+      mutationFn: createNewArticleApi,
+
+      onSuccess: () => {
+        toast.success("Article created successfully");
+
+        queryClient.invalidateQueries({
+          queryKey: ["articles"],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ["all-articles"],
+        });
+      },
+
+      onError: () => {
+        toast.error("Creating article failed");
+      },
+    });
+
   return {
     // All artists
     articlesIsLoading,
@@ -101,5 +124,8 @@ export default function useArticle() {
     // delete article
     deleteArticle,
     deleteArticleIsPending,
+    // create article
+    createArticle,
+    createArticleIsPending,
   };
 }
