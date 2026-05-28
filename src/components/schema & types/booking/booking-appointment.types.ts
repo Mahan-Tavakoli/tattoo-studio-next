@@ -114,3 +114,6 @@ export interface WalkInResponseProps {
   clientId: string;
   tattooDate: Date;
 }
+export interface UploadFormInputs {
+  images: File[];
+}

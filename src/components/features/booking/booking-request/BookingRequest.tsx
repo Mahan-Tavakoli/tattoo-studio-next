@@ -185,6 +185,11 @@ function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
             name="bookingRequest.tattooDate"
             control={control}
             errors={bookingErrors?.tattooDate}
+            disablePast
+            excludeDays={[0]}
+            disabledDates={closedDates}
+            currentMonth={currentMonth}
+            onMonthChange={setCurrentMonth}
             required
           />
 

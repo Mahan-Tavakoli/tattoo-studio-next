@@ -72,7 +72,7 @@ function StudioIntro() {
               key={i}
               className="text-center border border-snow/10 rounded-2xl py-8 bg-onyx/40 backdrop-blur-xs"
             >
-              <h3 className="text-3xl sm:text-5xl font-semibold">
+              <h3 className="text-2xl sm:text-4xl font-semibold">
                 {inView && (
                   <CountUp
                     end={stat.number}
@@ -82,7 +82,7 @@ function StudioIntro() {
                 )}
               </h3>
 
-              <p className="mt-3 text-snow/50 uppercase tracking-widest text-sm">
+              <p className="mt-3 text-snow/50 uppercase tracking-widest text-xs md:text-sm">
                 {stat.label}
               </p>
             </div>

@@ -5,6 +5,7 @@ import bookingAppointmentApi, {
   getBookingByIdApi,
   updateBookingStatusApi,
   walkInBookingAppointmentApi,
+  walkInBookingUploads,
 } from "@/components/services/bookingService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -15,7 +16,7 @@ export default function useBooking() {
   const params = useParams();
 
   const bookingId = typeof params?.id === "string" ? params.id : "";
-
+  
   // public booking
   const {
     isPending: bookingAppointmentIsPending,
@@ -35,22 +36,7 @@ export default function useBooking() {
     },
   });
 
-  // walk-in booking
-  const {
-    isPending: WalkInAppointmentIsPending,
-    mutateAsync: walkInAppointment,
-  } = useMutation({
-    mutationFn: walkInBookingAppointmentApi,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["booking"],
-      });
-      toast.success("Walk-In booking recorded successfully!");
-    },
-    onError: () => {
-      toast.error("Failed to submit walk-in record. Please try again.");
-    },
-  });
+  
 
   // get all bookings
   const {
@@ -103,6 +89,43 @@ export default function useBooking() {
       },
     });
 
+        // walk-in booking
+  const {
+    isPending: WalkInAppointmentIsPending,
+    mutateAsync: walkInAppointment,
+  } = useMutation({
+    mutationFn: walkInBookingAppointmentApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["booking"],
+      });
+      toast.success("Walk-In booking recorded successfully!");
+    },
+    onError: () => {
+      toast.error("Failed to submit walk-in record. Please try again.");
+    },
+  });
+
+  
+    const {isPending: WalkInAppointmentImagesIsPending, mutateAsync: walkInAppointmentImages} = useMutation({
+      mutationFn: walkInBookingUploads,
+
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+        queryKey: ["booking"],
+      });
+
+        toast.success("Images uploaded successfully!")
+      },
+
+      onError: () => {
+        toast.error(
+          "Failed to finalize references transmission.",
+      );
+      }
+    })
+
+    // check in booking
   const { isPending: checkInBookingIsPending, mutate: checkInBooking } =
     useMutation({
       mutationFn: checkInBookingApi,
@@ -122,6 +145,9 @@ export default function useBooking() {
       },
     });
 
+
+
+
   return {
     // public booking
     bookingAppointmentIsPending,
@@ -130,6 +156,8 @@ export default function useBooking() {
     // walk in booking
     walkInAppointment,
     WalkInAppointmentIsPending,
+    walkInAppointmentImages,
+    WalkInAppointmentImagesIsPending,
 
     // bookings
     bookings,

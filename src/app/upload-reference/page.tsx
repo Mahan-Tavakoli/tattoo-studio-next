@@ -7,17 +7,16 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import DotsLoader from "@/components/ui/DotsLoader";
 import InputFile from "@/components/ui/InputFile";
+import { UploadFormInputs } from "@/components/schema & types/booking/booking-appointment.types";
+import useBooking from "@/components/features/booking/useBooking";
 
-interface UploadFormInputs {
-  images: File[];
-}
 
 export default function MobileReferenceUploadPage() {
+  const {walkInAppointmentImages, WalkInAppointmentImagesIsPending} = useBooking()
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams?.get("token");
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const methods = useForm<UploadFormInputs>({
@@ -35,12 +34,12 @@ export default function MobileReferenceUploadPage() {
 
   if (!token) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-alabaster p-6 text-center">
-        <div className="bg-white p-6 rounded-2xl shadow-md max-w-sm">
+      <div className="min-h-screen flex items-center justify-center p-6 text-center">
+        <div className="bg-snow p-6 rounded-2xl shadow-md max-w-sm">
           <p className="text-red-700 font-semibold">
             Invalid or Missing Session Link
           </p>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-onyx mt-2">
             Please re-scan the original QR code generated on the reception
             tablet dashboard.
           </p>
@@ -55,39 +54,14 @@ export default function MobileReferenceUploadPage() {
       return;
     }
 
-    setIsSubmitting(true);
     const formData = new FormData();
 
     // Target matches files array mapping
     data.images.forEach((file: File) => {
       formData.append("images", file);
     });
-
-    try {
-      // Connect to your absolute backend base context structure
-      const backendBaseUrl =
-        process.env.NEXT_PUBLIC_API_URL || "http://172.19.61.86:4000"; // Adjust to backend portfolio port allocation
-      await axios.post(
-        `${backendBaseUrl}/public/booking/${token}/uploads`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
-
-      toast.success("Images uploaded successfully!");
-      setIsSuccess(true);
-    } catch (error: any) {
-      console.error("Reference file uploads broke:", error);
-      toast.error(
-        error?.response?.data?.message ||
-          "Failed to finalize references transmission.",
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
+await walkInAppointmentImages({uploadToken: token, images: formData})
+setIsSuccess(true)
   };
 
   if (isSuccess) {
@@ -110,11 +84,11 @@ export default function MobileReferenceUploadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-alabaster text-onyx flex flex-col justify-center p-4">
-      <div className="w-full max-w-md mx-auto bg-white rounded-2xl p-6 shadow-md space-y-6">
+    <div className="min-h-screen text-onyx flex flex-col justify-center p-4">
+      <div className="w-full max-w-md mx-auto bg-alabaster rounded-2xl p-6 shadow-md space-y-6">
         <div>
           <h1 className="text-xl font-bold">Add Reference Images</h1>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-onyx/50 mt-1">
             Upload sketches, design inspiration, or body positioning photos for
             your walk-in session.
           </p>
@@ -133,15 +107,15 @@ export default function MobileReferenceUploadPage() {
 
             <button
               type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-onyx text-white py-3 rounded-xl font-medium transition-all hover:bg-opacity-90 disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
+              disabled={WalkInAppointmentImagesIsPending}
+              className="submit-btn w-full max-w-lg"
             >
-              {isSubmitting ? (
+              {WalkInAppointmentImagesIsPending ? (
                 <>
                   Sending Media <DotsLoader />
                 </>
               ) : (
-                "Submit Images to Tablet"
+                "Submit Images"
               )}
             </button>
           </form>

@@ -6,6 +6,7 @@ import {
   BookingStatusProps,
   SingleBookingResponse,
   TattooScheduledProps,
+  UploadFormInputs,
   WalkInResponseProps,
 } from "@/components/schema & types/booking/booking-appointment.types";
 
@@ -23,19 +24,6 @@ export default function bookingAppointmentApi(
     } */,
     )
     .then(({ data }: AxiosResponse<BookingAppointmentProps>) => data);
-}
-
-// walk-in booking
-export function walkInBookingAppointmentApi(
-  newWalkInBooking: FormData,
-): Promise<WalkInResponseProps> {
-  return http
-    .post("/admin/bookings/walk-in", newWalkInBooking, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then(({ data }: AxiosResponse<WalkInResponseProps>) => data);
 }
 
 // get all bookings
@@ -85,4 +73,30 @@ export function checkInBookingApi(bookingId: string) {
   return http
     .post(`/admin/booking-requests/${bookingId}/check-in`)
     .then(({ data }) => data);
+}
+
+// walk-in booking
+export function walkInBookingAppointmentApi(
+  newWalkInBooking: FormData,
+): Promise<WalkInResponseProps> {
+  return http
+    .post("/admin/bookings/walk-in", newWalkInBooking, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then(({ data }: AxiosResponse<WalkInResponseProps>) => data);
+}
+
+// walk in booking uploads
+export function walkInBookingUploads({
+  uploadToken,
+  images,
+}: {
+  uploadToken: string;
+  images: FormData;
+}): Promise<UploadFormInputs> {
+  return http
+    .post(`/public/booking/${uploadToken}/uploads`, images)
+    .then(({ data }: AxiosResponse<UploadFormInputs>) => data);
 }

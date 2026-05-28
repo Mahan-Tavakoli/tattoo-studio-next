@@ -179,9 +179,9 @@ function DatePickerField<T extends Record<string, any>>({
                         "px-2 py-1 rounded border border-alabaster/40 text-xs bg-onyx text-snow outline-none cursor-pointer appearance-none custom-select-arrow",
                       nav: "flex items-center",
                       button_previous:
-                        "absolute left-5 top-5 z-30 h-6 w-6 flex items-center justify-center bg-snow/30 rounded-full hover:bg-snow/60 transition-colors",
+                        "absolute left-4 top-4.5 z-30 h-6 w-6 flex items-center justify-center bg-snow/30 rounded-full hover:bg-snow/60 transition-colors",
                       button_next:
-                        "absolute right-5 top-5 z-30 h-6 w-6 flex items-center justify-center bg-snow/30 rounded-full hover:bg-snow/60 transition-colors",
+                        "absolute right-4 top-4.5 z-30 h-6 w-6 flex items-center justify-center bg-snow/30 rounded-full hover:bg-snow/60 transition-colors",
                       month_grid: "w-full border-collapse",
                       weekdays: "flex w-full",
                       weekday:
@@ -212,9 +212,9 @@ function DatePickerField<T extends Record<string, any>>({
                         "p-1.5 rounded-sm border border-alabaster/50 text-xs bg-onyx text-snow hover:border-alabaster/75 focus:border-alabaster outline-none transition-all duration-200 cursor-pointer appearance-none custom-select-arrow",
                       nav: "flex items-center",
                       button_previous:
-                        "absolute left-4 top-9 z-30 h-7 w-7 flex items-center p-1 justify-center hover:opacity-100 transition-all bg-snow/40 rounded-full hover:bg-snow/75 duration-200",
+                        "absolute left-5 top-9 z-30 h-7 w-7 flex items-center p-1 justify-center hover:opacity-100 transition-all bg-snow/40 rounded-full hover:bg-snow/75 duration-200",
                       button_next:
-                        "absolute right-4 top-9 z-30 h-7 w-7 flex items-center p-1 justify-center hover:opacity-100 transition-all bg-snow/40 rounded-full hover:bg-snow/75 duration-200",
+                        "absolute right-5 top-9 z-30 h-7 w-7 flex items-center p-1 justify-center hover:opacity-100 transition-all bg-snow/40 rounded-full hover:bg-snow/75 duration-200",
                       month_grid: "w-full border-collapse space-y-1",
                       weekdays: "flex",
                       weekday:

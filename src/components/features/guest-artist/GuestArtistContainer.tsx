@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import useGuestArtistBooking from "./useGuestArtistBooking";
 import { formatDate } from "@/components/utils/formatter";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FormStepper from "@/components/ui/FormStepper";
 import Availability from "./availability/Availability";
 import Details from "./details/Details";

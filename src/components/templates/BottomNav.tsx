@@ -29,14 +29,14 @@ function BottomNav({ items }: { items: NavItem[] }) {
   return (
     <>
       {/* Navbar */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-onyx backdrop-blur-md border-t border-snow/10 z-50">
+      <nav className="md:hidden fixed bottom-0 left-0 px-1 rounded-l-full translate-x-1 w-full backdrop-blur border border-snow/20 z-50">
         <ul className="flex items-center py-2">
           {visibleItems.map((item) => (
             <li key={item.id} className="flex-1">
               <Link
                 href={item.href}
                 className={`flex flex-col items-center justify-center text-xs gap-1 py-2 transition w-full ${
-                  isActive(item.href) ? "text-dried-mustard" : "text-snow/60"
+                  isActive(item.href) ? "text-dried-mustard" : "text-snow/75"
                 }`}
               >
                 <span className="text-lg">{item.icon}</span>
@@ -49,7 +49,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
             <li className="flex-1">
               <button
                 onClick={() => setIsOpen(true)}
-                className="flex flex-col items-center justify-center text-xs gap-1 py-2 transition w-full text-snow/60"
+                className="flex flex-col items-center justify-center text-xs gap-1 py-2 transition w-full text-snow/75"
               >
                 <span className="text-lg">
                   <BsThreeDots />
@@ -93,7 +93,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
                       className={`flex items-center gap-3 p-3 rounded-xl hover:bg-carbon-black transition ${
                         isActive(item.href)
                           ? "text-dried-mustard"
-                          : "text-snow/60"
+                          : "text-snow/75"
                       }`}
                     >
                       <span className="text-lg">{item.icon}</span>

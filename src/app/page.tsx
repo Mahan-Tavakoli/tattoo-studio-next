@@ -26,12 +26,12 @@ function Home() {
 
         {/* Content */}
         <div className="relative z-20 h-full flex flex-col items-center justify-center gap-y-10">
-          <h1 className="text-3xl sm:text-6xl lg:text-8xl drop-shadow-2xl px-[20%] text-nowrap flex items-center justify-center flex-col font-blakely">
+          <h1 className="text-6xl lg:text-8xl drop-shadow-2xl px-[20%] text-nowrap flex items-center justify-center flex-col font-blakely">
             <span>Block 13</span>
             <span>Tattoo Studio</span>
           </h1>
 
-          <div className="flex items-center justify-center gap-x-10">
+          <div className="flex items-center justify-center md:gap-x-10 md:flex-row flex-col space-y-5">
             <Link
               href="/booking"
               className="border border-snow/30 px-4 py-2 flex items-center justify-between w-55 rounded-full hover:border-snow/75 transition-colors duration-200 group"

@@ -14,7 +14,7 @@ import FormStepper from "@/components/ui/FormStepper";
 import { formatDate } from "@/components/utils/formatter";
 import DotsLoader from "@/components/ui/DotsLoader";
 import useCurrentUser from "../auth/useCurrentUser";
-import { getBookingByIdApi } from "@/components/services/bookingService"; // Explicitly pulled for long polling
+import { getBookingByIdApi } from "@/components/services/bookingService";
 import { toast } from "react-toastify";
 
 const BOOKING_STEPS = [
@@ -106,6 +106,7 @@ function BookingContainer() {
     formData.append("placement", data.bookingRequest.placement || "");
 
     if (isWalkIn) {
+      console.log("data =>", data);
       formData.append(
         "tattooDate",
         data.bookingRequest.tattooDate.toISOString(),
@@ -159,7 +160,7 @@ function BookingContainer() {
   };
 
   // Environment switching layout matching local interface configuration targets
-  const targetHostBase = "http://192.168.1.60:3000";
+  const targetHostBase = "http://192.168.1.106:3000";
   const customerMobileUploadUrl = uploadToken
     ? `${targetHostBase}/upload-reference?token=${uploadToken}`
     : "";
