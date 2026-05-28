@@ -2,9 +2,9 @@
 
 import { NavItem } from "@/components/constants/Navigation";
 import useAuth from "@/components/features/auth/useAuth";
+import { Power } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HiOutlinePower } from "react-icons/hi2";
 
 function Sidebar({ items }: { items: NavItem[] }) {
   const { logout, logoutIsPending } = useAuth();
@@ -49,7 +49,7 @@ function Sidebar({ items }: { items: NavItem[] }) {
             className="cursor-pointer px-2 py-3 rounded-lg transition-all duration-300 w-full flex items-center justify-between hover:bg-red-600 gap-x-2"
           >
             <span>{logoutIsPending ? "..." : "Logout"}</span>
-            <HiOutlinePower className="size-5 opacity-75" />
+            <Power className="size-5 opacity-75" />
           </button>
         </li>
       </ul>

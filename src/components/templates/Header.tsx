@@ -9,24 +9,21 @@ import {
 import { usePathname } from "next/navigation";
 import { LuMenu } from "react-icons/lu";
 import HeaderMenu from "./HeaderMenu";
-import Image from "next/image";
 import Modal from "@/components/ui/Modal";
 import AuthContainer from "@/components/features/auth/AuthContainer";
-import { PiUser } from "react-icons/pi";
 import useCurrentUser from "../features/auth/useCurrentUser";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { BsCaretDown } from "react-icons/bs";
-import { HiOutlinePower } from "react-icons/hi2";
 import useAuth from "../features/auth/useAuth";
 import DotsLoader from "../ui/DotsLoader";
 import BlurImage from "./skeleton/BlurImage";
+import { Power, User } from "lucide-react";
 
 function Header() {
   const { logout, logoutIsPending } = useAuth();
@@ -94,7 +91,7 @@ function Header() {
           <DropdownMenu dir="ltr">
             <DropdownMenuTrigger className="focus:outline-none py-3">
               <div className="p-1 border border-snow/20 rounded-md hover:bg-transparent/50 hover:border-snow/50 transition-colors duration-200 w-24 flex items-center justify-between bg-transparent">
-                <PiUser className="size-7" />
+                <User className="size-7 opacity-75" />
 
                 {/* <Image
                       src="/image/user.jpg"
@@ -133,10 +130,10 @@ function Header() {
               <DropdownMenuItem
                 onClick={logoutHandler}
                 disabled={logoutIsPending}
-                className="flex items-center justify-between gap-x-2 hover:bg-red-700 cursor-pointer p-2 transition-colors duration-200 focus:text-white-smoke/80"
+                className="hover:bg-red-700 p-2 mt-0.5 flex items-center justify-between w-full gap-x-2 cursor-pointer px-2 py-3 rounded-sm transition-all duration-300"
               >
                 <span>{logoutIsPending ? <DotsLoader /> : "Logout"}</span>
-                <HiOutlinePower className="w-6! h-6! opacity-75" />
+                <Power className="size-5! opacity-75" />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

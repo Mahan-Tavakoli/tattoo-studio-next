@@ -31,7 +31,7 @@ function Home() {
             <span>Tattoo Studio</span>
           </h1>
 
-          <div className="flex items-center justify-center md:gap-x-10 md:flex-row flex-col space-y-5">
+          <div className="flex items-center justify-center md:gap-x-10 md:flex-row flex-col space-y-5 md:space-y-0">
             <Link
               href="/booking"
               className="border border-snow/30 px-4 py-2 flex items-center justify-between w-55 rounded-full hover:border-snow/75 transition-colors duration-200 group"

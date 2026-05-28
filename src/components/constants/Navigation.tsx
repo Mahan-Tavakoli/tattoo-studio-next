@@ -1,20 +1,15 @@
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import {
-  FaInstagram,
-  FaWhatsapp,
-  FaPencilAlt,
-  FaAsterisk,
-  FaUsers,
-  FaBookmark,
-  FaHome,
-  FaUserAlt,
-  FaBookOpen,
-  FaCalendarCheck,
-  FaNewspaper,
-} from "react-icons/fa";
-import { PiTelegramLogo } from "react-icons/pi";
-import { BsTwitterX } from "react-icons/bs";
-import { GrMoney } from "react-icons/gr";
-import { TfiBarChartAlt } from "react-icons/tfi";
+  BookCheck,
+  BookText,
+  CalendarClock,
+  ClipboardCheck,
+  Home,
+  LayoutDashboard,
+  Palette,
+  Users,
+  Wallet,
+} from "lucide-react";
 
 export interface NavItem {
   id: number;
@@ -35,11 +30,16 @@ export const headerMenu: NavItem[] = [
 ];
 
 export const navMenu: NavItem[] = [
-  { id: 1, title: "Home", href: "/", icon: <FaHome /> },
-  { id: 2, title: "Artists", href: "/tattoo-artists", icon: <FaUserAlt /> },
-  { id: 3, title: "Lookbook", href: "/lookbook", icon: <FaBookOpen /> },
-  { id: 4, title: "Booking", href: "/booking", icon: <FaCalendarCheck /> },
-  { id: 5, title: "Articles", href: "/articles", icon: <FaNewspaper /> },
+  { id: 1, title: "Home", href: "/", icon: <Home /> },
+  { id: 2, title: "Artists", href: "/tattoo-artists", icon: <Users /> },
+  { id: 3, title: "Lookbook", href: "/lookbook", icon: <Palette /> },
+  { id: 4, title: "Booking", href: "/booking", icon: <CalendarClock /> },
+  {
+    id: 5,
+    title: "Articles",
+    href: "/articles",
+    icon: <BookText className="size-5" />,
+  },
 ];
 
 export const socialMedia = [
@@ -105,32 +105,43 @@ export const AdminSidebarItems: NavItem[] = [
   {
     id: 1,
     title: "Dashboard",
-    icon: <TfiBarChartAlt className="size-5" />,
+    icon: <LayoutDashboard className="size-5" />,
     href: "/admin/dashboard",
   },
   {
     id: 2,
-    title: "Tattoo Artists",
-    icon: <FaPencilAlt className="size-5" />,
-    href: "/admin/tattoo-artists",
+    title: "Appointments",
+    icon: <ClipboardCheck className="size-5" />,
+    href: "/admin/appointments",
   },
   {
     id: 3,
-    title: "Booking",
-    icon: <FaBookmark className="size-5" />,
-    href: "/admin/booking",
+    title: "Tattoo Artists",
+    icon: <Palette className="size-5" />,
+    href: "/admin/tattoo-artists",
   },
   {
     id: 4,
+    title: "Booking",
+    icon: <CalendarClock className="size-5" />,
+    href: "/admin/booking",
+  },
+  {
+    id: 5,
     title: "Guest Artist",
-    icon: <FaUsers className="size-5" />,
+    icon: <Users className="size-5" />,
     href: "/admin/guest-artist",
   },
-  { id: 5, title: "Articles", icon: <FaNewspaper />, href: "/admin/articles" },
   {
     id: 6,
+    title: "Articles",
+    icon: <BookText className="size-5" />,
+    href: "/admin/articles",
+  },
+  {
+    id: 7,
     title: "Payments",
-    icon: <GrMoney className="size-5" />,
+    icon: <Wallet className="size-5" />,
     href: "/admin/payments",
   },
 ];
