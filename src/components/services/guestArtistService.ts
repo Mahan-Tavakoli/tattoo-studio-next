@@ -67,3 +67,15 @@ export function deleteGuestArtistApi(
     .delete(`/admin/guest-bookings/${guestArtistId}`)
     .then(({ data }: AxiosResponse<GuestArtistInfo>) => data);
 }
+
+export function editGuestArtistApi({
+  guestArtistId,
+  newBookingTable,
+}: {
+  guestArtistId: string;
+  newBookingTable: GuestArtistBooking;
+}): Promise<GuestArtistBookingResponse> {
+  return http
+    .patch(`/admin/guest-bookings/${guestArtistId}`, newBookingTable)
+    .then(({ data }: AxiosResponse<GuestArtistBookingResponse>) => data);
+}

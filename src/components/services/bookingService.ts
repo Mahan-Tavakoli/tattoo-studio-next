@@ -100,3 +100,7 @@ export function walkInBookingUploads({
     .post(`/public/booking/${uploadToken}/uploads`, images)
     .then(({ data }: AxiosResponse<UploadFormInputs>) => data);
 }
+
+export function getAppointmentsApi() {
+  return http.get("/admin/appointments").then(({ data }) => data);
+}

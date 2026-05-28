@@ -1,5 +1,6 @@
 import {
   deleteGuestArtistApi,
+  editGuestArtistApi,
   getGuestArtistByIdApi,
   getGuestArtistsApi,
 } from "@/components/services/guestArtistService";
@@ -55,6 +56,26 @@ export default function useGuestArtist() {
       },
     });
 
+  const { isPending: editGuestArtistIsPending, mutate: editGuestArtist } =
+    useMutation({
+      mutationFn: editGuestArtistApi,
+
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({ queryKey: ["guest-artists"] });
+
+        queryClient.invalidateQueries({
+          queryKey: ["guest-artist", guestArtistId],
+        });
+        toast.success(
+          `Guest artist ${data.booking.name} updated successfully!`,
+        );
+      },
+
+      onError: () => {
+        toast.error("Updating guest artist failed, try again later");
+      },
+    });
+
   return {
     guestArtists,
     guestArtistsIsLoading,
@@ -66,5 +87,8 @@ export default function useGuestArtist() {
 
     deleteGuestArtist,
     deleteGuestArtistIsPending,
+
+    editGuestArtist,
+    editGuestArtistIsPending,
   };
 }

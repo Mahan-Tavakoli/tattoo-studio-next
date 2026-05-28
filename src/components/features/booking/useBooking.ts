@@ -2,6 +2,7 @@ import bookingAppointmentApi, {
   checkInBookingApi,
   createTattooScheduleApi,
   getAllBookingsApi,
+  getAppointmentsApi,
   getBookingByIdApi,
   updateBookingStatusApi,
   walkInBookingAppointmentApi,
@@ -16,7 +17,7 @@ export default function useBooking() {
   const params = useParams();
 
   const bookingId = typeof params?.id === "string" ? params.id : "";
-  
+
   // public booking
   const {
     isPending: bookingAppointmentIsPending,
@@ -35,8 +36,6 @@ export default function useBooking() {
       toast.error("Failed to submit booking. Please try again.");
     },
   });
-
-  
 
   // get all bookings
   const {
@@ -89,7 +88,7 @@ export default function useBooking() {
       },
     });
 
-        // walk-in booking
+  // walk-in booking
   const {
     isPending: WalkInAppointmentIsPending,
     mutateAsync: walkInAppointment,
@@ -106,26 +105,26 @@ export default function useBooking() {
     },
   });
 
-  
-    const {isPending: WalkInAppointmentImagesIsPending, mutateAsync: walkInAppointmentImages} = useMutation({
-      mutationFn: walkInBookingUploads,
+  const {
+    isPending: WalkInAppointmentImagesIsPending,
+    mutateAsync: walkInAppointmentImages,
+  } = useMutation({
+    mutationFn: walkInBookingUploads,
 
-      onSuccess: () => {
-        queryClient.invalidateQueries({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
         queryKey: ["booking"],
       });
 
-        toast.success("Images uploaded successfully!")
-      },
+      toast.success("Images uploaded successfully!");
+    },
 
-      onError: () => {
-        toast.error(
-          "Failed to finalize references transmission.",
-      );
-      }
-    })
+    onError: () => {
+      toast.error("Failed to finalize references transmission.");
+    },
+  });
 
-    // check in booking
+  // check in booking
   const { isPending: checkInBookingIsPending, mutate: checkInBooking } =
     useMutation({
       mutationFn: checkInBookingApi,
@@ -145,8 +144,17 @@ export default function useBooking() {
       },
     });
 
+  // get appointments
+  const {
+    data: appointmentsData,
+    isLoading: appointmentsIsLoading,
+    isError: appointmentsIsError,
+  } = useQuery({
+    queryFn: getAppointmentsApi,
+    queryKey: ["appointments"],
+  });
 
-
+  const appointments = appointmentsData || [];
 
   return {
     // public booking
@@ -176,5 +184,14 @@ export default function useBooking() {
     //  schedule tattoo
     scheduleTattoo,
     scheduleTattooIsPending,
+
+    // check in
+    checkInBooking,
+    checkInBookingIsPending,
+
+    // appointments
+    appointments,
+    appointmentsIsLoading,
+    appointmentsIsError,
   };
 }

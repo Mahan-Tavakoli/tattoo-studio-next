@@ -1,9 +1,7 @@
+import AppointmentContainer from "@/components/features/admin/appointment/AppointmentContainer";
+
 function AdminAppointments() {
-  return (
-    <div>
-      <h1>AdminAppointments</h1>
-    </div>
-  );
+  return <AppointmentContainer />;
 }
 
 export default AdminAppointments;

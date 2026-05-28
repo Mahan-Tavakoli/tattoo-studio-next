@@ -8,6 +8,7 @@ import { useState } from "react";
 import Modal from "@/components/ui/Modal";
 import ConfirmDelete from "@/components/ui/ConfirmDelete";
 import { GuestArtistInfo } from "@/components/schema & types/guest-artist/guest-artist.types";
+import UpdateGuestArtistForm from "./UpdateGuestArtistForm";
 
 function GuestArtistTable() {
   const {
@@ -87,11 +88,10 @@ function GuestArtistTable() {
           onClose={() => setGuestArtistToEdit(null)}
           title="Update Booking Status"
         >
-          {/* <UpdateBookingStatusForm
-            booking={guestArtistToEdit}
-            onClose={() => setGuestArtistToEdit(null)}
-          /> */}
-          <h1>Edit</h1>
+          <UpdateGuestArtistForm
+          // booking={guestArtistToEdit}
+          // onClose={() => setGuestArtistToEdit(null)}
+          />
         </Modal>
       )}
 
