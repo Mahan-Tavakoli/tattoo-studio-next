@@ -167,6 +167,9 @@ export const WalkInRequestValidationSchema = z.object({
   artistId: z
     .string({ message: "Please assign an artist" })
     .min(1, "Artist selection is required"),
+  budgetRange: z
+    .string({ message: "Please select a budget range" })
+    .min(1, "Please select a budget range"),
 });
 
 export const WalkInBookingSchema = z.object({

@@ -113,6 +113,7 @@ export interface WalkInResponseProps {
   uploadToken: string;
   clientId: string;
   tattooDate: Date;
+  budgetRange: string;
 }
 export interface UploadFormInputs {
   images: File[];
