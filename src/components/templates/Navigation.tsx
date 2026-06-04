@@ -1,9 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
-import { navMenu, AdminSidebarItems } from "@/components/constants/Navigation";
+import { navMenu, AdminSidebarItems } from "@/components/constants/Constants";
 import BottomNav from "./BottomNav";
+import { usePathname } from "@/i18n/navigation";
 
 function Navigation() {
   const pathname = usePathname();

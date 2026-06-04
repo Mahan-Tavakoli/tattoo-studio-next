@@ -5,10 +5,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { headerMenu } from "@/components/constants/Navigation";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { headerMenu } from "@/components/constants/Constants";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { Link, usePathname } from "@/i18n/navigation";
 
 interface HeaderMenuProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ interface HeaderMenuProps {
 
 function HeaderMenu({ isOpen, onOpenChange }: HeaderMenuProps) {
   const pathname = usePathname();
+  const t = useTranslations("header");
 
   useEffect(() => {
     const handleResize = () => {
@@ -57,10 +59,13 @@ function HeaderMenu({ isOpen, onOpenChange }: HeaderMenuProps) {
               className={`transition-colors duration-200 ${pathname === item?.href ? "text-dried-mustard" : "hover:text-dried-mustard"}`}
               onClick={() => onOpenChange(false)}
             >
-              <span>{item.title}</span>
+              <span>{t(item.titleKey)}</span>
             </Link>
           ))}
         </nav>
+        <div className="w-[95%] mx-auto">
+          <LanguageSwitcher />
+        </div>
       </SheetContent>
     </Sheet>
   );

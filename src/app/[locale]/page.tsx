@@ -1,12 +1,15 @@
-import { HomePageContent } from "@/components/constants/Navigation";
+import { HomePageContent } from "@/components/constants/Constants";
 import Review from "@/components/features/review/Review";
 import StudioIntro from "@/components/templates/home/StudioIntro";
 import StudioMarquee from "@/components/templates/home/StudioMarquee";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
 import Link from "next/link";
 import { MdArrowRightAlt } from "react-icons/md";
+import { useTranslations } from "next-intl";
 
 function Home() {
+  const t = useTranslations("home");
+
   return (
     <>
       <div className="relative h-screen w-full overflow-hidden">
@@ -19,7 +22,7 @@ function Home() {
           className="absolute inset-0 w-full h-full object-cover brightness-75"
         >
           <source src="/videos/video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
+          {t("videoFallback")}
         </video>
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/50 z-10" />
@@ -36,7 +39,7 @@ function Home() {
               href="/booking"
               className="border border-snow/30 px-4 py-2 flex items-center justify-between w-55 rounded-full hover:border-snow/75 transition-colors duration-200 group"
             >
-              <span>Booking</span>
+              <span>{t("booking")}</span>
               <MdArrowRightAlt
                 size={22}
                 className="group-hover:translate-x-1 transition-transform duration-200"
@@ -44,10 +47,10 @@ function Home() {
             </Link>
 
             <Link
-              href="/guest-artist"
+              href="/guest"
               className="border border-snow/30 px-4 py-2 flex items-center justify-between w-55 rounded-full hover:border-snow/75 transition-colors duration-200 group"
             >
-              <span>Guest Artist</span>
+              <span>{t("guestArtist")}</span>
               <MdArrowRightAlt
                 size={22}
                 className="group-hover:translate-x-1 transition-transform duration-200"
@@ -73,7 +76,7 @@ function Home() {
               >
                 <BlurImage
                   src={c.imgSrc}
-                  alt={c.title}
+                  alt={c.titleKey}
                   fill
                   preload
                   blurDataURL="/images/placeholder.png"
@@ -83,7 +86,7 @@ function Home() {
                 <div className="absolute inset-0 bg-linear-to-t from-onyx via-onyx/40 to-transparent">
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 group-hover:bottom-1/2 group-hover:translate-y-1/2 transition-all duration-500 ease-in-out">
                     <span className="text-lg sm:text-xl lg:text-2xl text-center whitespace-nowrap">
-                      {c.title}
+                      {t(c.titleKey)}
                     </span>
                   </div>
                 </div>

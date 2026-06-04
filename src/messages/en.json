@@ -1,0 +1,51 @@
+{
+  "header": {
+    "home": "Home",
+    "tattooArtists": "Tattoo Artists",
+    "lookbook": "Lookbook",
+    "booking": "Booking",
+    "guestArtist": "Guest Artist",
+    "articles": "Articles",
+    "aboutUs": "About Us",
+    "contact": "Contact",
+
+    "dashboard": "Dashboard",
+    "appointments": "Appointments",
+    "payments": "Payments",
+    "logout": "Logout",
+    "adminLogin": "Admin Login"
+  },
+
+  "navigation": {
+    "home": "Home",
+    "artists": "Artists",
+    "lookbook": "Lookbook",
+    "booking": "Booking",
+    "articles": "Articles",
+    "more": "More"
+  },
+
+  "admin": {
+    "dashboard": "Dashboard",
+    "appointments": "Appointments",
+    "tattooArtists": "Tattoo Artists",
+    "booking": "Booking",
+    "guestArtist": "Guest Artist",
+    "articles": "Articles",
+    "payments": "Payments"
+  },
+
+  "home": {
+    "studioName": "Tattoo Studio",
+
+    "booking": "Booking",
+    "guestArtist": "Guest Artist",
+
+    "artists": "Artists",
+    "lookbook": "Lookbook",
+    "articles": "Articles",
+    "contact": "Contact",
+
+    "videoFallback": "Your browser does not support the video tag."
+  }
+}

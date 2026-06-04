@@ -1,0 +1,51 @@
+{
+  "header": {
+    "home": "Startseite",
+    "tattooArtists": "Tätowierer",
+    "lookbook": "Lookbook",
+    "booking": "Termin buchen",
+    "guestArtist": "Gastkünstler",
+    "articles": "Artikel",
+    "aboutUs": "Über uns",
+    "contact": "Kontakt",
+
+    "dashboard": "Dashboard",
+    "appointments": "Termine",
+    "payments": "Zahlungen",
+    "logout": "Abmelden",
+    "adminLogin": "Admin Anmeldung"
+  },
+
+  "navigation": {
+    "home": "Startseite",
+    "artists": "Künstler",
+    "lookbook": "Lookbook",
+    "booking": "Buchung",
+    "articles": "Artikel",
+    "more": "Mehr"
+  },
+
+  "admin": {
+    "dashboard": "Dashboard",
+    "appointments": "Termine",
+    "tattooArtists": "Tätowierer",
+    "booking": "Buchungen",
+    "guestArtist": "Gastkünstler",
+    "articles": "Artikel",
+    "payments": "Zahlungen"
+  },
+
+  "home": {
+    "studioName": "Tattoo Studio",
+
+    "booking": "Termin buchen",
+    "guestArtist": "Gastkünstler",
+
+    "artists": "Künstler",
+    "lookbook": "Lookbook",
+    "articles": "Artikel",
+    "contact": "Kontakt",
+
+    "videoFallback": "Ihr Browser unterstützt das Video-Tag nicht."
+  }
+}

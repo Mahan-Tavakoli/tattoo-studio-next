@@ -1,9 +1,11 @@
-import Image from "next/image";
-import { headerMenu, socialMedia } from "../constants/Navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { headerMenu, socialMedia } from "../constants/Constants";
 import BlurImage from "./skeleton/BlurImage";
+import { useTranslations } from "next-intl";
 
 function Footer() {
+  const t = useTranslations("header");
+
   return (
     <section className=" border-t border-snow/20 bg-onyx">
       <div className="container mx-auto mb-10 px-[5%]">
@@ -33,7 +35,7 @@ function Footer() {
                     href={page.href}
                     className="hover:text-alabaster transition-colors duration-300 text-center leading-6 w-auto"
                   >
-                    {page.title}
+                    {t(page.titleKey)}
                   </Link>
                 ))}
               </div>

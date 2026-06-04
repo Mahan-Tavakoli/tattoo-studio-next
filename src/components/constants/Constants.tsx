@@ -13,30 +13,30 @@ import {
 
 export interface NavItem {
   id: number;
-  title: string;
+  titleKey: string;
   icon?: React.ReactNode;
   href: string;
 }
 
 export const headerMenu: NavItem[] = [
-  { id: 1, title: "Home", href: "/" },
-  { id: 2, title: "Tattoo artists", href: "/tattoo-artists" },
-  { id: 3, title: "Lookbook", href: "/lookbook" },
-  { id: 4, title: "Booking", href: "/booking" },
-  { id: 5, title: "Guest Artist", href: "/guest" },
-  { id: 6, title: "Articles", href: "/articles" },
-  { id: 7, title: "About us", href: "/about" },
-  { id: 8, title: "Contact", href: "/contact" },
+  { id: 1, titleKey: "home", href: "/" },
+  { id: 2, titleKey: "tattooArtists", href: "/tattoo-artists" },
+  { id: 3, titleKey: "lookbook", href: "/lookbook" },
+  { id: 4, titleKey: "booking", href: "/booking" },
+  { id: 5, titleKey: "guestArtist", href: "/guest" },
+  { id: 6, titleKey: "articles", href: "/articles" },
+  { id: 7, titleKey: "aboutUs", href: "/about" },
+  { id: 8, titleKey: "contact", href: "/contact" },
 ];
 
 export const navMenu: NavItem[] = [
-  { id: 1, title: "Home", href: "/", icon: <Home /> },
-  { id: 2, title: "Artists", href: "/tattoo-artists", icon: <Users /> },
-  { id: 3, title: "Lookbook", href: "/lookbook", icon: <Palette /> },
-  { id: 4, title: "Booking", href: "/booking", icon: <CalendarClock /> },
+  { id: 1, titleKey: "home", href: "/", icon: <Home /> },
+  { id: 2, titleKey: "artists", href: "/tattoo-artists", icon: <Users /> },
+  { id: 3, titleKey: "lookbook", href: "/lookbook", icon: <Palette /> },
+  { id: 4, titleKey: "booking", href: "/booking", icon: <CalendarClock /> },
   {
     id: 5,
-    title: "Articles",
+    titleKey: "articles",
     href: "/articles",
     icon: <BookText className="size-5" />,
   },
@@ -77,25 +77,25 @@ export const socialMedia = [
 export const HomePageContent = [
   {
     id: 1,
-    title: "Artists",
+    titleKey: "artists",
     linkHref: "/tattoo-artists",
     imgSrc: "/images/gallery/IMG_3381.JPG",
   },
   {
     id: 2,
-    title: "Lookbook",
+    titleKey: "lookbook",
     linkHref: "/lookbook",
     imgSrc: "/images/gallery/IMG_0257.PNG",
   },
   {
     id: 3,
-    title: "Articles",
+    titleKey: "articles",
     linkHref: "/articles",
     imgSrc: "/images/gallery/IMG_0258.jpg",
   },
   {
     id: 4,
-    title: "Contact",
+    titleKey: "contact",
     linkHref: "/contact",
     imgSrc: "/images/gallery/IMG_0257.PNG",
   },
@@ -104,43 +104,43 @@ export const HomePageContent = [
 export const AdminSidebarItems: NavItem[] = [
   {
     id: 1,
-    title: "Dashboard",
+    titleKey: "dashboard",
     icon: <LayoutDashboard className="size-5" />,
     href: "/admin/dashboard",
   },
   {
     id: 2,
-    title: "Appointments",
+    titleKey: "appointments",
     icon: <ClipboardCheck className="size-5" />,
     href: "/admin/appointments",
   },
   {
     id: 3,
-    title: "Tattoo Artists",
+    titleKey: "tattooArtists",
     icon: <Palette className="size-5" />,
     href: "/admin/tattoo-artists",
   },
   {
     id: 4,
-    title: "Booking",
+    titleKey: "booking",
     icon: <CalendarClock className="size-5" />,
     href: "/admin/booking",
   },
   {
     id: 5,
-    title: "Guest Artist",
+    titleKey: "guestArtist",
     icon: <Users className="size-5" />,
     href: "/admin/guest-artist",
   },
   {
     id: 6,
-    title: "Articles",
+    titleKey: "articles",
     icon: <BookText className="size-5" />,
     href: "/admin/articles",
   },
   {
     id: 7,
-    title: "Payments",
+    titleKey: "payments",
     icon: <Wallet className="size-5" />,
     href: "/admin/payments",
   },

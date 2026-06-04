@@ -1,4 +1,4 @@
-import { AdminSidebarItems } from "@/components/constants/Navigation";
+import { AdminSidebarItems } from "@/components/constants/Constants";
 import Sidebar from "@/components/templates/admin/Sidebar";
 
 function AdminLayout({ children }: { children: React.ReactNode }) {

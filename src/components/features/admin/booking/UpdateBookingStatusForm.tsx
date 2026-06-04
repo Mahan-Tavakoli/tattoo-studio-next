@@ -11,7 +11,7 @@ import SelectBox from "@/components/ui/SelectBox";
 import {
   BookingStatus,
   BookingStatusCancelReason,
-} from "@/components/constants/Navigation";
+} from "@/components/constants/Constants";
 import TextAreaField from "@/components/ui/TextAreaField";
 import { BookingInfo } from "@/components/schema & types/booking/booking-appointment.types";
 import { formatBookingStatus } from "@/components/utils/formatter";

@@ -1,14 +1,15 @@
 "use client";
 
-import { NavItem } from "@/components/constants/Navigation";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { NavItem } from "@/components/constants/Constants";
 import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { usePathname, Link } from "@/i18n/navigation";
 
 function BottomNav({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
+  const t = useTranslations("navigation");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const isActive = (path: string) =>
@@ -40,7 +41,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
                 }`}
               >
                 <span className="text-lg">{item.icon}</span>
-                <span>{item.title}</span>
+                <span>{t(item.titleKey)}</span>
               </Link>
             </li>
           ))}
@@ -55,7 +56,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
                   <BsThreeDots />
                 </span>
                 {/* <BsThreeDots className="size-5"/> */}
-                <span>More</span>
+                <span>{t("more")}</span>
               </button>
             </li>
           )}
@@ -97,7 +98,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
                       }`}
                     >
                       <span className="text-lg">{item.icon}</span>
-                      <span>{item.title}</span>
+                      <span>{t(item.titleKey)}</span>
                     </Link>
                   </li>
                 ))}

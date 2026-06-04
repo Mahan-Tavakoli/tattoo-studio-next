@@ -11,7 +11,7 @@ import { FieldError, useFormContext } from "react-hook-form";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import useConsultSlot from "../../consultSlot/useConsultSlot";
 import { useState } from "react";
-import { PublicBudgetRange } from "@/components/constants/Navigation";
+import { PublicBudgetRange } from "@/components/constants/Constants";
 import useArtist from "../../artist/useArtist";
 
 interface BookingRequestProps {

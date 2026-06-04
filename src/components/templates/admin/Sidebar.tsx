@@ -1,6 +1,6 @@
 "use client";
 
-import { NavItem } from "@/components/constants/Navigation";
+import { NavItem } from "@/components/constants/Constants";
 import useAuth from "@/components/features/auth/useAuth";
 import { Power } from "lucide-react";
 import Link from "next/link";
