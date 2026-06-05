@@ -18,7 +18,7 @@ function LanguageSwitcher() {
     <select
       value={locale}
       onChange={(e) => changeLocale(e.target.value)}
-      className="bg-transparent border border-snow/20 rounded-md px-3 py-2 cursor-pointer"
+      className="bg-transparent border border-snow/20 rounded-md px-3 py-2 cursor-pointer w-[95%] mx-auto lg:w-auto"
     >
       <option value="en">ENG</option>
       <option value="de">DE</option>

@@ -134,15 +134,10 @@ function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           )}
-
-          {/* Desktop Language Switcher */}
-          <div className="hidden lg:block">
-            <LanguageSwitcher />
-          </div>
         </div>
 
         {/* DESKTOP NAVIGATION */}
-        <nav className="w-[75%] mx-auto hidden lg:flex items-center justify-center">
+        <nav className="hidden lg:flex items-center justify-center">
           <ul className="w-full gap-x-8 flex items-center justify-between px-1">
             {headerMenu.map((item) => (
               <li key={item.id}>
@@ -160,7 +155,10 @@ function Header() {
             ))}
           </ul>
         </nav>
-
+        {/* Desktop Language Switcher */}
+        <div className="hidden lg:block">
+          <LanguageSwitcher />
+        </div>
         {/* MOBILE RIGHT SECTION */}
         <div className="lg:hidden flex items-center gap-3 order-2">
           <button

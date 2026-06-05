@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
@@ -19,6 +20,7 @@ interface InputFileProps<T extends Record<string, any>> {
   required?: boolean;
   multiple?: boolean;
   initialUrls?: string[];
+  translationNameSpace?: string;
 }
 
 function InputFile<T extends Record<string, any>>({
@@ -31,7 +33,15 @@ function InputFile<T extends Record<string, any>>({
   required,
   multiple,
   initialUrls,
+  translationNameSpace,
 }: InputFileProps<T>) {
+  const t = useTranslations(translationNameSpace);
+
+  const errorMessage =
+    errors?.message && translationNameSpace
+      ? t(errors.message as any)
+      : errors?.message;
+
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [existingPreviews, setExistingPreviews] = useState<string[]>([]);
   const [newPreviews, setNewPreviews] = useState<string[]>([]);
@@ -161,7 +171,7 @@ function InputFile<T extends Record<string, any>>({
         </div>
       )}
       {errors?.message && (
-        <p className="text-red-700 text-xs mt-1">{String(errors.message)}</p>
+        <p className="text-red-700 text-xs mt-1">{String(errorMessage)}</p>
       )}
     </div>
   );

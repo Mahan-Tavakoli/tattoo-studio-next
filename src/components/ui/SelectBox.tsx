@@ -1,10 +1,11 @@
+import { useTranslations } from "next-intl";
 import { FieldError, Path, UseFormRegister } from "react-hook-form";
 
 interface SelectBoxOptions {
   id: number | string;
   label?: string;
   value?: string | number;
-  displayName?: string
+  displayName?: string;
 }
 
 interface SelectBoxProps<T extends Record<string, any>> {
@@ -16,6 +17,7 @@ interface SelectBoxProps<T extends Record<string, any>> {
   required?: boolean;
   disabled?: boolean;
   defaultValue?: string;
+  translationNameSpace?: string;
 }
 
 function SelectBox<T extends Record<string, any>>({
@@ -27,7 +29,14 @@ function SelectBox<T extends Record<string, any>>({
   required,
   disabled = false,
   defaultValue,
+  translationNameSpace,
 }: SelectBoxProps<T>) {
+  const t = useTranslations(translationNameSpace);
+
+  const errorMessage =
+    errors?.message && translationNameSpace
+      ? t(errors.message as any)
+      : errors?.message;
   return (
     <div className="relative">
       <select
@@ -39,7 +48,10 @@ function SelectBox<T extends Record<string, any>>({
       >
         <option value="" disabled hidden></option>
         {options.map((option) => (
-          <option key={option.id} value={option.value ? option.value : option.id}>
+          <option
+            key={option.id}
+            value={option.value ? option.value : option.id}
+          >
             {option.label ? option.label : option.displayName}
           </option>
         ))}
@@ -53,7 +65,7 @@ function SelectBox<T extends Record<string, any>>({
         {required && <span className="text-red-700 text-sm">*</span>}
       </label>
 
-      {errors && <p className="text-red-700 text-xs mt-1">{errors.message}</p>}
+      {errors && <p className="text-red-700 text-xs mt-1">{errorMessage}</p>}
     </div>
   );
 }

@@ -47,5 +47,134 @@
     "contact": "Contact",
 
     "videoFallback": "Your browser does not support the video tag."
+  },
+
+  "studioIntro": {
+    "studioName": "Block 13 Studio",
+    "title": "Custom tattoos crafted with precision, atmosphere and individuality.",
+    "description": "From fine line to full custom concepts, every session is designed collaboratively to create timeless work with meaning.",
+
+    "stats": {
+      "tattoos": "Tattoos",
+      "yearsExperience": "Years Experience",
+      "consultations": "Consultations",
+      "guestArtists": "Guest Artists"
+    }
+  },
+
+  "review": {
+    "shareExperience": "Share your experience",
+    "rateOnGoogle": "Rate us on Google",
+    "fetchError": "Failed to fetch reviews"
+  },
+
+  "common": {
+    "logout": "Logout"
+  },
+
+  "booking": {
+    "container": {
+      "clientInfo": "Client Info",
+      "tattooDetails": "Tattoo Details",
+
+      "walkInRegistration": "Walk-In Registration",
+      "tattooRequest": "Tattoo Request",
+
+      "submitting": "Submitting",
+      "completeRegistration": "Complete Registration",
+      "submitBooking": "Submit Booking",
+
+      "walkInLogged": "Walk-In Logged!",
+      "scanPhone": "Scan with your phone to upload references. This modal clears automatically once transmission starts.",
+      "waitingUploads": "Waiting for mobile device uploads...",
+      "skipUpload": "Skip / No Images to Upload",
+
+      "uploadSuccess": "Mobile uploaded references received successfully!"
+    },
+
+    "clientInfo": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phoneNumber": "Phone number"
+    },
+
+    "common": {
+      "next": "Next",
+      "back": "Back"
+    },
+
+    "bookingRequest": {
+      "tattooDate": "Tattoo Date",
+      "consultDate": "Consult Date",
+      "budgetRange": "Budget Range",
+      "assignArtist": "Assign Artist",
+
+      "bookingType": "Booking Type",
+      "appointment": "Appointment",
+      "consultation": "Consultation",
+      "coverUp": "Cover up",
+
+      "placementDescription": "Placement Description",
+      "tattooConcept": "Tattoo Concept Design Idea",
+
+      "referenceImages": "Reference Images (Max 10)"
+    },
+
+    "validation": {
+      "firstNameRequired": "First name is required",
+      "firstNameMin": "First name must be at least 3 characters",
+      "firstNameMax": "First name must be at most 80 characters",
+
+      "lastNameRequired": "Last name is required",
+      "lastNameMin": "Last name must be at least 3 characters",
+      "lastNameMax": "Last name must be at most 80 characters",
+
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+
+      "phoneRequired": "Phone number is required",
+
+      "tattooDescriptionRequired": "Tattoo description is required",
+      "tattooDescriptionMax": "You can describe at most 2000 characters",
+
+      "budgetRangeRequired": "Please select a budget range",
+
+      "bookingTypeRequired": "Please select a booking type",
+
+      "placementRequired": "Placement is required",
+      "placementMax": "You can describe at most 120 characters",
+
+      "consultDateRequired": "Consult date is required",
+      "consultDateSunday": "Studio is closed on Sundays. Please choose another day",
+
+      "tattooDateRequired": "Tattoo schedule date is required",
+
+      "artistRequired": "Please assign an artist",
+      "artistSelectionRequired": "Artist selection is required",
+
+      "fileSize": "Each image must be less than 10MB",
+      "fileType": "Only image files are allowed",
+      "fileMax": "You can upload a maximum of 10 images"
+    },
+
+    "toast": {
+      "bookingSubmitted": "Booking request submitted! We'll contact you within 72 hours.",
+      "bookingFailed": "Failed to submit booking. Please try again.",
+
+      "statusUpdated": "Status updated successfully",
+      "statusUpdateFailed": "Failed to update status. Please try again.",
+
+      "tattooScheduled": "Tattoo scheduled successfully",
+
+      "walkInRecorded": "Walk-In booking recorded successfully!",
+      "walkInFailed": "Failed to submit walk-in record. Please try again.",
+
+      "imagesUploaded": "Images uploaded successfully!",
+      "imagesUploadFailed": "Failed to finalize references transmission.",
+
+      "clientCheckedIn": "Client checked in",
+      "clientCheckInFailed": "There is a problem checking in the client. Try again later."
+    }
   }
 }

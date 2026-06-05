@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { FieldError, Path, UseFormRegister } from "react-hook-form";
 
 interface InputFieldProps<T extends Record<string, any>> {
@@ -7,6 +8,7 @@ interface InputFieldProps<T extends Record<string, any>> {
   register: UseFormRegister<T>;
   errors: FieldError | undefined;
   required?: boolean;
+  translationNameSpace?: string;
 }
 
 function InputField<T extends Record<string, any>>({
@@ -16,7 +18,15 @@ function InputField<T extends Record<string, any>>({
   register,
   errors,
   required,
+  translationNameSpace,
 }: InputFieldProps<T>) {
+  const t = useTranslations(translationNameSpace);
+
+  const errorMessage =
+    errors?.message && translationNameSpace
+      ? t(errors.message as any)
+      : errors?.message;
+
   return (
     <div className="relative">
       <input
@@ -33,7 +43,7 @@ function InputField<T extends Record<string, any>>({
         <span>{label}</span>
         {required && <span className="text-red-700 text-sm">*</span>}
       </label>
-      {errors && <p className="text-red-700 text-xs mt-1">{errors.message}</p>}
+      {errors && <p className="text-red-700 text-xs mt-1">{errorMessage}</p>}
     </div>
   );
 }

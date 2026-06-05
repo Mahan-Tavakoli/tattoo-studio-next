@@ -16,13 +16,10 @@ import DotsLoader from "@/components/ui/DotsLoader";
 import useCurrentUser from "../auth/useCurrentUser";
 import { getBookingByIdApi } from "@/components/services/bookingService";
 import { toast } from "react-toastify";
-
-const BOOKING_STEPS = [
-  { id: 1, label: "Client Info" },
-  { id: 2, label: "Tattoo Details" },
-];
+import { useTranslations } from "next-intl";
 
 function BookingContainer() {
+  const t = useTranslations("booking");
   const [step, setStep] = useState<number>(1);
   const [uploadToken, setUploadToken] = useState<string | null>(null);
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
@@ -36,6 +33,11 @@ function BookingContainer() {
     walkInAppointment,
     WalkInAppointmentIsPending,
   } = useBooking();
+
+  const BOOKING_STEPS = [
+    { id: 1, label: t("container.clientInfo") },
+    { id: 2, label: t("container.tattooDetails") },
+  ];
 
   const activeSchema = isWalkIn
     ? WalkInBookingSchema
@@ -70,7 +72,7 @@ function BookingContainer() {
             bookingDetail.uploads &&
             bookingDetail.uploads.length > 0
           ) {
-            toast.success("Mobile uploaded references received successfully!");
+            toast.success(t("container.uploadSuccess"));
             clearInterval(intervalId);
             closeQrModal(); // Auto-shutdown view modal panel safely
           }
@@ -160,7 +162,7 @@ function BookingContainer() {
   };
 
   // Environment switching layout matching local interface configuration targets
-  const targetHostBase = "http://192.168.1.61:3000";
+  const targetHostBase = "http://192.168.1.60:3000";
   const customerMobileUploadUrl = uploadToken
     ? `${targetHostBase}/upload-reference?token=${uploadToken}`
     : "";
@@ -169,7 +171,9 @@ function BookingContainer() {
     <div className="pt-15 px-4 flex justify-center">
       <div className="w-full max-w-sm bg-alabaster text-onyx rounded-2xl p-5 shadow-md relative">
         <h1 className="text-2xl font-bold mb-6">
-          {isWalkIn ? "Walk-In Registration" : "Tattoo Request"}
+          {isWalkIn
+            ? t("container.walkInRegistration")
+            : t("container.tattooRequest")}
         </h1>
 
         <FormStepper
@@ -196,12 +200,12 @@ function BookingContainer() {
                 >
                   {isPending ? (
                     <span className="flex items-center justify-center gap-2">
-                      Submitting <DotsLoader />
+                      {t("container.submitting")} <DotsLoader />
                     </span>
                   ) : isWalkIn ? (
-                    "Complete Registration"
+                    t("container.completeRegistration")
                   ) : (
-                    "Submit Booking"
+                    t("container.submitBooking")
                   )}
                 </button>
               </>
@@ -214,11 +218,10 @@ function BookingContainer() {
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 animate-fadeIn">
             <div className="bg-white rounded-2xl p-6 max-w-sm w-full text-center shadow-xl space-y-4">
               <h2 className="text-xl font-bold text-gray-900">
-                Walk-In Logged!
+                {t("container.walkInLogged")}
               </h2>
               <p className="text-sm text-gray-600">
-                Scan with your phone to upload references. This modal clears
-                automatically once transmission starts.
+                {t("container.scanPhone")}
               </p>
 
               <div className="flex justify-center p-3 bg-gray-50 rounded-xl border border-gray-100">
@@ -231,7 +234,7 @@ function BookingContainer() {
 
               <div className="flex items-center justify-center gap-2 text-xs font-medium text-amber-600 bg-amber-50 py-2 rounded-lg">
                 <span className="w-2 h-2 bg-amber-500 rounded-full animate-ping" />
-                Waiting for mobile device uploads...
+                {t("container.waitingUploads")}
               </div>
 
               <button
@@ -239,7 +242,7 @@ function BookingContainer() {
                 onClick={closeQrModal}
                 className="w-full text-xs text-gray-400 hover:text-gray-600 transition-colors pt-2 underline"
               >
-                Skip / No Images to Upload
+                {t("container.skipUpload")}
               </button>
             </div>
           </div>

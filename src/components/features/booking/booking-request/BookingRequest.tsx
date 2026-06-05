@@ -13,19 +13,15 @@ import useConsultSlot from "../../consultSlot/useConsultSlot";
 import { useState } from "react";
 import { PublicBudgetRange } from "@/components/constants/Constants";
 import useArtist from "../../artist/useArtist";
+import { useTranslations } from "next-intl";
 
 interface BookingRequestProps {
   onBack: () => void;
   isWalkIn: boolean;
 }
 
-const bookingTypeOptions = [
-  { id: 1, label: "Appointment", value: "APPOINTMENT" },
-  { id: 2, label: "Consultation", value: "CONSULTATION" },
-  { id: 3, label: "Cover up", value: "COVER_UP" },
-];
-
 function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
+  const t = useTranslations("booking");
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
 
   const {
@@ -42,6 +38,12 @@ function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
     formState: { errors },
     setValue,
   } = useFormContext<BookingAppointmentFormData | WalkInBookingFormData>();
+
+  const bookingTypeOptions = [
+    { id: 1, label: t("bookingRequest.appointment"), value: "APPOINTMENT" },
+    { id: 2, label: t("bookingRequest.consultation"), value: "CONSULTATION" },
+    { id: 3, label: t("bookingRequest.coverUp"), value: "COVER_UP" },
+  ];
 
   const closedDates: Date[] =
     publicConsultAvailability?.days
@@ -174,14 +176,14 @@ function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
           onClick={onBack}
         >
           <HiArrowLongLeft size={22} />
-          <span>Back</span>
+          <span>{t("common.back")}</span>
         </button>
       </div>
 
       {isWalkIn ? (
         <>
           <DatePickerField
-            label="Tattoo Date"
+            label={t("bookingRequest.tattooDate")}
             name="bookingRequest.tattooDate"
             control={control}
             errors={bookingErrors?.tattooDate}
@@ -194,20 +196,22 @@ function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
           />
 
           <SelectBox
-            label="Budget Range"
+            label={t("bookingRequest.budgetRange")}
             name="bookingRequest.budgetRange"
             register={register}
             errors={bookingErrors?.budgetRange}
             options={PublicBudgetRange}
+            translationNameSpace="booking"
             required
           />
 
           <SelectBox
-            label="Assign Artist"
+            label={t("bookingRequest.assignArtist")}
             name="bookingRequest.artistId"
             register={register}
             errors={bookingErrors?.artistId}
             options={artistOptions}
+            translationNameSpace="booking"
             required
           />
 
@@ -234,25 +238,27 @@ function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
       ) : (
         <>
           <SelectBox
-            label="Booking Type"
+            label={t("bookingRequest.bookingType")}
             name="bookingRequest.bookingType"
             register={register}
             errors={bookingErrors?.bookingType}
             options={bookingTypeOptions}
+            translationNameSpace="booking"
             required
           />
 
           <SelectBox
-            label="Budget Range"
+            label={t("bookingRequest.budgetRange")}
             name="bookingRequest.budgetRange"
             register={register}
             errors={bookingErrors?.budgetRange}
             options={PublicBudgetRange}
+            translationNameSpace="booking"
             required
           />
 
           <DatePickerField
-            label="Consult Date"
+            label={t("bookingRequest.consultDate")}
             name="bookingRequest.consultDate"
             control={control}
             errors={bookingErrors?.consultDate}
@@ -269,28 +275,31 @@ function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
 
       {/* ── CORE COMPATIBLE INTAKE METADATA ──────────────────── */}
       <TextAreaField
-        label="Placement Description"
+        label={t("bookingRequest.placementDescription")}
         name="bookingRequest.placement"
         register={register}
         errors={bookingErrors?.placement}
+        translationNameSpace="booking"
       />
 
       <TextAreaField
-        label="Tattoo Concept Design Idea"
+        label={t("bookingRequest.tattooConcept")}
         name="bookingRequest.description"
         register={register}
         errors={bookingErrors?.description}
+        translationNameSpace="booking"
       />
 
       {/* Conditional File Uploader: Hidden entirely for Walk-In Tablet flows */}
       {!isWalkIn && (
         <InputFile
-          label="Reference Images (Max 10)"
+          label={t("bookingRequest.referenceImages")}
           name="bookingRequest.file"
           setValue={setValue}
           multiple
           required
           errors={bookingErrors?.file as any}
+          translationNameSpace="booking"
         />
       )}
     </>

@@ -3,31 +3,34 @@
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-
-const stats = [
-  {
-    number: 1200,
-    suffix: "+",
-    label: "Tattoos",
-  },
-  {
-    number: 10,
-    suffix: "+",
-    label: "Years Experience",
-  },
-  {
-    number: 350,
-    suffix: "+",
-    label: "Consultations",
-  },
-  {
-    number: 12,
-    suffix: "+",
-    label: "Guest Artists",
-  },
-];
+import { useTranslations } from "next-intl";
 
 function StudioIntro() {
+  const t = useTranslations("studioIntro");
+
+  const stats = [
+    {
+      number: 1200,
+      suffix: "+",
+      label: t("stats.tattoos"),
+    },
+    {
+      number: 10,
+      suffix: "+",
+      label: t("stats.yearsExperience"),
+    },
+    {
+      number: 350,
+      suffix: "+",
+      label: t("stats.consultations"),
+    },
+    {
+      number: 12,
+      suffix: "+",
+      label: t("stats.guestArtists"),
+    },
+  ];
+
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
@@ -47,16 +50,15 @@ function StudioIntro() {
           className="text-center max-w-4xl mx-auto"
         >
           <p className="text-sm uppercase tracking-[0.4em] text-snow/40 mb-6 font-semibold">
-            Block 13 Studio
+            {t("studioName")}
           </p>
 
           <h2 className="text-3xl sm:text-5xl leading-tight font-light">
-            Custom tattoos crafted with precision, atmosphere and individuality.
+            {t("title")}
           </h2>
 
           <p className="mt-8 text-snow/60 max-w-2xl mx-auto leading-relaxed">
-            From fine line to full custom concepts, every session is designed
-            collaboratively to create timeless work with meaning.
+            {t("description")}
           </p>
         </motion.div>
 

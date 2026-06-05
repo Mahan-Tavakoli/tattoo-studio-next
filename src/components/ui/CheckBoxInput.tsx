@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { FieldError, Path, UseFormRegister } from "react-hook-form";
 
 interface CheckBoxInputProps<T extends Record<string, any>> {
@@ -5,6 +6,7 @@ interface CheckBoxInputProps<T extends Record<string, any>> {
   name: Path<T>;
   register: UseFormRegister<T>;
   errors?: FieldError;
+  translationNameSpace?: string;
 }
 
 function CheckBoxInput<T extends Record<string, any>>({
@@ -12,7 +14,14 @@ function CheckBoxInput<T extends Record<string, any>>({
   name,
   register,
   errors,
+  translationNameSpace,
 }: CheckBoxInputProps<T>) {
+  const t = useTranslations(translationNameSpace);
+
+  const errorMessage =
+    errors?.message && translationNameSpace
+      ? t(errors.message as any)
+      : errors?.message;
   return (
     <div className="flex flex-col gap-1 py-1">
       <label className="flex items-start gap-3 cursor-pointer group">
@@ -26,7 +35,7 @@ function CheckBoxInput<T extends Record<string, any>>({
         </span>
       </label>
       {errors && (
-        <p className="text-red-700 text-[10px] ml-8">{errors.message}</p>
+        <p className="text-red-700 text-[10px] ml-8">{errorMessage}</p>
       )}
     </div>
   );

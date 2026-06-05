@@ -47,5 +47,132 @@
     "contact": "Kontakt",
 
     "videoFallback": "Ihr Browser unterstützt das Video-Tag nicht."
+  },
+
+  "studioIntro": {
+    "studioName": "Block 13 Studio",
+    "title": "Individuelle Tattoos mit Präzision, Atmosphäre und Persönlichkeit gestaltet.",
+    "description": "Von Fine-Line-Tattoos bis hin zu vollständig individuellen Konzepten wird jede Sitzung gemeinsam geplant, um zeitlose Arbeiten mit Bedeutung zu schaffen.",
+
+    "stats": {
+      "tattoos": "Tattoos",
+      "yearsExperience": "Jahre Erfahrung",
+      "consultations": "Beratungen",
+      "guestArtists": "Gastkünstler"
+    }
+  },
+
+  "review": {
+    "shareExperience": "Teile deine Erfahrung",
+    "rateOnGoogle": "Bewerte uns bei Google",
+    "fetchError": "Bewertungen konnten nicht geladen werden"
+  },
+
+  "common": {
+    "logout": "Abmelden"
+  },
+
+  "booking": {
+    "container": {
+      "clientInfo": "Kundendaten",
+      "tattooDetails": "Tattoo-Details",
+
+      "walkInRegistration": "Walk-In-Anmeldung",
+      "tattooRequest": "Tattoo-Anfrage",
+
+      "submitting": "Wird gesendet",
+      "completeRegistration": "Anmeldung abschließen",
+      "submitBooking": "Anfrage senden",
+
+      "walkInLogged": "Walk-In registriert!",
+      "scanPhone": "Scanne mit deinem Smartphone den QR-Code, um Referenzbilder hochzuladen. Dieses Fenster schließt sich automatisch, sobald der Upload beginnt.",
+      "waitingUploads": "Warte auf Uploads vom Mobilgerät...",
+      "skipUpload": "Überspringen / Keine Bilder hochladen",
+
+      "uploadSuccess": "Referenzbilder erfolgreich vom Mobilgerät hochgeladen!"
+    },
+
+    "clientInfo": {
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-Mail",
+      "phoneNumber": "Telefonnummer"
+    },
+
+    "common": {
+      "next": "Weiter",
+      "back": "Zurück"
+    },
+
+    "bookingRequest": {
+      "tattooDate": "Tattoo-Termin",
+      "consultDate": "Beratungstermin",
+      "budgetRange": "Budgetbereich",
+      "assignArtist": "Künstler auswählen",
+
+      "bookingType": "Terminart",
+      "appointment": "Termin",
+      "consultation": "Beratung",
+      "coverUp": "Cover-Up",
+
+      "placementDescription": "Beschreibung der Körperstelle",
+      "tattooConcept": "Tattoo-Idee / Designbeschreibung",
+
+      "referenceImages": "Referenzbilder (max. 10)"
+    },
+    "validation": {
+      "firstNameRequired": "Vorname ist erforderlich",
+      "firstNameMin": "Der Vorname muss mindestens 3 Zeichen lang sein",
+      "firstNameMax": "Der Vorname darf höchstens 80 Zeichen lang sein",
+
+      "lastNameRequired": "Nachname ist erforderlich",
+      "lastNameMin": "Der Nachname muss mindestens 3 Zeichen lang sein",
+      "lastNameMax": "Der Nachname darf höchstens 80 Zeichen lang sein",
+
+      "emailRequired": "E-Mail ist erforderlich",
+      "emailInvalid": "Bitte gib eine gültige E-Mail-Adresse ein",
+
+      "phoneRequired": "Telefonnummer ist erforderlich",
+
+      "tattooDescriptionRequired": "Eine Tattoo-Beschreibung ist erforderlich",
+      "tattooDescriptionMax": "Du kannst maximal 2000 Zeichen eingeben",
+
+      "budgetRangeRequired": "Bitte wähle einen Budgetbereich aus",
+
+      "bookingTypeRequired": "Bitte wähle eine Terminart aus",
+
+      "placementRequired": "Die Körperstelle muss angegeben werden",
+      "placementMax": "Du kannst maximal 120 Zeichen eingeben",
+
+      "consultDateRequired": "Ein Beratungstermin ist erforderlich",
+      "consultDateSunday": "Das Studio ist sonntags geschlossen. Bitte wähle einen anderen Tag",
+
+      "tattooDateRequired": "Ein Tattoo-Termin ist erforderlich",
+
+      "artistRequired": "Bitte einen Künstler zuweisen",
+      "artistSelectionRequired": "Die Auswahl eines Künstlers ist erforderlich",
+
+      "fileSize": "Jedes Bild muss kleiner als 10 MB sein",
+      "fileType": "Nur Bilddateien sind erlaubt",
+      "fileMax": "Es können maximal 10 Bilder hochgeladen werden"
+    },
+    "toast": {
+      "bookingSubmitted": "Deine Anfrage wurde erfolgreich gesendet! Wir melden uns innerhalb von 72 Stunden bei dir.",
+      "bookingFailed": "Die Anfrage konnte nicht gesendet werden. Bitte versuche es erneut.",
+
+      "statusUpdated": "Status erfolgreich aktualisiert",
+      "statusUpdateFailed": "Status konnte nicht aktualisiert werden. Bitte versuche es erneut.",
+
+      "tattooScheduled": "Tattoo-Termin erfolgreich geplant",
+
+      "walkInRecorded": "Walk-In erfolgreich erfasst!",
+      "walkInFailed": "Walk-In konnte nicht gespeichert werden. Bitte versuche es erneut.",
+
+      "imagesUploaded": "Bilder erfolgreich hochgeladen!",
+      "imagesUploadFailed": "Die Übertragung der Referenzbilder konnte nicht abgeschlossen werden.",
+
+      "clientCheckedIn": "Kunde erfolgreich eingecheckt",
+      "clientCheckInFailed": "Beim Check-in des Kunden ist ein Fehler aufgetreten. Bitte versuche es später erneut."
+    }
   }
 }

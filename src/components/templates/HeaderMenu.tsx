@@ -63,9 +63,7 @@ function HeaderMenu({ isOpen, onOpenChange }: HeaderMenuProps) {
             </Link>
           ))}
         </nav>
-        <div className="w-[95%] mx-auto">
-          <LanguageSwitcher />
-        </div>
+        <LanguageSwitcher />
       </SheetContent>
     </Sheet>
   );

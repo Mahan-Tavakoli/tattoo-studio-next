@@ -1,6 +1,7 @@
 import { BookingAppointmentFormData } from "@/components/schema & types/booking/booking-appointement.schema";
 import DatePickerField from "@/components/ui/DatePickerField";
 import InputField from "@/components/ui/InputField";
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 
 interface ClientInfoProps {
@@ -8,6 +9,7 @@ interface ClientInfoProps {
 }
 
 function ClientInfo({ onNext }: ClientInfoProps) {
+  const t = useTranslations("booking");
   const {
     register,
     control,
@@ -18,28 +20,31 @@ function ClientInfo({ onNext }: ClientInfoProps) {
     <>
       {/* First Name */}
       <InputField<BookingAppointmentFormData>
-        label="First name"
+        label={t("clientInfo.firstName")}
         name="client.firstName"
         errors={errors.client?.firstName}
         register={register}
+        translationNameSpace="booking"
         required
       />
 
       {/* Last Name */}
       <InputField<BookingAppointmentFormData>
-        label="Last name"
+        label={t("clientInfo.lastName")}
         name="client.lastName"
         errors={errors.client?.lastName}
         register={register}
+        translationNameSpace="booking"
         required
       />
 
       {/* Email */}
       <InputField<BookingAppointmentFormData>
-        label="Email"
+        label={t("clientInfo.email")}
         name="client.email"
         errors={errors.client?.email}
         register={register}
+        translationNameSpace="booking"
         type="email"
         required
       />
@@ -65,17 +70,18 @@ function ClientInfo({ onNext }: ClientInfoProps) {
 
       {/* Phone Number */}
       <InputField<BookingAppointmentFormData>
-        label="Phone number"
+        label={t("clientInfo.phoneNumber")}
         name="client.phone"
         errors={errors.client?.phone}
         register={register}
+        translationNameSpace="booking"
         type="tel"
         required
       />
 
       {/* Next step btn */}
       <button type="button" onClick={onNext} className="submit-btn">
-        Next
+        {t("common.next")}
       </button>
     </>
   );

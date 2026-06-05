@@ -9,11 +9,13 @@ import bookingAppointmentApi, {
   walkInBookingUploads,
 } from "@/components/services/bookingService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function useBooking() {
   const queryClient = useQueryClient();
+  const t = useTranslations("booking");
   const params = useParams();
 
   const bookingId = typeof params?.id === "string" ? params.id : "";
@@ -28,12 +30,10 @@ export default function useBooking() {
       queryClient.invalidateQueries({
         queryKey: ["booking"],
       });
-      toast.success(
-        "Booking request submitted! We'll contact you within 72 hours.",
-      );
+      toast.success(t("toast.bookingSubmitted"));
     },
     onError: () => {
-      toast.error("Failed to submit booking. Please try again.");
+      toast.error(t("toast.bookingFailed"));
     },
   });
 
@@ -70,10 +70,10 @@ export default function useBooking() {
       console.log("onSuccessData =>", data);
       queryClient.invalidateQueries({ queryKey: ["booking", bookingId] });
       queryClient.invalidateQueries({ queryKey: ["single-booking"] });
-      toast.success("Status updated successfully");
+      toast.success(t("toast.statusUpdated"));
     },
     onError: () => {
-      toast.error("Failed to update status. Please try again");
+      toast.error(t("toast.statusUpdateFailed"));
     },
   });
 
@@ -84,7 +84,7 @@ export default function useBooking() {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["booking"] });
         queryClient.invalidateQueries({ queryKey: ["single-booking"] });
-        toast.success("Tattoo scheduled successfully");
+        toast.success(t("toast.tattooScheduled"));
       },
     });
 
@@ -98,10 +98,10 @@ export default function useBooking() {
       queryClient.invalidateQueries({
         queryKey: ["booking"],
       });
-      toast.success("Walk-In booking recorded successfully!");
+      toast.success(t("toast.walkInRecorded"));
     },
     onError: () => {
-      toast.error("Failed to submit walk-in record. Please try again.");
+      toast.error(t("toast.walkInFailed"));
     },
   });
 
@@ -116,11 +116,11 @@ export default function useBooking() {
         queryKey: ["booking"],
       });
 
-      toast.success("Images uploaded successfully!");
+      toast.success(t("toast.imagesUploaded"));
     },
 
     onError: () => {
-      toast.error("Failed to finalize references transmission.");
+      toast.error(t("toast.imagesUploadFailed"));
     },
   });
 
@@ -134,13 +134,11 @@ export default function useBooking() {
           queryKey: ["single-booking", bookingId],
         });
         queryClient.invalidateQueries({ queryKey: ["booking"] });
-        toast.success("Client checked in");
+        toast.success(t("toast.clientCheckedIn"));
       },
 
       onError: () => {
-        toast.error(
-          "There is problem for checking in the client, try again later",
-        );
+        toast.error(t("toast.clientCheckInFailed"));
       },
     });
 

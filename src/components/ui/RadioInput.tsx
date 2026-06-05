@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Controller, Path, Control } from "react-hook-form";
 
 interface RadioInputProps<T extends Record<string, any>> {
@@ -6,6 +7,7 @@ interface RadioInputProps<T extends Record<string, any>> {
   control: Control<T>;
   errors?: any;
   required?: boolean;
+  translationNameSpace?: string;
 }
 
 function RadioInput<T extends Record<string, any>>({
@@ -14,7 +16,15 @@ function RadioInput<T extends Record<string, any>>({
   control,
   errors,
   required,
+  translationNameSpace,
 }: RadioInputProps<T>) {
+  const t = useTranslations(translationNameSpace);
+
+  const errorMessage =
+    errors?.message && translationNameSpace
+      ? t(errors.message as any)
+      : errors?.message;
+
   return (
     <div className="flex flex-col gap-2 p-3 border border-onyx/50 hover:border-onyx/75 transition-colors duration-200 rounded-lg">
       <div className="flex items-center justify-between">
@@ -52,7 +62,7 @@ function RadioInput<T extends Record<string, any>>({
         />
       </div>
 
-      {errors && <p className="text-red-700 text-xs mt-1">{errors.message}</p>}
+      {errors && <p className="text-red-700 text-xs mt-1">{errorMessage}</p>}
     </div>
   );
 }

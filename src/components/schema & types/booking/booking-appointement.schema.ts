@@ -6,30 +6,32 @@ import * as z from "zod";
 
 export const ClientInfoValidationSchema = z.object({
   firstName: z
-    .string({ message: "First name is required" })
-    .min(3, "First name must be at least 3 characters")
-    .max(80, "First name must be at most 80 characters"),
+    .string({
+      message: "validation.firstNameRequired",
+    })
+    .min(3, "validation.firstNameMin")
+    .max(80, "validation.firstNameMax"),
 
   lastName: z
-    .string({ message: "Last name is required" })
-    .min(3, "Last name must be at least 3 characters")
-    .max(80, "Last name must be at most 80 characters"),
+    .string({
+      message: "validation.lastNameRequired",
+    })
+    .min(3, "validation.lastNameMin")
+    .max(80, "validation.lastNameMax"),
 
   email: z
-    .string({ message: "Email is required" })
-    //.min(1, "Email is required")
-    .email("Please enter a valid email address"),
+    .string({
+      message: "validation.emailRequired",
+    })
+    .email("validation.emailInvalid"),
 
   phone: z
-    .string({ message: "Phone number is required" })
-    .min(1, { message: "Phone number is required" }),
-  // .regex(/^(?:\+49|0049|0)1[5-7]\d{1,2}[\s-]?\d{7,8}$/, {
-  //   message: "Please enter a valid german mobile number",
-  // }),
-
-  // birthday: z
-  //   .date({ message: "Birthday is reqired" })
-  //   .transform((date) => date.toISOString()),
+    .string({
+      message: "validation.phoneRequired",
+    })
+    .min(1, {
+      message: "validation.phoneRequired",
+    }),
 });
 
 // 1. PUBLIC BOOKING SCHEMAS
@@ -37,63 +39,46 @@ export const ClientInfoValidationSchema = z.object({
 export const BookingRequestValidationSchema = z.object({
   description: z
     .string()
-    .min(1, "Tattoo description is required")
-    .max(2000, "you can describe at most 2000 characters"),
+    .min(1, "validation.tattooDescriptionRequired")
+    .max(2000, "validation.tattooDescriptionMax"),
 
   budgetRange: z
-    .string({ message: "Please select a budget range" })
-    .min(1, "Please select a budget range"),
-
-  // studioChooses: z
-  //   .boolean({ message: "Please choose an option" }),
-
-  // source: z
-  //   .string()
-  //   .min(1, "Please select how you found us"),
-
-  //referrer: z.string().optional(),
+    .string({
+      message: "validation.budgetRangeRequired",
+    })
+    .min(1, "validation.budgetRangeRequired"),
 
   bookingType: z
-    .string({ message: "Please select a booking type" })
-    .min(1, "Please select a booking type"),
+    .string({
+      message: "validation.bookingTypeRequired",
+    })
+    .min(1, "validation.bookingTypeRequired"),
 
   placement: z
     .string()
-    .min(1, "Placement is required")
-    .max(120, "you can describe at most 120 characters"),
+    .min(1, "validation.placementRequired")
+    .max(120, "validation.placementMax"),
 
   consultDate: z
-    .date({ message: "Cunsult date is required" })
-    .refine((date) => date.getDate() !== 0, {
-      message: "Studio is closed on Sundays. Please choose another day",
+    .date({
+      message: "validation.consultDateRequired",
+    })
+    .refine((date) => date.getDay() !== 0, {
+      message: "validation.consultDateSunday",
     }),
-  //.transform((date) => date.toISOString()),
-
-  // sizeDescription: z
-  //   .string()
-  //   .min(1, "Size description is required")
-  //   .max(200, "you can describe at most 200 characters"),
-
-  // preferredDateFrom: z
-  //   .date({ message: "Preferred date from is reqired" })
-  //   .transform((date) => date.toISOString()),
-
-  // preferredDateTo: z
-  //   .date({ message: "Preferred date to is reqired" })
-  //   .transform((date) => date.toISOString()),
 
   file: z
     .array(
       z
         .instanceof(File)
         .refine((file) => file.size <= 10 * 1024 * 1024, {
-          message: "Each image must be less than 10MG",
+          message: "validation.fileSize",
         })
         .refine((file) => file.type.startsWith("image/"), {
-          message: "Only image files are allowed",
+          message: "validation.fileType",
         }),
     )
-    .max(10, "You can upload maxmimum 10 images"),
+    .max(10, "validation.fileMax"),
 });
 
 // Medical Declaration validation
@@ -157,19 +142,29 @@ export type BookingAppointmentFormData = z.infer<
 export const WalkInRequestValidationSchema = z.object({
   description: z
     .string()
-    .min(1, "Tattoo description is required")
-    .max(2000, "You can describe at most 2000 characters"),
+    .min(1, "validation.tattooDescriptionRequired")
+    .max(2000, "validation.tattooDescriptionMax"),
+
   placement: z
     .string()
-    .min(1, "Placement is required")
-    .max(120, "You can describe at most 120 characters"),
-  tattooDate: z.date({ message: "Tattoo schedule date is required" }),
+    .min(1, "validation.placementRequired")
+    .max(120, "validation.placementMax"),
+
+  tattooDate: z.date({
+    message: "validation.tattooDateRequired",
+  }),
+
   artistId: z
-    .string({ message: "Please assign an artist" })
-    .min(1, "Artist selection is required"),
+    .string({
+      message: "validation.artistRequired",
+    })
+    .min(1, "validation.artistSelectionRequired"),
+
   budgetRange: z
-    .string({ message: "Please select a budget range" })
-    .min(1, "Please select a budget range"),
+    .string({
+      message: "validation.budgetRangeRequired",
+    })
+    .min(1, "validation.budgetRangeRequired"),
 });
 
 export const WalkInBookingSchema = z.object({

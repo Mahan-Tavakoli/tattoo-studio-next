@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { FieldError, Path, UseFormRegister } from "react-hook-form";
 
 interface TextAreaFieldProps<T extends Record<string, any>> {
@@ -6,6 +7,7 @@ interface TextAreaFieldProps<T extends Record<string, any>> {
   register: UseFormRegister<T>;
   errors?: FieldError;
   rows?: number;
+  translationNameSpace?: string;
 }
 
 function TextAreaField<T extends Record<string, any>>({
@@ -14,7 +16,15 @@ function TextAreaField<T extends Record<string, any>>({
   register,
   errors,
   rows = 4,
+  translationNameSpace,
 }: TextAreaFieldProps<T>) {
+  const t = useTranslations(translationNameSpace);
+
+  const errorMessage =
+    errors?.message && translationNameSpace
+      ? t(errors.message as any)
+      : errors?.message;
+
   return (
     <div className="relative">
       <textarea
@@ -30,7 +40,7 @@ function TextAreaField<T extends Record<string, any>>({
       >
         <span>{label}</span>
       </label>
-      {errors && <p className="text-red-700 text-xs mt-1">{errors.message}</p>}
+      {errors && <p className="text-red-700 text-xs mt-1">{errorMessage}</p>}
     </div>
   );
 }
