@@ -5,8 +5,10 @@ import { PiPlus } from "react-icons/pi";
 import ArticlesTable from "./ArticlesTable";
 import Modal from "@/components/ui/Modal";
 import ArticleForm from "./ArticleForm";
+import { useTranslations } from "next-intl";
 
 function ArticlesContainer() {
+  const t = useTranslations("admin.article")
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClose = useCallback(() => {
@@ -17,14 +19,14 @@ function ArticlesContainer() {
     <div className="container">
       <div className="flex items-center justify-between">
         <h1 className="md:text-xl sm:max-md:text-base text-sm font-bold">
-          Articles
+          {t('title')}
         </h1>
         <div className="flex items-center">
           <button
             className="btn flex gap-x-2 text-sm"
             onClick={() => setIsOpen(true)}
           >
-            <span>Create Article</span>
+            <span>{t("createArticle")}</span>
             <PiPlus className="size-5" />
           </button>
         </div>
@@ -33,7 +35,7 @@ function ArticlesContainer() {
       <ArticlesTable />
       {/* Add New Category */}
       {isOpen && (
-        <Modal title="Creating New Article" onClose={handleClose} large>
+        <Modal title={t("createNewArticle")} onClose={handleClose} large>
           <ArticleForm onClose={handleClose} />
         </Modal>
       )}

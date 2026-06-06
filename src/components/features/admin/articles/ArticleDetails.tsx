@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useArticle from "../../article/useArticle";
 import { toast } from "react-toastify";
 import StatusBadge from "@/components/templates/admin/StatusBadge";
@@ -13,12 +13,14 @@ import Image from "next/image";
 import { BsArrowLeft } from "react-icons/bs";
 import Modal from "@/components/ui/Modal";
 import ConfirmDelete from "@/components/ui/ConfirmDelete";
+import { useTranslations } from "next-intl";
 
 /* -------------------------------------------------------------------------- */
 /*                               MAIN COMPONENT                               */
 /* -------------------------------------------------------------------------- */
 
 function ArticleDetails() {
+  const t = useTranslations("admin.article.details");
   const {
     articleData,
     singleArticleDataIsLoading,
@@ -73,12 +75,16 @@ function ArticleDetails() {
   /*                                ERROR STATE                                 */
   /* -------------------------------------------------------------------------- */
 
-  if (singleArticleDataIsError || !article) {
-    toast.error("Failed to load article");
+  useEffect(() => {
+    if (singleArticleDataIsError) {
+      toast.error(t("loadError"));
+    }
+  }, [singleArticleDataIsError, t]);
 
+  if (singleArticleDataIsError || !article) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
-        <p>Failed to load article details</p>
+        <p>{t("loadErrorDescription")}</p>
       </div>
     );
   }
@@ -113,7 +119,7 @@ function ArticleDetails() {
               <span>•</span>
 
               <span>
-                Published{" "}
+                {t("published")}
                 {article.publishedAt ? formattedDate(article.publishedAt) : "-"}
               </span>
             </div>
@@ -126,7 +132,7 @@ function ArticleDetails() {
               href={`/admin/article/edit/${article.id}`}
               className="btn flex items-center gap-x-2 text-sm"
             >
-              <span>Edit</span>
+              <span>{t("edit")}</span>
 
               <CiEdit className="size-5" />
             </Link>
@@ -135,7 +141,7 @@ function ArticleDetails() {
               className="btn bg-red-950 hover:bg-red-900 text-sm flex items-center gap-x-2"
               onClick={() => setIsDeleteOpen(true)}
             >
-              <span>Delete</span>
+              <span>{t("edit")}</span>
 
               <CiTrash className="size-5" />
             </button>
@@ -149,25 +155,25 @@ function ArticleDetails() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           <MetricCard
             icon={<CiClock2 className="size-6" />}
-            label="Reading Time"
-            value={`${readingTime} min`}
+            label={t("readingTime")}
+            value={`${readingTime} ${t("minutes")}`}
           />
 
           <MetricCard
             icon={<HiOutlineDocumentText className="size-6" />}
-            label="Words"
+            label={t("words")}
             value={`${wordCount}`}
           />
 
           <MetricCard
             icon={<HiOutlineTag className="size-6" />}
-            label="Tags"
+            label={t("tags")}
             value={`${article.tags?.length || 0}`}
           />
 
           <MetricCard
             icon={<CiCalendar className="size-6" />}
-            label="Published"
+            label={t("published")}
             value={
               article.publishedAt ? formattedDate(article.publishedAt) : "-"
             }
@@ -184,7 +190,7 @@ function ArticleDetails() {
           <div className="xl:col-span-2 space-y-6">
             {/* COVER IMAGE */}
 
-            <Card title="Cover Image">
+            <Card title={t("coverImage")}>
               <div className="relative w-full h-100 overflow-hidden rounded-2xl">
                 <Image
                   src={article.coverUrl}
@@ -197,13 +203,13 @@ function ArticleDetails() {
 
             {/* EXCERPT */}
 
-            <Card title="Excerpt">
+            <Card title={t("coverImage")}>
               <p className="leading-8 text-snow/70">{article.excerpt}</p>
             </Card>
 
             {/* CONTENT */}
 
-            <Card title="Article Content">
+            <Card title={t("articleContent")}>
               <div className="space-y-5 text-snow/80 leading-8 whitespace-pre-line">
                 {article.content}
               </div>
@@ -215,16 +221,16 @@ function ArticleDetails() {
           <div className="space-y-6">
             {/* ARTICLE INFO */}
 
-            <Card title="Article Information">
+            <Card title={t("articleInformation")}>
               <Info
-                label="Author"
-                value={article.author?.displayName || "Admin"}
+                label={t("author")}
+                value={article.author?.displayName || t("admin")}
               />
 
               {/* <Info label="Slug" value={article.slug} /> */}
 
               <Info
-                label="Status"
+                label={t("status")}
                 value={
                   <StatusBadge
                     status={article.status}
@@ -234,7 +240,7 @@ function ArticleDetails() {
               />
 
               <Info
-                label="Published At"
+                label={t("publishedAt")}
                 value={
                   article.publishedAt ? formattedDate(article.publishedAt) : "-"
                 }
@@ -245,7 +251,7 @@ function ArticleDetails() {
 
             {/* TAGS */}
 
-            <Card title="Tags">
+            <Card title={t("tags")}>
               <div className="flex flex-wrap gap-2">
                 {article.tags?.length > 0 ? (
                   article.tags.map((tag: string) => (
@@ -257,27 +263,27 @@ function ArticleDetails() {
                     </span>
                   ))
                 ) : (
-                  <p className="text-snow/50 text-sm">No tags available</p>
+                  <p className="text-snow/50 text-sm">{t("noTags")}</p>
                 )}
               </div>
             </Card>
 
             {/* TIMELINE */}
 
-            <Card title="Timeline">
+            <Card title={t("timeline")}>
               <div className="space-y-5">
                 <TimelineItem
-                  label="Created At"
+                  label={t("createdAt")}
                   value={formattedDate(article.createdAt)}
                 />
 
                 <TimelineItem
-                  label="Updated At"
+                  label={t("updatedAt")}
                   value={formattedDate(article.updatedAt)}
                 />
 
                 <TimelineItem
-                  label="Published At"
+                  label={t("publishedAt")}
                   value={
                     article.publishedAt
                       ? formattedDate(article.publishedAt)
@@ -289,22 +295,26 @@ function ArticleDetails() {
 
             {/* QUICK SUMMARY */}
 
-            <Card title="Summary">
+            <Card title={t("summary")}>
               <div className="rounded-2xl bg-carbon-black p-5 space-y-5">
                 <div>
-                  <p className="text-sm text-snow/50 mb-1">Reading Time</p>
+                  <p className="text-sm text-snow/50 mb-1">
+                    {t("readingTime")}
+                  </p>
 
-                  <p className="text-3xl font-semibold">{readingTime} min</p>
+                  <p className="text-3xl font-semibold">
+                    {readingTime} {t("minutes")}
+                  </p>
                 </div>
 
                 <div className="border-t border-snow/10 pt-4 flex items-center justify-between">
-                  <span className="text-snow/50 text-sm">Words</span>
+                  <span className="text-snow/50 text-sm">{t("words")}</span>
 
                   <span className="font-medium">{wordCount}</span>
                 </div>
 
                 <div className="border-t border-snow/10 pt-4 flex items-center justify-between">
-                  <span className="text-snow/50 text-sm">Tags</span>
+                  <span className="text-snow/50 text-sm">{t("tags")}</span>
 
                   <span className="font-medium">
                     {article.tags?.length || 0}
@@ -312,7 +322,7 @@ function ArticleDetails() {
                 </div>
 
                 <div className="border-t border-snow/10 pt-4 flex items-center justify-between">
-                  <span className="text-snow/50 text-sm">Status</span>
+                  <span className="text-snow/50 text-sm">{t("status")}</span>
 
                   <StatusBadge
                     status={article.status}
@@ -331,7 +341,7 @@ function ArticleDetails() {
         <div>
           <Link href="/admin/article" className="btn text-sm">
             <BsArrowLeft className="size-5" />
-            Back to Articles
+            {t("backToArticles")}
           </Link>
         </div>
       </div>
@@ -341,7 +351,10 @@ function ArticleDetails() {
       {/* ------------------------------------------------------------------ */}
 
       {isDeleteOpen && (
-        <Modal onClose={() => setIsDeleteOpen(false)} title="Deleting article">
+        <Modal
+          onClose={() => setIsDeleteOpen(false)}
+          title={t("deleteArticle")}
+        >
           <ConfirmDelete
             resourceName={`Article ${article.title}`}
             disabled={deleteArticleIsPending}

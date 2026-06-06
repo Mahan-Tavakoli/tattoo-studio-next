@@ -14,17 +14,15 @@ import TextAreaField from "@/components/ui/TextAreaField";
 import InputFile from "@/components/ui/InputFile";
 import SelectBox from "@/components/ui/SelectBox";
 import CreatableSelect from "react-select/creatable";
+import { useTranslations } from "next-intl";
+import DotsLoader from "@/components/ui/DotsLoader";
 
 interface ArticleFormProps {
   onClose: () => void;
 }
 
-const STATUS_OPTIONS = [
-  { id: 1, value: "DRAFT", label: "Draft" },
-  { id: 2, value: "PUBLISHED", label: "Publish" },
-];
-
 function ArticleForm({ onClose }: ArticleFormProps) {
+  const t = useTranslations("admin.article.form");
   const { createArticle, createArticleIsPending } = useArticle();
 
   const {
@@ -45,6 +43,19 @@ function ArticleForm({ onClose }: ArticleFormProps) {
       tags: [],
     },
   });
+
+  const statusOptions = [
+    {
+      id: 1,
+      value: "DRAFT",
+      label: t("draft"),
+    },
+    {
+      id: 2,
+      value: "PUBLISHED",
+      label: t("published"),
+    },
+  ];
 
   const content = watch("content");
 
@@ -74,7 +85,7 @@ function ArticleForm({ onClose }: ArticleFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* TITLE */}
       <InputField<CreateArticleSchemaType>
-        label="Title"
+        label={t("title")}
         name="title"
         register={register}
         errors={errors.title}
@@ -83,7 +94,7 @@ function ArticleForm({ onClose }: ArticleFormProps) {
 
       {/* EXCERPT */}
       <TextAreaField<CreateArticleSchemaType>
-        label="Excerpt"
+        label={t("excerpt")}
         name="excerpt"
         register={register}
         errors={errors.excerpt}
@@ -91,7 +102,7 @@ function ArticleForm({ onClose }: ArticleFormProps) {
 
       {/* COVER */}
       <InputFile<CreateArticleSchemaType>
-        label="Cover"
+        label={t("cover")}
         name="cover"
         setValue={setValue}
         errors={errors.cover}
@@ -100,16 +111,16 @@ function ArticleForm({ onClose }: ArticleFormProps) {
 
       {/* STATUS */}
       <SelectBox<CreateArticleSchemaType>
-        label="Status"
+        label={t("status")}
         name="status"
         register={register}
         errors={errors.status}
-        options={STATUS_OPTIONS}
+        options={statusOptions}
       />
 
       {/* CONTENT */}
       <TextAreaField<CreateArticleSchemaType>
-        label="Content"
+        label={t("content")}
         name="content"
         register={register}
         errors={errors.content}
@@ -123,7 +134,7 @@ function ArticleForm({ onClose }: ArticleFormProps) {
         render={({ field }) => (
           <CreatableSelect
             isMulti
-            placeholder="Add tags"
+            placeholder={t("addTags")}
             className="mt-2"
             // styles={{
             //   control: (base) => ({
@@ -168,21 +179,27 @@ function ArticleForm({ onClose }: ArticleFormProps) {
 
       {/* PREVIEW */}
       <div className="rounded-2xl border border-onyx/10 p-6">
-        <h2 className="font-semibold mb-5">Live Preview</h2>
+        <h2 className="font-semibold mb-5">{t("livePreview")}</h2>
 
         <div className="prose prose-invert text-onyx/50">
-          <ReactMarkdown>{content || "Nothing to preview"}</ReactMarkdown>
+          <ReactMarkdown>{content || t("nothingToPreview")}</ReactMarkdown>
         </div>
       </div>
 
       {/* SUBMIT */}
       <div className="flex justify-end gap-3">
         <button type="button" className="btn" onClick={onClose}>
-          Cancel
+          {t("cancel")}
         </button>
 
         <button type="submit" disabled={createArticleIsPending} className="btn">
-          {createArticleIsPending ? "Creating..." : "Create Article"}
+          {createArticleIsPending ? (
+            <>
+              {t("creating")} <DotsLoader />
+            </>
+          ) : (
+            t("createArticle")
+          )}
         </button>
       </div>
     </form>

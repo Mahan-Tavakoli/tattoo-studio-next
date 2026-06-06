@@ -18,8 +18,9 @@ import { formatBookingStatus } from "@/components/utils/formatter";
 import DatePickerField from "@/components/ui/DatePickerField";
 import useArtist from "../../artist/useArtist";
 import InputField from "@/components/ui/InputField";
-import { keyof } from "zod";
 import DotsLoader from "@/components/ui/DotsLoader";
+import { useTranslations } from "next-intl";
+
 
 export const STATUS_TRANSITIONS: Record<
   /* BookingStatus */ any,
@@ -42,6 +43,7 @@ function UpdateBookingStatusForm({
   booking,
   onClose,
 }: UpdateBookingStatusFormProps) {
+  const t = useTranslations("admin.bookings.updateStatus");
   const {
     updateBookingStatus,
     updateBookingStatusIsPending,
@@ -130,7 +132,7 @@ function UpdateBookingStatusForm({
       <SelectBox<UpdateStatusFormValues>
         name="status"
         register={register}
-        label="Status"
+        label={t("status")}
         errors={errors.status}
         options={filteredStatusOptions}
         required
@@ -140,7 +142,7 @@ function UpdateBookingStatusForm({
       {/* Admin notes */}
       {status !== "TATTOO_SCHEDULED" && (
         <TextAreaField<UpdateStatusFormValues>
-          label="Admin Notes"
+          label={t("adminNotes")}
           name="adminNotes"
           errors={errors.adminNotes}
           register={register}
@@ -152,7 +154,7 @@ function UpdateBookingStatusForm({
       {status === "CANCELLED" && (
         <SelectBox<UpdateStatusFormValues>
           name="cancelReason"
-          label="Cancel Reason"
+          label={t("cancelReason")}
           register={register}
           errors={errors.cancelReason}
           options={BookingStatusCancelReason}
@@ -164,7 +166,7 @@ function UpdateBookingStatusForm({
           {/* Schedule Date */}
           <DatePickerField<UpdateStatusFormValues>
             name="scheduledDate"
-            label="Schedule Date"
+            label={t("scheduleDate")}
             control={control}
             errors={errors.scheduledDate}
             disablePast
@@ -173,11 +175,11 @@ function UpdateBookingStatusForm({
 
           {/* Artist Id */}
           {allArtistsIsLoading ? (
-            <p className="text-sm">Loading artists...</p>
+            <p className="text-sm">{t("loadingArtists")}</p>
           ) : (
             <SelectBox<UpdateStatusFormValues>
               name="artistId"
-              label="Artist"
+              label={t("artist")}
               register={register}
               options={allArtists}
               errors={errors.artistId}
@@ -190,7 +192,7 @@ function UpdateBookingStatusForm({
           {/* Duration Note */}
           <InputField<UpdateStatusFormValues>
             name="durationNote"
-            label="Duration hour note"
+            label={t("durationNote")}
             register={register}
             errors={errors.durationNote}
           />
@@ -198,7 +200,7 @@ function UpdateBookingStatusForm({
           {/* Notes */}
           <TextAreaField<UpdateStatusFormValues>
             name="notes"
-            label="Notes"
+            label={t("notes")}
             register={register}
             errors={errors.notes}
           />
@@ -214,10 +216,10 @@ function UpdateBookingStatusForm({
       >
         {updateBookingStatusIsPending || scheduleTattooIsPending ? (
           <>
-            Updating <DotsLoader />
-          </>
+  {t("updating")} <DotsLoader />
+</>
         ) : (
-          "Update Status"
+          t("updateStatus")
         )}
       </button>
     </form>

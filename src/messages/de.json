@@ -32,7 +32,169 @@
     "booking": "Buchungen",
     "guestArtist": "Gastkünstler",
     "articles": "Artikel",
-    "payments": "Zahlungen"
+    "payments": "Zahlungen",
+    "article": {
+      "title": "Artikel",
+      "createArticle": "Artikel erstellen",
+      "createNewArticle": "Neuen Artikel erstellen",
+
+      "table": {
+        "index": "#",
+        "author": "Autor",
+        "title": "Titel",
+        "status": "Status",
+        "details": "Artikeldetails",
+        "operation": "Aktionen",
+
+        "loadingError": "Artikel konnten nicht geladen werden",
+        "loadingErrorDescription": "Artikel konnten nicht geladen werden. Bitte versuche es erneut.",
+
+        "empty": "Es sind noch keine Artikel vorhanden"
+      },
+
+      "form": {
+        "title": "Titel",
+        "excerpt": "Kurzbeschreibung",
+        "cover": "Titelbild",
+        "status": "Status",
+        "content": "Inhalt",
+        "tags": "Tags",
+
+        "draft": "Entwurf",
+        "published": "Veröffentlicht",
+
+        "addTags": "Tags hinzufügen",
+
+        "livePreview": "Live-Vorschau",
+        "nothingToPreview": "Keine Vorschau verfügbar",
+
+        "cancel": "Abbrechen",
+
+        "creating": "Wird erstellt...",
+        "createArticle": "Artikel erstellen"
+      },
+
+      "details": {
+        "loadError": "Artikel konnte nicht geladen werden",
+        "loadErrorDescription": "Artikeldetails konnten nicht geladen werden",
+
+        "published": "Veröffentlicht",
+
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+
+        "readingTime": "Lesezeit",
+        "words": "Wörter",
+        "tags": "Tags",
+
+        "coverImage": "Titelbild",
+        "excerpt": "Kurzbeschreibung",
+        "articleContent": "Artikelinhalt",
+
+        "articleInformation": "Artikelinformationen",
+
+        "author": "Autor",
+        "status": "Status",
+        "publishedAt": "Veröffentlicht am",
+
+        "timeline": "Zeitverlauf",
+
+        "createdAt": "Erstellt am",
+        "updatedAt": "Aktualisiert am",
+
+        "summary": "Zusammenfassung",
+
+        "backToArticles": "Zurück zu den Artikeln",
+
+        "deleteArticle": "Artikel löschen",
+
+        "noTags": "Keine Tags vorhanden",
+
+        "admin": "Administrator",
+
+        "minutes": "Min."
+      }
+    },
+    "bookings": {
+      "title": "Buchungen",
+      "consultAvailability": "Beratungsverfügbarkeit",
+
+      "table": {
+        "index": "#",
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "status": "Status",
+        "budgetRange": "Budgetbereich",
+        "consultDate": "Beratungstermin",
+        "details": "Details",
+        "operation": "Aktionen",
+
+        "empty": "Noch keine Buchungen vorhanden",
+
+        "loadError": "Buchungen konnten nicht geladen werden. Bitte versuche es erneut.",
+        "loadErrorDescription": "Buchungen konnten nicht geladen werden",
+
+        "updateBookingStatus": "Buchungsstatus aktualisieren",
+
+        "clientCheckIn": "Kunden-Check-In",
+        "checkIn": "Einchecken"
+      },
+
+      "row": {
+        "viewDetails": "Details anzeigen",
+
+        "bookingCancelled": "Buchung storniert",
+        "bookingCompleted": "Buchung abgeschlossen",
+        "clientNoShow": "Kunde nicht erschienen"
+      },
+
+      "updateStatus": {
+        "status": "Status",
+        "adminNotes": "Admin-Notizen",
+
+        "cancelReason": "Stornierungsgrund",
+
+        "scheduleDate": "Termindatum",
+        "artist": "Tätowierer",
+
+        "loadingArtists": "Tätowierer werden geladen...",
+
+        "durationNote": "Dauer (Stunden)",
+        "notes": "Notizen",
+
+        "updateStatus": "Status aktualisieren",
+        "updating": "Wird aktualisiert"
+      },
+
+      "details": {
+        "loadError": "Buchungsdetails konnten nicht geladen werden. Bitte versuche es erneut.",
+
+        "bookingOverview": "Buchungsübersicht",
+
+        "updateStatus": "Status aktualisieren",
+
+        "client": "Kunde",
+        "bookingInfo": "Buchungsinformationen",
+        "tattooDetails": "Tattoo-Details",
+
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+
+        "status": "Status",
+        "budget": "Budget",
+        "consultDate": "Beratungstermin",
+
+        "placement": "Körperstelle",
+        "description": "Beschreibung",
+
+        "referenceImages": "Referenzbilder",
+        "noImages": "Keine Bilder hochgeladen",
+
+        "backToBookings": "Zurück zu den Buchungen"
+      }
+    }
   },
 
   "home": {

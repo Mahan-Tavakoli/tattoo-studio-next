@@ -4,8 +4,10 @@ import Modal from "@/components/ui/Modal";
 import { useCallback, useState } from "react";
 import { PiPlus } from "react-icons/pi";
 import BookingTable from "./BookingTable";
+import { useTranslations } from "next-intl";
 
 function BookingContainer() {
+  const t = useTranslations("admin.bookings");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClose = useCallback(() => {
@@ -16,14 +18,14 @@ function BookingContainer() {
     <div className="container">
       <div className="flex items-center justify-between">
         <h1 className="md:text-xl sm:max-md:text-base text-sm font-bold">
-          Bookings
+          {t("title")}
         </h1>
         <div className="flex items-center">
           <button
             className="btn flex gap-x-2 text-sm"
             onClick={() => setIsOpen(true)}
           >
-            <span>Consult Availability</span>
+            <span>{t("consultAvailability")}</span>
             <PiPlus className="size-5" />
           </button>
         </div>

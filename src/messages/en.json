@@ -32,7 +32,170 @@
     "booking": "Booking",
     "guestArtist": "Guest Artist",
     "articles": "Articles",
-    "payments": "Payments"
+    "payments": "Payments",
+
+    "article": {
+      "title": "Articles",
+      "createArticle": "Create Article",
+      "createNewArticle": "Creating New Article",
+
+      "table": {
+        "index": "#",
+        "author": "Author",
+        "title": "Title",
+        "status": "Status",
+        "details": "Article Details",
+        "operation": "Operation",
+
+        "loadingError": "Failed to load articles",
+        "loadingErrorDescription": "Failed to load articles. Try again.",
+
+        "empty": "No articles defined yet"
+      },
+      "form": {
+        "title": "Title",
+        "excerpt": "Excerpt",
+        "cover": "Cover",
+        "status": "Status",
+        "content": "Content",
+        "tags": "Tags",
+
+        "draft": "Draft",
+        "published": "Published",
+
+        "addTags": "Add tags",
+
+        "livePreview": "Live Preview",
+        "nothingToPreview": "Nothing to preview",
+
+        "cancel": "Cancel",
+
+        "creating": "Creating...",
+        "createArticle": "Create Article"
+      },
+
+      "details": {
+        "loadError": "Failed to load article",
+        "loadErrorDescription": "Failed to load article details",
+
+        "published": "Published",
+
+        "edit": "Edit",
+        "delete": "Delete",
+
+        "readingTime": "Reading Time",
+        "words": "Words",
+        "tags": "Tags",
+
+        "coverImage": "Cover Image",
+        "excerpt": "Excerpt",
+        "articleContent": "Article Content",
+
+        "articleInformation": "Article Information",
+
+        "author": "Author",
+        "status": "Status",
+        "publishedAt": "Published At",
+
+        "timeline": "Timeline",
+
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+
+        "summary": "Summary",
+
+        "backToArticles": "Back to Articles",
+
+        "deleteArticle": "Deleting Article",
+
+        "noTags": "No tags available",
+
+        "admin": "Admin",
+
+        "minutes": "min"
+      }
+    },
+
+    "bookings": {
+      "title": "Bookings",
+      "consultAvailability": "Consult Availability",
+
+      "table": {
+        "index": "#",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "status": "Status",
+        "budgetRange": "Budget Range",
+        "consultDate": "Consult Date",
+        "details": "Details",
+        "operation": "Operation",
+
+        "empty": "No bookings yet",
+
+        "loadError": "Failed to load bookings, try again",
+        "loadErrorDescription": "Failed to load bookings",
+
+        "updateBookingStatus": "Update Booking Status",
+
+        "clientCheckIn": "Client Check-In",
+        "checkIn": "Check-In"
+      },
+
+      "row": {
+        "viewDetails": "View Details",
+
+        "bookingCancelled": "Booking Cancelled",
+        "bookingCompleted": "Booking Completed",
+        "clientNoShow": "Client No Show"
+      },
+
+      "updateStatus": {
+        "status": "Status",
+        "adminNotes": "Admin Notes",
+
+        "cancelReason": "Cancel Reason",
+
+        "scheduleDate": "Schedule Date",
+        "artist": "Artist",
+
+        "loadingArtists": "Loading artists...",
+
+        "durationNote": "Duration Hour Note",
+        "notes": "Notes",
+
+        "updateStatus": "Update Status",
+        "updating": "Updating"
+      },
+
+      "details": {
+        "loadError": "Failed to load booking details, try again",
+
+        "bookingOverview": "Booking Overview",
+
+        "updateStatus": "Update Status",
+
+        "client": "Client",
+        "bookingInfo": "Booking Information",
+        "tattooDetails": "Tattoo Details",
+
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+
+        "status": "Status",
+        "budget": "Budget",
+        "consultDate": "Consult Date",
+
+        "placement": "Placement",
+        "description": "Description",
+
+        "referenceImages": "Reference Images",
+        "noImages": "No images uploaded",
+
+        "backToBookings": "Back to Bookings"
+      }
+    }
   },
 
   "home": {

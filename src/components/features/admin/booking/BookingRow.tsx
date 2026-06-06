@@ -9,6 +9,7 @@ import formattedDate, { formatBudgetRange } from "@/components/utils/formatter";
 import { CircleCheck } from "lucide-react";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
+import { useTranslations } from "next-intl";
 
 interface BookingRowProps {
   index: number;
@@ -18,6 +19,7 @@ interface BookingRowProps {
 }
 
 function BookingRow({ booking, index, onEdit, onCheckIn }: BookingRowProps) {
+  const t = useTranslations("admin.bookings.row");
   return (
     <Table.Row>
       <td>{index + 1}</td>
@@ -26,7 +28,7 @@ function BookingRow({ booking, index, onEdit, onCheckIn }: BookingRowProps) {
       </td>
       <td>
         <a
-          href={`email:${booking.client.email}`}
+          href={`mailto:${booking.client.email}`}
           className="btn text-xs mx-auto"
         >
           {booking.client.email}
@@ -44,7 +46,7 @@ function BookingRow({ booking, index, onEdit, onCheckIn }: BookingRowProps) {
       <td>{formattedDate(booking.consultDate)}</td>
       <td>
         <Link href={`/admin/booking/${booking.id}`} className="btn">
-          View Details
+          {t("viewDetails")}
         </Link>
       </td>
       <td>
@@ -53,13 +55,13 @@ function BookingRow({ booking, index, onEdit, onCheckIn }: BookingRowProps) {
           booking?.status === "COMPLETED" ||
           booking?.status === "CONSULT_NO_SHOW" ? (
             <span className="gap-x-2">
-              {/* No Operation -
-            {booking?.status === "CANCELLED"
-              ? "Booking Cancelled"
-              : booking?.status === "COMPLETED"
-                ? "Booking Completed"
-                : "Client Not Show"} */}
-              -
+              <span className="text-xs text-snow/50">
+                {booking.status === "CANCELLED"
+                  ? t("bookingCancelled")
+                  : booking.status === "COMPLETED"
+                    ? t("bookingCompleted")
+                    : t("clientNoShow")}
+              </span>
             </span>
           ) : (
             <>

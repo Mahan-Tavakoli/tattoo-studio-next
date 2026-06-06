@@ -9,8 +9,11 @@ import { usePathname, Link } from "@/i18n/navigation";
 
 function BottomNav({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
-  const t = useTranslations("navigation");
+  const navT = useTranslations("navigation");
+  const adminT = useTranslations("admin");
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const isAdmin = pathname.startsWith("/admin");
 
   const isActive = (path: string) =>
     pathname === path || pathname.startsWith(path + "/");
@@ -18,6 +21,9 @@ function BottomNav({ items }: { items: NavItem[] }) {
   const MAX_VISIBLE = 4;
   const visibleItems = items.slice(0, MAX_VISIBLE);
   const overflowItems = items.slice(MAX_VISIBLE);
+
+  const getLabel = (key: string) =>
+    isAdmin ? adminT(key as any) : navT(key as any);
 
   useEffect(() => {
     setIsOpen(false);
@@ -41,7 +47,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
                 }`}
               >
                 <span className="text-lg">{item.icon}</span>
-                <span>{t(item.titleKey)}</span>
+                <span>{getLabel(item.titleKey)}</span>
               </Link>
             </li>
           ))}
@@ -56,7 +62,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
                   <BsThreeDots />
                 </span>
                 {/* <BsThreeDots className="size-5"/> */}
-                <span>{t("more")}</span>
+                <span>{navT("more")}</span>
               </button>
             </li>
           )}
@@ -98,7 +104,7 @@ function BottomNav({ items }: { items: NavItem[] }) {
                       }`}
                     >
                       <span className="text-lg">{item.icon}</span>
-                      <span>{t(item.titleKey)}</span>
+                      <span>{getLabel(item.titleKey)}</span>
                     </Link>
                   </li>
                 ))}

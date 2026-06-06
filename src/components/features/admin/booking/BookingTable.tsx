@@ -3,13 +3,15 @@
 import Table from "@/components/ui/Table";
 import useBooking from "../../booking/useBooking";
 import BookingRow from "./BookingRow";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BookingInfo } from "@/components/schema & types/booking/booking-appointment.types";
 import Modal from "@/components/ui/Modal";
 import UpdateBookingStatusForm from "./UpdateBookingStatusForm";
 import { toast } from "react-toastify";
+import { useTranslations } from "next-intl";
 
 function BookingTable() {
+  const t = useTranslations("admin.bookings.table");
   const { bookings, bookingIsLoading, bookingIsError } = useBooking();
 
   const [bookingToUpdateStatus, setBookingToUpdateStatus] =
@@ -18,11 +20,16 @@ function BookingTable() {
   const [checkInClientBooking, setCheckInClientBooking] =
     useState<BookingInfo | null>(null);
 
+  useEffect(() => {
+    if (bookingIsError) {
+      toast.error(t("loadError"));
+    }
+  }, [bookingIsError, t]);
+
   if (bookingIsError) {
-    toast.error("Failed to load bookings, try again");
     return (
       <div className="container">
-        <p className="text-red-500">Failed to load bookings</p>
+        <p className="text-red-500">{t("loadErrorDescription")}</p>
       </div>
     );
   }
@@ -31,15 +38,15 @@ function BookingTable() {
     <>
       <Table>
         <Table.Header>
-          <th className="py-2">#</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Status</th>
-          <th>Budget Range</th>
-          <th>Consult Date</th>
-          <th>Details</th>
-          <th>Operation</th>
+          <th className="py-2">{t("index")}</th>
+          <th>{t("name")}</th>
+          <th>{t("email")}</th>
+          <th>{t("phone")}</th>
+          <th>{t("status")}</th>
+          <th>{t("budgetRange")}</th>
+          <th>{t("consultDate")}</th>
+          <th>{t("details")}</th>
+          <th>{t("operation")}</th>
         </Table.Header>
         <Table.Body>
           {bookingIsLoading ? (
@@ -53,7 +60,7 @@ function BookingTable() {
           ) : bookings.length === 0 ? (
             <Table.Row>
               <td colSpan={4} className="py-4">
-                No Bookings yet
+                {t("empty")}
               </td>
             </Table.Row>
           ) : (
@@ -82,7 +89,7 @@ function BookingTable() {
       {bookingToUpdateStatus && (
         <Modal
           onClose={() => setBookingToUpdateStatus(null)}
-          title="Update Booking Status"
+          title={t("updateBookingStatus")}
         >
           <UpdateBookingStatusForm
             booking={bookingToUpdateStatus}
@@ -95,9 +102,9 @@ function BookingTable() {
       {checkInClientBooking && (
         <Modal
           onClose={() => setCheckInClientBooking(null)}
-          title="Client Check in"
+          title={t("clientCheckIn")}
         >
-          Check in
+          {t("checkIn")}
         </Modal>
       )}
     </>

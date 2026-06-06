@@ -2,7 +2,7 @@
 
 import formattedDate, { formatBudgetRange } from "@/components/utils/formatter";
 import useBooking from "../../booking/useBooking";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { CiEdit } from "react-icons/ci";
@@ -14,8 +14,10 @@ import BlurImage from "@/components/templates/skeleton/BlurImage";
 import { bookingStatusStyles } from "@/components/templates/admin/booking/bookingStatusStyles";
 import Link from "next/link";
 import { BsArrowLeft } from "react-icons/bs";
+import { useTranslations } from "next-intl";
 
 function BookingDetails() {
+  const t = useTranslations("admin.bookings.details");
   const { singleBooking, singleBookingIsLoading, singleBookingIsError } =
     useBooking();
   const [index, setIndex] = useState<number>(-1);
@@ -23,6 +25,14 @@ function BookingDetails() {
 
   const { client, uploads } = singleBooking || {};
 
+
+    useEffect(() => {
+    if (singleBookingIsError) {
+      toast.error(t("loadError"));
+    }
+  }, [singleBookingIsError, t]);
+
+  
   if (singleBookingIsLoading) {
     return (
       <div className="p-6 space-y-6 animate-pulse">
@@ -35,11 +45,12 @@ function BookingDetails() {
     );
   }
 
+
+
   if (singleBookingIsError) {
-    toast.error("Failed to load booking details, try again");
     return (
       <div className="flex items-center justify-center h-[60vh]">
-        <p>Failed to load booking details, try again</p>
+        <p>{t("loadError")}</p>
       </div>
     );
   }
@@ -53,7 +64,7 @@ function BookingDetails() {
             <h1 className="text-xl md:text-2xl font-semibold">
               {client?.firstName} {client?.lastName}
             </h1>
-            <p className="text-sm text-snow/50">Booking overview</p>
+            <p className="text-sm text-snow/50">{t("bookingOverview")}</p>
           </div>
           {singleBooking?.status == "CANCELLED" ||
           singleBooking?.status == "COMPLETED" ||
@@ -65,7 +76,7 @@ function BookingDetails() {
                 className="btn flex gap-x-2 text-sm"
                 onClick={() => setIsOpen(true)}
               >
-                <span>Update Status</span>
+                <span>{t("updateStatus")}</span>
                 <CiEdit className="size-5" />
               </button>
             </div>
@@ -76,19 +87,19 @@ function BookingDetails() {
           {/* LEFT SIDE */}
           <div className="space-y-6">
             {/* CLIENT CARD */}
-            <Card title="Client">
+            <Card title={t("client")}>
               <Info
-                label="Name"
+                label={t("name")}
                 value={`${client?.firstName} ${client?.lastName}`}
               />
-              <Info label="Email" value={client?.email} />
-              <Info label="Phone" value={client?.phone} />
+              <Info label={t("email")} value={client?.email} />
+              <Info label={t("phone")} value={client?.phone} />
             </Card>
 
             {/* BOOKING META */}
-            <Card title="Booking Info">
+            <Card title={t("bookingInfo")}>
               <Info
-                label="Status"
+                label={t("status")}
                 value={
                   singleBooking?.status && (
                     <StatusBadge
@@ -99,20 +110,23 @@ function BookingDetails() {
                 }
               />
               <Info
-                label="Budget"
+                label={t("budget")}
                 value={formatBudgetRange(singleBooking?.budgetRange)}
               />
               <Info
-                label="Consult Date"
+                label={t("consultDate")}
                 value={formattedDate(singleBooking?.consultDate)}
               />
             </Card>
 
             {/* LONG TEXT FIELDS */}
-            <Card title="Tattoo Details">
-              <TextBlock label="Placement" value={singleBooking?.placement} />
+            <Card title={t("tattooDetails")}>
               <TextBlock
-                label="Description"
+                label={t("placement")}
+                value={singleBooking?.placement}
+              />
+              <TextBlock
+                label={t("description")}
                 value={singleBooking?.description}
               />
             </Card>
@@ -120,7 +134,7 @@ function BookingDetails() {
 
           {/* RIGHT SIDE */}
           <div className="bg-onyx shadow-sm rounded-2xl p-5">
-            <h2 className="text-lg font-medium mb-4">Reference Images</h2>
+            <h2 className="text-lg font-medium mb-4">{t("referenceImages")}</h2>
 
             {uploads && uploads.length > 0 ? (
               <>
@@ -155,7 +169,7 @@ function BookingDetails() {
                 />
               </>
             ) : (
-              <p className="text-sm text-snow/50">No images uploaded</p>
+              <p className="text-sm text-snow/50">{t("noImages")}</p>
             )}
           </div>
         </div>
@@ -165,13 +179,13 @@ function BookingDetails() {
         <div>
           <Link href="/admin/booking" className="btn text-sm mt-10">
             <BsArrowLeft className="size-5" />
-            Back to Bookings
+            {t("backToBookings")}
           </Link>
         </div>
       </div>
 
       {isOpen && singleBooking && (
-        <Modal onClose={() => setIsOpen(false)} title="Update Booking Status">
+        <Modal onClose={() => setIsOpen(false)} title={t("updateStatus")}>
           <UpdateBookingStatusForm
             booking={singleBooking}
             onClose={() => setIsOpen(false)}
