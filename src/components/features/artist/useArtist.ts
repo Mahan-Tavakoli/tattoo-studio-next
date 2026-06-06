@@ -7,10 +7,12 @@ import {
   getArtistsLookbookApi,
 } from "@/components/services/artistService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function useArtist() {
+  const t = useTranslations("artists.toast");
   const queryClient = useQueryClient();
   const params = useParams();
   const slug = typeof params?.slug === "string" ? params.slug : "";
@@ -68,10 +70,14 @@ export default function useArtist() {
         console.log("createNewArtistOnSuccessData =>", data);
         queryClient.invalidateQueries({ queryKey: ["artists"] });
         queryClient.invalidateQueries({ queryKey: ["artists-lookbook"] });
-        toast.success(`Create ${data.displayName} successfully`);
+        toast.success(
+          t("createSuccess", {
+            name: data.displayName,
+          }),
+        );
       },
       onError: () => {
-        toast.error("Artist not created, try again later");
+        toast.error(t("createFailed"));
       },
     });
 
@@ -82,14 +88,18 @@ export default function useArtist() {
 
       onSuccess: (data) => {
         console.log("editArtistOnSuccessData =>", data);
-        toast.success(`Edit ${data.displayName} successfully`);
+        toast.success(
+          t("editSuccess", {
+            name: data.displayName,
+          }),
+        );
         queryClient.invalidateQueries({ queryKey: ["artists"] });
         queryClient.invalidateQueries({ queryKey: ["single-artist"] });
         queryClient.invalidateQueries({ queryKey: ["artists-lookbook"] });
       },
 
       onError: () => {
-        toast.error("Edit artist failed, try again later");
+        toast.error(t("editFailed"));
       },
     });
 
@@ -108,12 +118,18 @@ export default function useArtist() {
         console.log("editArtistStatusOnSuccessData =>", data);
 
         toast.success(
-          `${data.displayName}'s status has been ${data.status === "ACTIVE" ? "actived" : "inactived"} successfully`,
+          data.status === "ACTIVE"
+            ? t("statusActive", {
+                name: data.displayName,
+              })
+            : t("statusInactive", {
+                name: data.displayName,
+              }),
         );
       },
 
       onError: () => {
-        toast.error("Change artist status failed, try again later");
+        toast.error(t("statusFailed"));
       },
     });
 

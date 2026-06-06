@@ -7,9 +7,16 @@ import ReactMarkdown from "react-markdown";
 import { FaFacebook } from "react-icons/fa";
 import { BsLinkedin, BsTwitterX } from "react-icons/bs";
 import { Link2 } from "lucide-react";
-import Link from "next/link";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { Link } from "@/i18n/navigation";
+import useLocalizedField from "@/components/hook/useLocalizedField";
+import { useTranslations } from "next-intl";
+import ArticleDetailsSkeleton from "@/components/templates/skeleton/skeletons/article/ArticleDetailsSkeleton";
 
 function ArticleDetails() {
+  const t = useTranslations("articles.details");
+  const localizedField = useLocalizedField();
   const {
     singleArticleData,
     singleArticleIsLoading,
@@ -19,27 +26,35 @@ function ArticleDetails() {
     articlesIsLoading,
   } = useArticle();
 
-  if (singleArticleIsLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Loading...
-      </div>
-    );
+  useEffect(() => {
+    if (articlesIsError || singleArticleIsError) {
+      toast.error(t("errorLoading"));
+    }
+  }, [articlesIsError, singleArticleIsError, t]);
+
+  if (singleArticleIsLoading || articlesIsLoading) {
+    return <ArticleDetailsSkeleton />;
   }
 
-  if (singleArticleIsError) {
+  if (singleArticleIsError || articlesIsError) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        Error loading article
+      <div className="container">
+        <p className="text-red-500">{t("errorLoading")}</p>
       </div>
     );
   }
 
   if (!singleArticleData) return null;
 
-  const readingTime = Math.ceil(
-    singleArticleData.content.split(" ").length / 200,
-  );
+  const title = String(localizedField(singleArticleData, "title")) || "";
+
+  const excerpt = String(localizedField(singleArticleData, "excerpt")) || "";
+
+  const content = String(localizedField(singleArticleData, "content")) || "";
+
+  const readingTime = Math.ceil(content.split(" ").length / 200);
+
+  const shareTitle = title;
 
   const relatedArticles = articles
     .filter((article) => article.slug !== singleArticleData.slug)
@@ -47,15 +62,13 @@ function ArticleDetails() {
 
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
-  const shareTitle = singleArticleData.title;
-
   return (
     <article className="">
       {/* HERO */}
       <section className="relative h-[75vh] min-h-lvh md:h-[80vh] overflow-hidden">
         <BlurImage
           src={singleArticleData.coverUrl}
-          alt={singleArticleData.title}
+          alt={title}
           fill
           preload
           blurDataURL="/images/placeholder.png"
@@ -71,7 +84,7 @@ function ArticleDetails() {
             <div className="max-w-4xl">
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 <span className="bg-white/10 backdrop-blur-md border border-white/10 px-4 py-1 rounded-full text-sm">
-                  {singleArticleData.author?.displayName || "Admin"}
+                  {singleArticleData.author?.displayName || t("admin")}
                 </span>
 
                 <span className="bg-white/10 backdrop-blur-md border border-white/10 px-4 py-1 rounded-full text-sm">
@@ -79,16 +92,16 @@ function ArticleDetails() {
                 </span>
 
                 <span className="bg-white/10 backdrop-blur-md border border-white/10 px-4 py-1 rounded-full text-sm">
-                  {readingTime} min read
+                  {readingTime} t("minutesRead")
                 </span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight tracking-tight mb-6">
-                {singleArticleData.title}
+                {title}
               </h1>
 
               <p className="text-lg md:text-xl text-white/75 max-w-3xl leading-relaxed">
-                {singleArticleData.excerpt}
+                {excerpt}
               </p>
             </div>
           </div>
@@ -161,7 +174,7 @@ function ArticleDetails() {
             <div className="sticky top-32 h-fit">
               <div className="p-5 rounded-2xl bg-onyx/40 border border-snow/10 backdrop-blur-sm">
                 <span className="text-[10px] text-center text-snow/40 uppercase tracking-widest block mb-4 font-bold">
-                  Share
+                  {t("share")}
                 </span>
 
                 <div className="flex flex-col gap-4">
@@ -225,14 +238,14 @@ function ArticleDetails() {
             {/* CONTENT */}
             <div className="rounded-2xl border border-snow/10 bg-white/2 backdrop-blur-sm p-6 sm:p-8 lg:p-12">
               <div className="prose prose-invert prose-lg max-w-none prose-headings:text-snow prose-headings:font-bold prose-p:text-snow/80 prose-p:leading-8 prose-a:text-dried-mustard prose-blockquote:border-l-dried-mustard prose-blockquote:text-snow/60 prose-strong:text-snow prose-li:text-snow/80">
-                <ReactMarkdown>{singleArticleData.content}</ReactMarkdown>
+                <ReactMarkdown>{content}</ReactMarkdown>
               </div>
             </div>
 
             {/* TAGS */}
             <div className="mt-8 p-5 rounded-2xl bg-onyx/40 border border-snow/10 backdrop-blur-sm">
               <span className="text-[10px] text-snow/40 uppercase tracking-widest block mb-4 font-bold">
-                Tags
+                {t("tags")}
               </span>
 
               <div className="flex flex-wrap gap-3">
@@ -255,7 +268,7 @@ function ArticleDetails() {
       <section className="container mx-auto px-[5%] mt-32 mb-8">
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Continue Reading
+            {t("continueReading")}
           </h2>
         </div>
 
@@ -284,7 +297,7 @@ function ArticleDetails() {
                 <span className="bg-onyx backdrop-blur-md border border-snow/20 text-xs px-3 py-1 rounded-lg">
                   {article.publishedAt
                     ? formattedDate(article.publishedAt)
-                    : "No Date"}
+                    : t("noDate")}
                 </span>
               </div>
 
@@ -305,7 +318,7 @@ function ArticleDetails() {
 
                     <div className="mt-5 flex items-center gap-2 text-sm font-medium">
                       <span className="underline underline-offset-6">
-                        Read Article
+                        {t("readArticle")}
                       </span>
 
                       <span className="transition-transform duration-300 group-hover:translate-x-1">

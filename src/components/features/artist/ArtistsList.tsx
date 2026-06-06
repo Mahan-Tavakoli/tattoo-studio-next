@@ -1,15 +1,16 @@
 "use client";
 
 import useArtist from "./useArtist";
-import Image from "next/image";
 import { LuInstagram } from "react-icons/lu";
-import { GoDotFill } from "react-icons/go";
 import Link from "next/link";
 import ArtistListSkeleton from "@/components/templates/skeleton/skeletons/tattoo-artist/ArtistListSkeleton";
 import { toast } from "react-toastify";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
+import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 
 function ArtistsList() {
+  const t = useTranslations("artists.artistsList");
   const {
     artistsLookbookItems,
     artistsLookbookIsLoading,
@@ -18,8 +19,18 @@ function ArtistsList() {
 
   const skeletons = [...Array(8)];
 
+  useEffect(() => {
+    if (artistsLookbookIsError) {
+      toast.error(t("loadError"));
+    }
+  }, [artistsLookbookIsError, t]);
+
   if (artistsLookbookIsError)
-    return toast.error("Failed to fetch Artists, try again later");
+    return (
+      <div className="container">
+        <p className="text-red-500">{t("loadError")}</p>
+      </div>
+    );
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

@@ -336,5 +336,77 @@
       "clientCheckedIn": "Kunde erfolgreich eingecheckt",
       "clientCheckInFailed": "Beim Check-in des Kunden ist ein Fehler aufgetreten. Bitte versuche es später erneut."
     }
+  },
+
+  "artists": {
+    "title": "Künstler",
+    "artistsList": {
+      "title": "Künstler",
+      "loadError": "Künstler konnten nicht geladen werden. Bitte versuche es später erneut."
+    },
+
+    "artistDetails": {
+      "notFound": "Künstler nicht gefunden.",
+      "loadError": "Künstlerdetails konnten nicht geladen werden. Bitte versuche es später erneut.",
+
+      "biography": "Biografie",
+      "noBio": "Für diesen Künstler ist keine Biografie verfügbar.",
+
+      "socialMedia": "Soziale Medien",
+      "location": "Standort",
+      "studioLocation": "Block 13 Studio — Köln",
+      "recentWorks": "Neueste Arbeiten",
+
+      "galleryImageAlt": "Tattoo-Galerie"
+    },
+
+    "toast": {
+      "createSuccess": "{name} wurde erfolgreich erstellt",
+      "createFailed": "Der Künstler konnte nicht erstellt werden. Bitte versuche es später erneut.",
+
+      "editSuccess": "{name} wurde erfolgreich bearbeitet",
+      "editFailed": "Der Künstler konnte nicht bearbeitet werden. Bitte versuche es später erneut.",
+
+      "statusActive": "Der Status von {name} wurde erfolgreich aktiviert",
+      "statusInactive": "Der Status von {name} wurde erfolgreich deaktiviert",
+      "statusFailed": "Der Künstlerstatus konnte nicht geändert werden. Bitte versuche es später erneut.",
+
+      "loadFailed": "Künstlerdetails konnten nicht geladen werden. Bitte versuche es später erneut.",
+      "loadArtistsFailed": "Künstler konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
+  },
+
+  "articles": {
+    "title": "Artikel",
+    "articlesList": {
+      "error": "Artikel konnten nicht geladen werden",
+      "noDate": "Kein Datum",
+      "readArticle": "Artikel lesen"
+    },
+    "details": {
+      "errorLoading": "Fehler beim Laden des Artikels",
+
+      "admin": "Administrator",
+
+      "share": "Teilen",
+      "tags": "Tags",
+
+      "continueReading": "Weiterlesen",
+
+      "readArticle": "Artikel lesen",
+
+      "noDate": "Kein Datum",
+
+      "minutesRead": "Min. Lesezeit",
+
+      "linkCopied": "Link kopiert"
+    },
+    "toast": {
+      "created": "Artikel erfolgreich erstellt",
+      "createFailed": "Artikel konnte nicht erstellt werden",
+
+      "deleted": "Artikel \"{title}\" wurde erfolgreich gelöscht!",
+      "deleteFailed": "Artikel konnte nicht gelöscht werden. Bitte versuche es später erneut."
+    }
   }
 }

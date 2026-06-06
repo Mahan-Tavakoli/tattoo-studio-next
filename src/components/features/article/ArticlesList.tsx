@@ -4,13 +4,41 @@ import Link from "next/link";
 import useArticle from "./useArticle";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
 import formattedDate from "@/components/utils/formatter";
+import { useTranslations } from "next-intl";
+import useLocalizedField from "@/components/hook/useLocalizedField";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import ArticleListSkeleton from "@/components/templates/skeleton/skeletons/article/ArticleListSkeleton";
 
 function ArticlesList() {
+  const t = useTranslations("articles.articlesList");
+  const localizedField = useLocalizedField();
   const { articles, articlesIsLoading, articlesIsError } = useArticle();
 
-  if (articlesIsLoading) return <div>Loading ...</div>;
-  if (articlesIsError) return <div>Error !</div>;
+  useEffect(() => {
+    if (articlesIsError) {
+      toast.error(t("error"));
+    }
+  }, [articlesIsError, t]);
 
+  if (articlesIsError)
+    return (
+      <div className="container">
+        <p className="text-red-500">{t("error")}</p>
+      </div>
+    );
+
+  const skeletons = Array.from({ length: 8 });
+
+  if (articlesIsLoading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+        {skeletons.map((_, index) => (
+          <ArticleListSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
       {articles.map((article) => (
@@ -22,7 +50,7 @@ function ArticlesList() {
           {/* IMAGE */}
           <BlurImage
             src={article.coverUrl}
-            alt={article.title}
+            alt={String(localizedField(article, "title"))}
             fill
             preload
             blurDataURL="/images/placeholder.png"
@@ -37,7 +65,7 @@ function ArticlesList() {
             <span className="bg-onyx backdrop-blur-md border border-snow/20 text-xs px-3 py-1 rounded-lg">
               {article.publishedAt
                 ? formattedDate(article.publishedAt)
-                : "No Date"}
+                : t("noDate")}
             </span>
           </div>
 
@@ -47,18 +75,18 @@ function ArticlesList() {
             <div className="transform transition-all duration-500 group-hover:-translate-y-10">
               {/* TITLE */}
               <h2 className="text-2xl font-bold leading-tight line-clamp-2 mb-0 group-hover:mb-4 transition-all duration-500">
-                {article.title}
+                {String(localizedField(article, "title"))}
               </h2>
 
               {/* EXCERPT */}
               <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 group-hover:max-h-40 group-hover:opacity-100">
                 <p className="text-sm text-snow/70 leading-relaxed line-clamp-4">
-                  {article.excerpt}
+                  {String(localizedField(article, "excerpt"))}
                 </p>
 
                 <div className="mt-5 flex items-center gap-2 text-sm font-medium">
                   <span className="underline underline-offset-6">
-                    Read Article
+                    {t("readArticle")}
                   </span>
 
                   <span className="transition-transform duration-300 group-hover:translate-x-1">

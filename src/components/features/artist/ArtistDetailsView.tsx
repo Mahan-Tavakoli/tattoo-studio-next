@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuAtSign, LuInstagram, LuMapPin } from "react-icons/lu";
 import { GrLocationPin } from "react-icons/gr";
 import useArtist from "./useArtist";
@@ -8,14 +8,20 @@ import Image from "next/image";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
 import ArtistDetailsSkeleton from "@/components/templates/skeleton/skeletons/tattoo-artist/ArtistDetailsSkeleton";
 import { toast } from "react-toastify";
+import useLocalizedField from "@/components/hook/useLocalizedField";
+import { useTranslations } from "next-intl";
 
 function ArtistDetailsView() {
+  const t = useTranslations("artists.artistDetails");
   const {
     artistBySlug,
     artistWorks,
     getArtistBySlugIsLoading,
     getArtistBySlugIsError,
   } = useArtist();
+
+  const localizedField = useLocalizedField();
+
   const [activeId, setActiveId] = useState<string | undefined>(undefined);
 
   if (getArtistBySlugIsLoading && !artistBySlug) {
@@ -23,12 +29,21 @@ function ArtistDetailsView() {
   }
 
   if (!artistBySlug) {
-    return <div>Artist not found.</div>;
+    return <div>{t("notFound")}</div>;
   }
 
-  if (getArtistBySlugIsError) {
-    return toast.error("Failed to fetch Artist details, try again later");
-  }
+  useEffect(() => {
+    if (getArtistBySlugIsError) {
+      toast.error(t("loadError"));
+    }
+  }, [getArtistBySlugIsError, t]);
+
+  if (getArtistBySlugIsError)
+    return (
+      <div className="container">
+        <p className="text-red-500">{t("loadError")}</p>
+      </div>
+    );
 
   return (
     <section className="py-16 px-[5%]">
@@ -77,10 +92,10 @@ function ArtistDetailsView() {
               {/* Scrollable Bio Area (Matches image height) */}
               <div className="overflow-y-auto pr-4 h-112.5">
                 <h3 className="text-[10px] uppercase tracking-[0.2em] text-snow/40 font-bold mb-4 pt-1">
-                  Biography
+                  {t("biography")}
                 </h3>
                 <p className="text-lg leading-relaxed text-snow/75 font-light">
-                  {artistBySlug.bio || "No bio available for this artist."}
+                  {localizedField(artistBySlug, "bio") || t("noBio")}
                 </p>
               </div>
 
@@ -88,7 +103,7 @@ function ArtistDetailsView() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-snow/20 mb-auto">
                 <div className="p-5 rounded-xl bg-onyx/40 border border-white/5 backdrop-blur-sm">
                   <span className="text-[10px] text-snow/40 uppercase tracking-widest block mb-1 font-bold">
-                    Social Media
+                    {t("socialMedia")}
                   </span>
                   {/* <span className="flex items-center gap-3 text-sm font-medium">
                     <span
@@ -113,12 +128,12 @@ function ArtistDetailsView() {
 
                 <div className="p-5 rounded-xl bg-onyx/40 border border-white/5 backdrop-blur-sm flex flex-col">
                   <span className="text-[10px] text-snow/40 uppercase tracking-widest block mb-1 font-bold">
-                    Location
+                    {t("location")}
                   </span>
                   <div className="flex items-center gap-2">
                     <span className="text-base leading-none">📍</span>
                     <span className="text-sm font-medium truncate">
-                      Block 13 Studio — Cologne
+                      {t("studioLocation")}
                     </span>
                   </div>
                 </div>
@@ -130,7 +145,7 @@ function ArtistDetailsView() {
         {/* BOTTOM SECTION: Full Width Recent Work */}
         <div className="mt-10 border-t border-snow/10 pt-10">
           <h2 className="text-2xl font-bold mb-10 uppercase tracking-tight">
-            Recent Works
+            {t("recentWorks")}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {artistWorks?.map((work) => (
@@ -143,7 +158,7 @@ function ArtistDetailsView() {
               >
                 <BlurImage
                   src={work.coverUrl}
-                  alt="Tattoo gallery"
+                  alt={t("galleryImageAlt")}
                   fill
                   className={`
                     object-cover

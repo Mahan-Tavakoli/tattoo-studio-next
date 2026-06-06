@@ -42,6 +42,8 @@ export interface SingleArtistResponse {
     avatarUrl: string;
     coverUrl: string;
     bio: string;
+    bioDe?: string;
+    bioEn?: string;
   };
   works: ArtistWorksResponse;
 }

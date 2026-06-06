@@ -6,10 +6,12 @@ import getArticlesApi, {
   getArticleBySlugApi,
 } from "@/components/services/articleService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function useArticle() {
+  const t = useTranslations("articles.toast");
   const queryClient = useQueryClient();
   const params = useParams();
   const router = useRouter();
@@ -72,13 +74,17 @@ export default function useArticle() {
         queryClient.invalidateQueries({
           queryKey: ["article", articleId],
         });
-        toast.success(`Article ${data.title} deleted successfully!`);
+        toast.success(
+          t("deleted", {
+            title: data.title,
+          }),
+        );
 
         router.push("/admin/articles");
       },
 
       onError: () => {
-        toast.error("Deleting article failed, try again later");
+        toast.error(t("deleteFailed"));
       },
     });
 
@@ -88,7 +94,7 @@ export default function useArticle() {
       mutationFn: createNewArticleApi,
 
       onSuccess: () => {
-        toast.success("Article created successfully");
+        toast.success(t("created"));
 
         queryClient.invalidateQueries({
           queryKey: ["articles"],
@@ -100,7 +106,7 @@ export default function useArticle() {
       },
 
       onError: () => {
-        toast.error("Creating article failed");
+        toast.error(t("createFailed"));
       },
     });
 

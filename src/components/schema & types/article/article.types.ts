@@ -1,9 +1,15 @@
 export interface ArticleInfo {
   id: string;
   title: string;
+  titleDe: string;
+  titleEn: string;
   slug: string;
   excerpt: string;
+  excerptDe: string;
+  excerptEn: string;
   content: string;
+  contentDe: string;
+  contentEn: string;
   coverUrl: string;
   tags: string[];
   status: ArticleStatus;
@@ -12,7 +18,7 @@ export interface ArticleInfo {
   updatedAt: Date;
   author?: {
     displayName: string | null;
-    authorId: string;
+    authorId?: string;
   };
 }
 

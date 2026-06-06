@@ -339,5 +339,79 @@
       "clientCheckedIn": "Client checked in",
       "clientCheckInFailed": "There is a problem checking in the client. Try again later."
     }
+  },
+
+  "artists": {
+    "title": "Artists",
+    "artistsList": {
+      "title": "Artists",
+      "loadError": "Failed to fetch artists, try again later"
+    },
+
+    "artistDetails": {
+      "notFound": "Artist not found.",
+      "loadError": "Failed to fetch artist details, try again later",
+
+      "biography": "Biography",
+      "noBio": "No bio available for this artist",
+
+      "socialMedia": "Social Media",
+      "location": "Location",
+      "studioLocation": "Block 13 Studio — Cologne",
+
+      "recentWorks": "Recent Works",
+
+      "galleryImageAlt": "Tattoo gallery"
+    },
+
+    "toast": {
+      "createSuccess": "{name} created successfully",
+      "createFailed": "Artist not created, try again later",
+
+      "editSuccess": "{name} edited successfully",
+      "editFailed": "Edit artist failed, try again later",
+
+      "statusActive": "{name}'s status has been activated successfully",
+      "statusInactive": "{name}'s status has been deactivated successfully",
+      "statusFailed": "Change artist status failed, try again later",
+
+      "loadFailed": "Failed to fetch artist details, try again later",
+      "loadArtistsFailed": "Failed to fetch artists, try again later"
+    }
+  },
+
+  "articles": {
+    "title": "Articles",
+    "articlesList": {
+      "error": "Failed to load articles",
+      "noDate": "No Date",
+      "readArticle": "Read Article"
+    },
+    "details": {
+      "errorLoading": "Error loading article",
+
+      "admin": "Admin",
+
+      "share": "Share",
+      "tags": "Tags",
+
+      "continueReading": "Continue Reading",
+
+      "readArticle": "Read Article",
+
+      "noDate": "No Date",
+
+      "minutesRead": "min read",
+
+      "linkCopied": "Link copied"
+    },
+
+    "toast": {
+      "created": "Article created successfully",
+      "createFailed": "Creating article failed",
+
+      "deleted": "Article {title} deleted successfully!",
+      "deleteFailed": "Deleting article failed, try again later"
+    }
   }
 }
