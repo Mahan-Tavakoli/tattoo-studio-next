@@ -24,7 +24,7 @@ function BookingContainer() {
   const [uploadToken, setUploadToken] = useState<string | null>(null);
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
 
-  const { user } = useCurrentUser();
+  const { user, currentUserIsLoading, currentUserIsError } = useCurrentUser();
   const isWalkIn = !!user;
 
   const {
@@ -166,6 +166,14 @@ function BookingContainer() {
   const customerMobileUploadUrl = uploadToken
     ? `${targetHostBase}/upload-reference?token=${uploadToken}`
     : "";
+
+  if (currentUserIsLoading) return <DotsLoader />;
+  if (currentUserIsError)
+    return (
+      <div className="container">
+        <p className="text-red-500">Error loading admin user</p>
+      </div>
+    );
 
   return (
     <div className="pt-15 px-4 flex justify-center">
