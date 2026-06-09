@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useGuestArtist from "./useGuestArtist";
 import { GuestArtistInfo } from "@/components/schema & types/guest-artist/guest-artist.types";
 import { differenceInCalendarDays } from "date-fns";
@@ -15,8 +15,10 @@ import Link from "next/link";
 import Modal from "@/components/ui/Modal";
 import ConfirmDelete from "@/components/ui/ConfirmDelete";
 import { BsArrowLeft } from "react-icons/bs";
+import { useTranslations } from "next-intl";
 
 function GuestArtistDetails() {
+  const t = useTranslations("admin.guestArtists.details");
   const {
     singleGuestArtist,
     singleGuestArtistIsLoading,
@@ -41,6 +43,11 @@ function GuestArtistDetails() {
     );
   }, [guestArtist]);
 
+  useEffect(() => {
+    if (singleGuestArtistIsError || !guestArtist)
+      toast.error(t("failedToLoad"));
+  }, [singleGuestArtistIsError, guestArtist, t]);
+
   if (singleGuestArtistIsLoading) {
     return (
       <div className="p-6 space-y-6 animate-pulse">
@@ -61,11 +68,9 @@ function GuestArtistDetails() {
   }
 
   if (singleGuestArtistIsError || !guestArtist) {
-    toast.error("Failed to load guest artist");
-
     return (
       <div className="flex items-center justify-center h-[60vh]">
-        <p>Failed to load guest artist details</p>
+        <p>{t("failedToLoadDetails")}</p>
       </div>
     );
   }
@@ -113,7 +118,7 @@ function GuestArtistDetails() {
               className="btn flex items-center gap-x-2 text-sm"
               onClick={() => setIsOpen(true)}
             >
-              <span>Update Status</span>
+              <span>{t("updateStatus")}</span>
               <CiEdit className="size-5" />
             </button>
 
@@ -121,7 +126,7 @@ function GuestArtistDetails() {
               className="btn bg-red-950 hover:bg-red-900 text-sm flex items-center gap-x-2"
               onClick={() => setIsDeleteOpen(true)}
             >
-              <span>Delete</span>
+              <span>{t("delete")}</span>
               <CiTrash className="size-5" />
             </button>
           </div>
@@ -132,34 +137,36 @@ function GuestArtistDetails() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           <MetricCard
             icon={<HiOutlineClock className="size-6" />}
-            label="Duration"
-            value={`${duration} ${duration === 1 ? "Day" : "Days"}`}
+            label={t("duration")}
+            value={`${duration} ${duration === 1 ? t("day") : t("days")}`}
           />
 
           <MetricCard
             icon={<HiOutlineTableCells className="size-6" />}
-            label="Reserved Tables"
+            label={t("reservedTables")}
             value={`${guestArtist.numberOfTables} ${
-              guestArtist.numberOfTables === 1 ? "Table" : "Tables"
+              guestArtist.numberOfTables === 1 ? t("table") : t("tables")
             }`}
           />
 
           <MetricCard
             icon={<CiCreditCard1 className="size-6" />}
-            label="Total Price"
+            label={t("totalPrice")}
             value={`$${formatPrice(guestArtist.totalPrice)}`}
             subValue={
               guestArtist.discountApplied > 0
-                ? `${guestArtist.discountApplied}% discount applied`
+                ? t("discountApplied", {
+                    discount: guestArtist.discountApplied,
+                  })
                 : undefined
             }
           />
 
           <MetricCard
             icon={<CiCalendar className="size-6" />}
-            label="Reservation Dates"
+            label={t("reservationDates")}
             value={formattedDate(guestArtist.startDate)}
-            subValue={`to ${formattedDate(guestArtist.endDate)}`}
+            subValue={`${t("to")} ${formattedDate(guestArtist.endDate)}`}
           />
         </div>
 
@@ -171,11 +178,11 @@ function GuestArtistDetails() {
           <div className="xl:col-span-2 space-y-6">
             {/* PERSONAL INFO */}
 
-            <Card title="Guest Artist Information">
-              <Info label="Full Name" value={guestArtist.name} />
+            <Card title={t("guestArtistInformation")}>
+              <Info label={t("fullName")} value={guestArtist.name} />
 
               <Info
-                label="Email Address"
+                label={t("emailAddress")}
                 value={
                   <a
                     href={`mailto:${guestArtist.email}`}
@@ -187,7 +194,7 @@ function GuestArtistDetails() {
               />
 
               <Info
-                label="Phone Number"
+                label={t("phoneNumber")}
                 value={
                   <a
                     href={`tel:${guestArtist.phone}`}
@@ -201,35 +208,35 @@ function GuestArtistDetails() {
 
             {/* RESERVATION */}
 
-            <Card title="Reservation Details">
+            <Card title={t("reservationDetails")}>
               <Info
-                label="Start Date"
+                label={t("startDate")}
                 value={formattedDate(guestArtist.startDate)}
               />
 
               <Info
-                label="End Date"
+                label={t("endDate")}
                 value={formattedDate(guestArtist.endDate)}
               />
 
               <Info
-                label="Duration"
-                value={`${duration} ${duration === 1 ? "day" : "days"}`}
+                label={t("duration")}
+                value={`${duration} ${duration === 1 ? t("day") : t("days")}`}
               />
 
               <Info
-                label="Tables Reserved"
+                label={t("tablesReserved")}
                 value={`${guestArtist.numberOfTables} ${
-                  guestArtist.numberOfTables === 1 ? "table" : "tables"
+                  guestArtist.numberOfTables === 1 ? t("table") : t("tables")
                 }`}
               />
             </Card>
 
             {/* PAYMENT */}
 
-            <Card title="Payment Information">
+            <Card title={t("paymentInformation")}>
               <Info
-                label="Reservation Status"
+                label={t("reservationStatus")}
                 value={
                   <StatusBadge
                     status={guestArtist.status}
@@ -239,21 +246,21 @@ function GuestArtistDetails() {
               />
 
               <Info
-                label="Total Price"
+                label={t("totalPrice")}
                 value={`$${formatPrice(guestArtist.totalPrice)}`}
               />
 
               <Info
-                label="Discount Applied"
+                label={t("discountAppliedLabel")}
                 value={
                   guestArtist.discountApplied > 0
                     ? `${guestArtist.discountApplied}%`
-                    : "No Discount"
+                    : t("noDiscount")
                 }
               />
 
               <Info
-                label="Stripe Session"
+                label={t("stripeSession")}
                 value={guestArtist.stripeSessionId || "-"}
               />
             </Card>
@@ -264,24 +271,24 @@ function GuestArtistDetails() {
           <div className="space-y-6">
             {/* SUMMARY */}
 
-            <Card title="Reservation Summary">
+            <Card title={t("reservationSummary")}>
               <div className="rounded-2xl bg-carbon-black p-5 space-y-5">
                 <div>
                   <p className="text-sm text-snow/50 mb-1">
-                    Reservation Period
+                    {t("reservationPeriod")}
                   </p>
 
                   <p className="font-medium leading-relaxed">
                     {formattedDate(guestArtist.startDate)}
                     <br />
-                    to
+                    {t("to")}
                     <br />
                     {formattedDate(guestArtist.endDate)}
                   </p>
                 </div>
 
                 <div className="border-t border-snow/10 pt-4 flex items-center justify-between">
-                  <span className="text-snow/50 text-sm">Tables</span>
+                  <span className="text-snow/50 text-sm"> {t("tables")}</span>
 
                   <span className="font-medium">
                     {guestArtist.numberOfTables}
@@ -289,13 +296,16 @@ function GuestArtistDetails() {
                 </div>
 
                 <div className="border-t border-snow/10 pt-4 flex items-center justify-between">
-                  <span className="text-snow/50 text-sm">Duration</span>
+                  <span className="text-snow/50 text-sm"> {t("duration")}</span>
 
-                  <span className="font-medium">{duration} days</span>
+                  <span className="font-medium">
+                    {" "}
+                    {duration} {duration === 1 ? t("day") : t("days")}
+                  </span>
                 </div>
 
                 <div className="border-t border-snow/10 pt-4">
-                  <p className="text-sm text-snow/50">Total Price</p>
+                  <p className="text-sm text-snow/50"> {t("totalPrice")}</p>
 
                   <h3 className="text-3xl font-semibold mt-2">
                     ${formatPrice(guestArtist.totalPrice)}
@@ -303,7 +313,9 @@ function GuestArtistDetails() {
 
                   {guestArtist.discountApplied > 0 && (
                     <p className="text-sm text-green-400 mt-2">
-                      {guestArtist.discountApplied}% discount applied
+                      {t("discountApplied", {
+                        discount: guestArtist.discountApplied,
+                      })}
                     </p>
                   )}
                 </div>
@@ -312,20 +324,20 @@ function GuestArtistDetails() {
 
             {/* TIMELINE */}
 
-            <Card title="Timeline">
+            <Card title={t("timeline")}>
               <div className="space-y-5">
                 <TimelineItem
-                  label="Created At"
+                  label={t("createdAt")}
                   value={formattedDate(guestArtist.createdAt)}
                 />
 
                 <TimelineItem
-                  label="Last Updated"
+                  label={t("lastUpdated")}
                   value={formattedDate(guestArtist.updatedAt)}
                 />
 
                 <TimelineItem
-                  label="Current Status"
+                  label={t("currentStatus")}
                   value={
                     <StatusBadge
                       status={guestArtist.status}
@@ -338,9 +350,9 @@ function GuestArtistDetails() {
 
             {/* ACKNOWLEDGMENT */}
 
-            <Card title="Agreement">
+            <Card title={t("agreement")}>
               <div className="flex items-center justify-between">
-                <span className="text-snow/60">Terms Accepted</span>
+                <span className="text-snow/60">{t("termsAccepted")}</span>
 
                 <div
                   className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -349,7 +361,9 @@ function GuestArtistDetails() {
                       : "bg-red-500/10 text-red-400 border border-red-500/20"
                   }`}
                 >
-                  {guestArtist.acknowledgment ? "Accepted" : "Not Accepted"}
+                  {guestArtist.acknowledgment
+                    ? t("accepted")
+                    : t("notAccepted")}
                 </div>
               </div>
             </Card>
@@ -361,7 +375,7 @@ function GuestArtistDetails() {
         <div>
           <Link href="/admin/guest-artist" className="btn text-sm">
             <BsArrowLeft className="size-5" />
-            Back to Guest Artists
+            {t("backToGuestArtists")}
           </Link>
         </div>
       </div>
@@ -371,7 +385,7 @@ function GuestArtistDetails() {
       {isOpen && (
         <Modal
           onClose={() => setIsOpen(false)}
-          title="Update Guest Artist Status"
+          title={t("updateGuestArtistStatus")}
         >
           <div className="p-4">Coming Soon...</div>
         </Modal>
@@ -381,10 +395,12 @@ function GuestArtistDetails() {
       {isDeleteOpen && (
         <Modal
           onClose={() => setIsDeleteOpen(false)}
-          title="Deleting guest artist"
+          title={t("deletingGuestArtist")}
         >
           <ConfirmDelete
-            resourceName={`Guest Artist ${guestArtist.name}`}
+            resourceName={t("guestArtistResource", {
+              name: guestArtist.name,
+            })}
             disabled={deleteGuestArtistIsPending}
             onClose={() => setIsDeleteOpen(false)}
             onConfirm={() => {

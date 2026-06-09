@@ -2,7 +2,6 @@ import bookingAppointmentApi, {
   checkInBookingApi,
   createTattooScheduleApi,
   getAllBookingsApi,
-  getAppointmentsApi,
   getBookingByIdApi,
   updateBookingStatusApi,
   walkInBookingAppointmentApi,
@@ -143,7 +142,7 @@ export default function useBooking() {
     });
 
   // get appointments
-  const {
+  /*   const {
     data: appointmentsData,
     isLoading: appointmentsIsLoading,
     isError: appointmentsIsError,
@@ -152,7 +151,7 @@ export default function useBooking() {
     queryKey: ["appointments"],
   });
 
-  const appointments = appointmentsData || [];
+  const appointments = appointmentsData || []; */
 
   return {
     // public booking
@@ -188,8 +187,8 @@ export default function useBooking() {
     checkInBookingIsPending,
 
     // appointments
-    appointments,
+    /*     appointments,
     appointmentsIsLoading,
-    appointmentsIsError,
+    appointmentsIsError, */
   };
 }

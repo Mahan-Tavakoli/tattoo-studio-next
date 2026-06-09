@@ -1,7 +1,10 @@
 import { getMeApi } from "@/components/services/authService";
 import { useQuery } from "@tanstack/react-query";
+import { getCookie } from "cookies-next";
 
 export default function useCurrentUser() {
+  const token = getCookie("access_token");
+
   const {
     data,
     isLoading: currentUserIsLoading,
@@ -10,6 +13,7 @@ export default function useCurrentUser() {
     queryKey: ["user"],
     queryFn: getMeApi,
     retry: false,
+    enabled: !!token,
   });
 
   const user = data ?? null;

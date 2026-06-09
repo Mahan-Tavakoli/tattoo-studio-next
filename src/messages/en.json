@@ -25,6 +25,12 @@
     "more": "More"
   },
 
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or may have been moved.",
+    "goBack": "Go Back"
+  },
+
   "admin": {
     "dashboard": "Dashboard",
     "appointments": "Appointments",
@@ -194,6 +200,104 @@
         "noImages": "No images uploaded",
 
         "backToBookings": "Back to Bookings"
+      }
+    },
+    "guestArtists": {
+      "title": "Guest Artists",
+      "stationConfig": "Station Config",
+      "toast": {
+        "deleted": "Guest artist {name} deleted successfully!",
+        "deleteFailed": "Deleting guest artist failed, try again later",
+        "updated": "Guest artist {name} updated successfully!",
+        "updateFailed": "Updating guest artist failed, try again later"
+      },
+      "table": {
+        "index": "#",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "date": "Date",
+        "details": "Details",
+        "operation": "Operation",
+
+        "update": "Update Guest Artist",
+        "delete": "Delete Guest Artist",
+
+        "loadError": "Failed to load guest artists",
+        "empty": "No guest artists yet"
+      },
+      "row": {
+        "viewDetails": "View Details"
+      },
+      "details": {
+        "failedToLoad": "Failed to load guest artist",
+        "failedToLoadDetails": "Failed to load guest artist details",
+
+        "updateStatus": "Update Status",
+        "delete": "Delete",
+
+        "duration": "Duration",
+        "day": "Day",
+        "days": "Days",
+
+        "reservedTables": "Reserved Tables",
+        "table": "Table",
+        "tables": "Tables",
+
+        "totalPrice": "Total Price",
+        "discountApplied": "{discount}% discount applied",
+
+        "reservationDates": "Reservation Dates",
+        "to": "to",
+
+        "guestArtistInformation": "Guest Artist Information",
+        "fullName": "Full Name",
+        "emailAddress": "Email Address",
+        "phoneNumber": "Phone Number",
+
+        "reservationDetails": "Reservation Details",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "tablesReserved": "Tables Reserved",
+
+        "paymentInformation": "Payment Information",
+        "reservationStatus": "Reservation Status",
+        "discountAppliedLabel": "Discount Applied",
+        "noDiscount": "No Discount",
+        "stripeSession": "Stripe Session",
+
+        "reservationSummary": "Reservation Summary",
+        "reservationPeriod": "Reservation Period",
+
+        "timeline": "Timeline",
+        "createdAt": "Created At",
+        "lastUpdated": "Last Updated",
+        "currentStatus": "Current Status",
+
+        "agreement": "Agreement",
+        "termsAccepted": "Terms Accepted",
+        "accepted": "Accepted",
+        "notAccepted": "Not Accepted",
+
+        "backToGuestArtists": "Back to Guest Artists",
+
+        "updateGuestArtistStatus": "Update Guest Artist Status",
+
+        "deletingGuestArtist": "Deleting guest artist",
+        "guestArtistResource": "Guest Artist {name}"
+      },
+      "stationConfigForm": {
+        "title": "Station Config",
+        "totalTables": "Total Tables",
+        "pricePerDay": "Price Per Day",
+        "monthlyDiscountPercent": "Monthly Discount Percent",
+        "updateConfig": "Update Config",
+        "updating": "Updating...",
+
+        "toast": {
+          "updated": "Station configuration updated successfully!",
+          "updateFailed": "Failed to update station configuration. Please try again later."
+        }
       }
     }
   },

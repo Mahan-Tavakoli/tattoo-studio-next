@@ -1,11 +1,15 @@
+"use client";
+
 import {
   editStationConfigApi,
   getStationConfigApi,
 } from "@/components/services/guestArtistService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
 
 export default function useStationConfig() {
+  const t = useTranslations("admin.guestArtists.stationConfigForm.toast");
   const queryClient = useQueryClient();
 
   const {
@@ -25,11 +29,11 @@ export default function useStationConfig() {
 
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["station-config"] });
-        toast.success("Station Config set successfully");
+        toast.success(t("updated"));
       },
 
       onError: () => {
-        toast.error("Setting Station Config is failed, try again later!");
+        toast.error(t("updateFailed"));
       },
     });
 

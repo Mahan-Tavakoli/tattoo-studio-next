@@ -1,11 +1,10 @@
 import { HomePageContent } from "@/components/constants/Constants";
 import Review from "@/components/features/review/Review";
 import StudioIntro from "@/components/templates/home/StudioIntro";
-import StudioMarquee from "@/components/templates/home/StudioMarquee";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
-import Link from "next/link";
 import { MdArrowRightAlt } from "react-icons/md";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 function Home() {
   const t = useTranslations("home");

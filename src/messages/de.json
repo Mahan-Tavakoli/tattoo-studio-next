@@ -25,6 +25,12 @@
     "more": "Mehr"
   },
 
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "goBack": "Zurück"
+  },
+
   "admin": {
     "dashboard": "Dashboard",
     "appointments": "Termine",
@@ -193,6 +199,104 @@
         "noImages": "Keine Bilder hochgeladen",
 
         "backToBookings": "Zurück zu den Buchungen"
+      }
+    },
+    "guestArtists": {
+      "title": "Gastkünstler",
+      "stationConfig": "Arbeitsplatz-Konfiguration",
+      "toast": {
+        "deleted": "Gastkünstler {name} wurde erfolgreich gelöscht!",
+        "deleteFailed": "Das Löschen des Gastkünstlers ist fehlgeschlagen. Bitte versuche es später erneut.",
+        "updated": "Gastkünstler {name} wurde erfolgreich aktualisiert!",
+        "updateFailed": "Die Aktualisierung des Gastkünstlers ist fehlgeschlagen. Bitte versuche es später erneut."
+      },
+      "table": {
+        "index": "#",
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "date": "Datum",
+        "details": "Details",
+        "operation": "Aktionen",
+
+        "update": "Gastkünstler bearbeiten",
+        "delete": "Gastkünstler löschen",
+
+        "loadError": "Gastkünstler konnten nicht geladen werden",
+        "empty": "Noch keine Gastkünstler vorhanden"
+      },
+      "row": {
+        "viewDetails": "Details anzeigen"
+      },
+      "details": {
+        "failedToLoad": "Gastkünstler konnte nicht geladen werden",
+        "failedToLoadDetails": "Details des Gastkünstlers konnten nicht geladen werden",
+
+        "updateStatus": "Status aktualisieren",
+        "delete": "Löschen",
+
+        "duration": "Dauer",
+        "day": "Tag",
+        "days": "Tage",
+
+        "reservedTables": "Reservierte Tische",
+        "table": "Tisch",
+        "tables": "Tische",
+
+        "totalPrice": "Gesamtpreis",
+        "discountApplied": "{discount}% Rabatt angewendet",
+
+        "reservationDates": "Reservierungsdaten",
+        "to": "bis",
+
+        "guestArtistInformation": "Informationen zum Gastkünstler",
+        "fullName": "Vollständiger Name",
+        "emailAddress": "E-Mail-Adresse",
+        "phoneNumber": "Telefonnummer",
+
+        "reservationDetails": "Reservierungsdetails",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "tablesReserved": "Reservierte Tische",
+
+        "paymentInformation": "Zahlungsinformationen",
+        "reservationStatus": "Reservierungsstatus",
+        "discountAppliedLabel": "Angewendeter Rabatt",
+        "noDiscount": "Kein Rabatt",
+        "stripeSession": "Stripe-Sitzung",
+
+        "reservationSummary": "Reservierungsübersicht",
+        "reservationPeriod": "Reservierungszeitraum",
+
+        "timeline": "Zeitverlauf",
+        "createdAt": "Erstellt am",
+        "lastUpdated": "Zuletzt aktualisiert",
+        "currentStatus": "Aktueller Status",
+
+        "agreement": "Vereinbarung",
+        "termsAccepted": "Bedingungen akzeptiert",
+        "accepted": "Akzeptiert",
+        "notAccepted": "Nicht akzeptiert",
+
+        "backToGuestArtists": "Zurück zu den Gastkünstlern",
+
+        "updateGuestArtistStatus": "Status des Gastkünstlers aktualisieren",
+
+        "deletingGuestArtist": "Gastkünstler wird gelöscht",
+        "guestArtistResource": "Gastkünstler {name}"
+      },
+      "stationConfigForm": {
+        "title": "Arbeitsplatz-Konfiguration",
+        "totalTables": "Gesamtzahl der Tische",
+        "pricePerDay": "Preis pro Tag",
+        "monthlyDiscountPercent": "Monatlicher Rabatt in Prozent",
+        "updateConfig": "Konfiguration aktualisieren",
+        "updating": "Wird aktualisiert...",
+
+        "toast": {
+          "updated": "Die Arbeitsplatz-Konfiguration wurde erfolgreich aktualisiert!",
+          "updateFailed": "Die Arbeitsplatz-Konfiguration konnte nicht aktualisiert werden. Bitte versuche es später erneut."
+        }
       }
     }
   },

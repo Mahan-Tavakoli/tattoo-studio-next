@@ -1,3 +1,5 @@
+"use client";
+
 import {
   deleteGuestArtistApi,
   editGuestArtistApi,
@@ -5,10 +7,12 @@ import {
   getGuestArtistsApi,
 } from "@/components/services/guestArtistService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function useGuestArtist() {
+  const t = useTranslations("admin.guestArtists.toast");
   const queryClient = useQueryClient();
   const params = useParams();
   const router = useRouter();
@@ -46,13 +50,17 @@ export default function useGuestArtist() {
         queryClient.invalidateQueries({
           queryKey: ["guest-artist", guestArtistId],
         });
-        toast.success(`Guest artist ${data.name} deleted successfully!`);
+        toast.success(
+          t("deleted", {
+            name: data.name,
+          }),
+        );
 
         router.push("/admin/guest-artist");
       },
 
       onError: () => {
-        toast.error("Deleting guest artist failed, try again later");
+        toast.error(t("deleteFailed"));
       },
     });
 
@@ -67,12 +75,14 @@ export default function useGuestArtist() {
           queryKey: ["guest-artist", guestArtistId],
         });
         toast.success(
-          `Guest artist ${data.booking.name} updated successfully!`,
+          t("updated", {
+            name: data.booking.name,
+          }),
         );
       },
 
       onError: () => {
-        toast.error("Updating guest artist failed, try again later");
+        toast.error(t("updateFailed"));
       },
     });
 

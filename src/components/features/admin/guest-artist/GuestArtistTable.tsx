@@ -4,13 +4,16 @@ import { toast } from "react-toastify";
 import useGuestArtist from "./useGuestArtist";
 import Table from "@/components/ui/Table";
 import GuestArtistRow from "./GuestArtistRow";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@/components/ui/Modal";
 import ConfirmDelete from "@/components/ui/ConfirmDelete";
 import { GuestArtistInfo } from "@/components/schema & types/guest-artist/guest-artist.types";
 import UpdateGuestArtistForm from "./UpdateGuestArtistForm";
+import { useTranslations } from "next-intl";
 
 function GuestArtistTable() {
+  const t = useTranslations("admin.guestArtists.table");
+
   const {
     guestArtists,
     guestArtistsIsError,
@@ -24,11 +27,16 @@ function GuestArtistTable() {
   const [guestArtistToDelete, setGuestArtistToDelete] =
     useState<GuestArtistInfo | null>(null);
 
+  useEffect(() => {
+    if (guestArtistsIsError) {
+      toast.error(t("loadError"));
+    }
+  }, [guestArtistsIsError, t]);
+
   if (guestArtistsIsError) {
-    toast.error("Failed to load guest artists, try again");
     return (
       <div className="container">
-        <p className="text-red-500">Failed to load guest artists</p>
+        <p className="text-red-500">{t("loadError")}</p>
       </div>
     );
   }
@@ -37,27 +45,27 @@ function GuestArtistTable() {
     <>
       <Table>
         <Table.Header>
-          <th className="py-2">#</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Date</th>
-          <th>Details</th>
-          <th>Operation</th>
+          <th className="py-2">{t("index")}</th>
+          <th>{t("name")}</th>
+          <th>{t("email")}</th>
+          <th>{t("phone")}</th>
+          <th>{t("date")}</th>
+          <th>{t("details")}</th>
+          <th>{t("operation")}</th>
         </Table.Header>
         <Table.Body>
           {guestArtistsIsLoading ? (
             [...Array(6)].map((_, i) => (
               <Table.Row key={i}>
-                <td colSpan={9}>
+                <td colSpan={7}>
                   <div className="h-10 bg-snow/10 animate-pulse rounded" />
                 </td>
               </Table.Row>
             ))
           ) : guestArtists.length === 0 ? (
             <Table.Row>
-              <td colSpan={4} className="py-4">
-                No Bookings yet
+              <td colSpan={7} className="py-4">
+                {t("empty")}
               </td>
             </Table.Row>
           ) : (
@@ -84,10 +92,7 @@ function GuestArtistTable() {
 
       {/* Edit Course */}
       {guestArtistToEdit && (
-        <Modal
-          onClose={() => setGuestArtistToEdit(null)}
-          title="Update Booking Status"
-        >
+        <Modal onClose={() => setGuestArtistToEdit(null)} title={t("update")}>
           <UpdateGuestArtistForm
           // booking={guestArtistToEdit}
           // onClose={() => setGuestArtistToEdit(null)}
@@ -96,10 +101,7 @@ function GuestArtistTable() {
       )}
 
       {guestArtistToDelete && (
-        <Modal
-          onClose={() => setGuestArtistToDelete(null)}
-          title="Deleting guest artist"
-        >
+        <Modal onClose={() => setGuestArtistToDelete(null)} title={t("delete")}>
           <ConfirmDelete
             resourceName={`Guest Artist ${guestArtistToDelete.name}`}
             disabled={deleteGuestArtistIsPending}

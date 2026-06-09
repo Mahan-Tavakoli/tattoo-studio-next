@@ -3,6 +3,7 @@ import Table from "@/components/ui/Table";
 import formattedDate from "@/components/utils/formatter";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface GuestArtistRowProps {
   index: number;
@@ -17,6 +18,7 @@ function GuestArtistRow({
   onEdit,
   onDelete,
 }: GuestArtistRowProps) {
+  const t = useTranslations("admin.guestArtists.row");
   return (
     <>
       <Table.Row>
@@ -41,7 +43,7 @@ function GuestArtistRow({
         </td>
         <td>
           <Link href={`/admin/guest-artist/${guestArtist.id}`} className="btn">
-            View Details
+            {t("viewDetails")}
           </Link>
         </td>
         <td>

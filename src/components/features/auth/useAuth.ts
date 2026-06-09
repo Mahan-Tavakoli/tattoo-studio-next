@@ -28,9 +28,9 @@ export default function useAuth() {
       } else if (status === 401) {
         toast.error("Email or password is incorrect");
       } else if (status === 404) {
-        toast.error("حساب کاربری یافت نشد");
+        toast.error("There is no acoount");
       } else {
-        toast.error("ورود به حساب کاربری ناموفق بود، لطفاً دوباره تلاش کنید.");
+        toast.error("Your attempt to login is failed, try again later");
       }
     },
   });
@@ -42,6 +42,9 @@ export default function useAuth() {
 
     onSuccess: () => {
       deleteCookie("access_token");
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
       toast.success("Logged out successfully.");
     },
 

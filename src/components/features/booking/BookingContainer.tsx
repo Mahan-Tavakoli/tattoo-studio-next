@@ -13,10 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormStepper from "@/components/ui/FormStepper";
 import { formatDate } from "@/components/utils/formatter";
 import DotsLoader from "@/components/ui/DotsLoader";
-import useCurrentUser from "../auth/useCurrentUser";
 import { getBookingByIdApi } from "@/components/services/bookingService";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
+import { getCookie } from "cookies-next/client";
 
 function BookingContainer() {
   const t = useTranslations("booking");
@@ -24,8 +24,9 @@ function BookingContainer() {
   const [uploadToken, setUploadToken] = useState<string | null>(null);
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
 
-  const { user, currentUserIsLoading, currentUserIsError } = useCurrentUser();
-  const isWalkIn = !!user;
+  const token = getCookie("access_token");
+
+  const isWalkIn = Boolean(token);
 
   const {
     bookingAppointment,
@@ -166,14 +167,6 @@ function BookingContainer() {
   const customerMobileUploadUrl = uploadToken
     ? `${targetHostBase}/upload-reference?token=${uploadToken}`
     : "";
-
-  if (currentUserIsLoading) return <DotsLoader />;
-  if (currentUserIsError)
-    return (
-      <div className="container">
-        <p className="text-red-500">Error loading admin user</p>
-      </div>
-    );
 
   return (
     <div className="pt-15 px-4 flex justify-center">

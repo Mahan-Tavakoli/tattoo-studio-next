@@ -9,12 +9,14 @@ import {
 } from "@/components/schema & types/station-config/station-config.schema";
 import InputField from "@/components/ui/InputField";
 import DotsLoader from "@/components/ui/DotsLoader";
+import { useTranslations } from "next-intl";
 
 interface StationConfigFormProps {
   onClose: () => void;
 }
 
 function StationConfigForm({ onClose }: StationConfigFormProps) {
+  const t = useTranslations("admin.guestArtists.stationConfigForm");
   const {
     stationConfig,
     stationConfigIsError,
@@ -54,7 +56,7 @@ function StationConfigForm({ onClose }: StationConfigFormProps) {
       {/* Total Tables */}
       <InputField<StationConfig>
         name="totalTables"
-        label="Total Tables"
+        label={t("totalTables")}
         register={register}
         errors={errors.totalTables}
         type="tel"
@@ -65,7 +67,7 @@ function StationConfigForm({ onClose }: StationConfigFormProps) {
 
       <InputField<StationConfig>
         name="pricePerDay"
-        label="Price Per Day"
+        label={t("pricePerDay")}
         register={register}
         errors={errors.pricePerDay}
         type="tel"
@@ -74,7 +76,7 @@ function StationConfigForm({ onClose }: StationConfigFormProps) {
 
       {/* Phone Number */}
       <InputField<StationConfig>
-        label="Monthly Discount Percent"
+        label={t("monthlyDiscountPercent")}
         name="monthlyDiscountPercent"
         errors={errors.monthlyDiscountPercent}
         register={register}
@@ -89,10 +91,10 @@ function StationConfigForm({ onClose }: StationConfigFormProps) {
       >
         {editStationConfigIsPending ? (
           <>
-            Updating <DotsLoader />
+            {t("updating")} <DotsLoader />
           </>
         ) : (
-          <>Update Config</>
+          <>{t("updateConfig")}</>
         )}
       </button>
     </form>
