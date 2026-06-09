@@ -6,6 +6,7 @@ import {
   ClipboardCheck,
   Home,
   LayoutDashboard,
+  Mail,
   Palette,
   Users,
   Wallet,
@@ -143,6 +144,12 @@ export const AdminSidebarItems: NavItem[] = [
     titleKey: "payments",
     icon: <Wallet className="size-5" />,
     href: "/admin/payments",
+  },
+  {
+    id: 8,
+    titleKey: "campaigns",
+    icon: <Mail className="size-5" />,
+    href: "/admin/campaigns",
   },
 ];
 

@@ -12,6 +12,7 @@
     "dashboard": "Dashboard",
     "appointments": "Termine",
     "payments": "Zahlungen",
+    "campaigns": "Kampagnen",
     "logout": "Abmelden",
     "adminLogin": "Admin Anmeldung"
   },
@@ -39,6 +40,7 @@
     "guestArtist": "Gastkünstler",
     "articles": "Artikel",
     "payments": "Zahlungen",
+    "campaigns": "Kampagnen",
     "article": {
       "title": "Artikel",
       "createArticle": "Artikel erstellen",
