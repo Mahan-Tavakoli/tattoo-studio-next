@@ -14,6 +14,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import Modal from "@/components/ui/Modal";
 import ConfirmDelete from "@/components/ui/ConfirmDelete";
 import { useTranslations } from "next-intl";
+import ArticleForm from "./ArticleForm";
 
 /* -------------------------------------------------------------------------- */
 /*                               MAIN COMPONENT                               */
@@ -30,6 +31,7 @@ function ArticleDetails() {
   } = useArticle();
 
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
+  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
   const article = articleData;
 
@@ -50,6 +52,14 @@ function ArticleDetails() {
   /* -------------------------------------------------------------------------- */
   /*                               LOADING STATE                                */
   /* -------------------------------------------------------------------------- */
+
+    useEffect(() => {
+    if (singleArticleDataIsError) {
+      toast.error(t("loadError"));
+    }
+  }, [singleArticleDataIsError, t]);
+
+
 
   if (singleArticleDataIsLoading) {
     return (
@@ -75,11 +85,7 @@ function ArticleDetails() {
   /*                                ERROR STATE                                 */
   /* -------------------------------------------------------------------------- */
 
-  useEffect(() => {
-    if (singleArticleDataIsError) {
-      toast.error(t("loadError"));
-    }
-  }, [singleArticleDataIsError, t]);
+
 
   if (singleArticleDataIsError || !article) {
     return (
@@ -131,6 +137,7 @@ function ArticleDetails() {
             <Link
               href={`/admin/article/edit/${article.id}`}
               className="btn flex items-center gap-x-2 text-sm"
+              onClick={() => setIsEditOpen(true)}
             >
               <span>{t("edit")}</span>
 
@@ -141,7 +148,7 @@ function ArticleDetails() {
               className="btn bg-red-950 hover:bg-red-900 text-sm flex items-center gap-x-2"
               onClick={() => setIsDeleteOpen(true)}
             >
-              <span>{t("edit")}</span>
+              <span>{t("delete")}</span>
 
               <CiTrash className="size-5" />
             </button>
@@ -369,6 +376,20 @@ function ArticleDetails() {
           />
         </Modal>
       )}
+
+      {/* edit modal */}
+      {isEditOpen && (
+              <Modal
+                title={`Edit ${article.title}`}
+                onClose={() => setIsEditOpen(false)}
+                large
+              >
+                <ArticleForm
+                  articleToEdit={article}
+                  onClose={() => setIsEditOpen(false)}
+                />
+              </Modal>
+            )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import AdminSignInApi, { logoutApi } from "@/components/services/authService";
+import AdminSignInApi, { getMeApi, logoutApi } from "@/components/services/authService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
@@ -11,12 +11,12 @@ export default function useAuth() {
 
   const { isPending, mutateAsync: signIn } = useMutation({
     mutationFn: AdminSignInApi,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       setCookie("access_token", data?.accessToken);
 
-      queryClient.invalidateQueries({
-        queryKey: ["user"],
-      });
+      const user = await getMeApi();
+
+  queryClient.setQueryData(["user"], user);
 
       toast.success("Welcome back Admin!");
     },
@@ -42,9 +42,7 @@ export default function useAuth() {
 
     onSuccess: () => {
       deleteCookie("access_token");
-      queryClient.invalidateQueries({
-        queryKey: ["user"],
-      });
+      queryClient.setQueryData(["user"], null);
       toast.success("Logged out successfully.");
     },
 

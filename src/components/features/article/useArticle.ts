@@ -1,6 +1,7 @@
 import getArticlesApi, {
   createNewArticleApi,
   deleteArticleApi,
+  editArticleApi,
   getAllArticlesApi,
   getArticleByIdApi,
   getArticleBySlugApi,
@@ -110,6 +111,27 @@ export default function useArticle() {
       },
     });
 
+      // edit article
+      const { isPending: editArticleIsPending, mutateAsync: editArticle } =
+        useMutation({
+          mutationFn: editArticleApi,
+    
+          onSuccess: (data) => {
+            console.log("editArtistOnSuccessData =>", data);
+            toast.success(
+              t("editSuccess", {
+                name: data.title,
+              }),
+            );
+            queryClient.invalidateQueries({ queryKey: ["articles"] });
+            queryClient.invalidateQueries({ queryKey: ["all-articles"] });
+          },
+    
+          onError: () => {
+            toast.error(t("editFailed"));
+          },
+        });
+
   return {
     // All artists
     articlesIsLoading,
@@ -133,5 +155,8 @@ export default function useArticle() {
     // create article
     createArticle,
     createArticleIsPending,
+    // edit article
+    editArticle,
+    editArticleIsPending
   };
 }

@@ -6,6 +6,11 @@ import {
 } from "../schema & types/article/article.types";
 import http from "./httpService";
 
+interface EditArticleArgs {
+  articleId: string;
+  newArticle: FormData | object;
+}
+
 // get public (published) articles
 export default function getArticlesApi(): Promise<ArticlesResponse> {
   return http
@@ -52,4 +57,24 @@ export function deleteArticleApi(articelId: string): Promise<ArticleInfo> {
   return http
     .delete(`/admin/articles/${articelId}`)
     .then(({ data }: AxiosResponse<ArticleInfo>) => data);
+}
+
+// edit article
+export function editArticleApi({
+  articleId,
+  newArticle,
+}: EditArticleArgs): Promise<ArticleFormDataProps> {
+  const isFormData =
+    typeof FormData !== "undefined" && newArticle instanceof FormData;
+
+  return http
+    .patch(`/admin/articles/${articleId}`, newArticle, {
+      headers:
+        isFormData && newArticle.has("cover")
+          ? {
+              "Content-Type": "multipart/form-data",
+            }
+          : undefined,
+    })
+    .then(({ data }: AxiosResponse<ArticleFormDataProps>) => data);
 }

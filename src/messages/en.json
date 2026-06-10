@@ -517,7 +517,10 @@
       "createFailed": "Creating article failed",
 
       "deleted": "Article {title} deleted successfully!",
-      "deleteFailed": "Deleting article failed, try again later"
+      "deleteFailed": "Deleting article failed, try again later",
+
+      "editSuccess": "{name} edited successfully",
+      "editFailed":"Edit article failed, try again later"
     }
   }
 }

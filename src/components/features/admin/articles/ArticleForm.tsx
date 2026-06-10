@@ -1,6 +1,6 @@
 "use client";
 
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, FieldError, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import useArticle from "../../article/useArticle";
@@ -16,14 +16,22 @@ import SelectBox from "@/components/ui/SelectBox";
 import CreatableSelect from "react-select/creatable";
 import { useTranslations } from "next-intl";
 import DotsLoader from "@/components/ui/DotsLoader";
+import { ArticleInfo } from "@/components/schema & types/article/article.types";
+import { useEffect } from "react";
 
 interface ArticleFormProps {
   onClose: () => void;
+  articleToEdit?: ArticleInfo | null;
 }
 
-function ArticleForm({ onClose }: ArticleFormProps) {
+function ArticleForm({ onClose, articleToEdit }: ArticleFormProps) {
   const t = useTranslations("admin.article.form");
-  const { createArticle, createArticleIsPending } = useArticle();
+  const {
+    createArticle,
+    createArticleIsPending,
+    editArticle,
+    editArticleIsPending,
+  } = useArticle();
 
   const {
     register,
@@ -31,6 +39,7 @@ function ArticleForm({ onClose }: ArticleFormProps) {
     watch,
     setValue,
     control,
+    reset,
     formState: { errors },
   } = useForm<CreateArticleSchemaType>({
     resolver: zodResolver(createArticleSchema),
@@ -59,6 +68,18 @@ function ArticleForm({ onClose }: ArticleFormProps) {
 
   const content = watch("content");
 
+  useEffect(() => {
+    if (articleToEdit?.id) {
+      reset({
+        title: articleToEdit.title,
+        excerpt: articleToEdit.excerpt,
+        content: articleToEdit.content,
+        status: articleToEdit.status,
+        tags: articleToEdit.tags,
+      });
+    }
+  }, [reset, articleToEdit]);
+
   const onSubmit: SubmitHandler<CreateArticleSchemaType> = async (data) => {
     console.log("date =>", data);
     const formData = new FormData();
@@ -73,12 +94,15 @@ function ArticleForm({ onClose }: ArticleFormProps) {
     });
 
     if (data.cover) formData.append("cover", data.cover);
-    console.log("formData =>", formData);
-    await createArticle(formData, {
-      onSuccess: () => {
-        onClose();
-      },
-    });
+
+    if (articleToEdit?.id) {
+      await editArticle({ articleId: articleToEdit.id, newArticle: formData });
+    } else {
+      await createArticle(formData);
+    }
+
+    reset();
+    onClose();
   };
 
   return (
@@ -105,7 +129,8 @@ function ArticleForm({ onClose }: ArticleFormProps) {
         label={t("cover")}
         name="cover"
         setValue={setValue}
-        errors={errors.cover}
+        errors={errors.cover as unknown as FieldError}
+        initialUrls={articleToEdit?.coverUrl ? [articleToEdit?.coverUrl] : []}
         required
       />
 

@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import Table from "@/components/ui/Table";
 import ArticlesRow from "./ArticlesRow";
 import { useTranslations } from "next-intl";
+import Modal from "@/components/ui/Modal";
+import ArticleForm from "./ArticleForm";
 
 function ArticlesTable() {
   const t = useTranslations("admin.article.table");
@@ -78,17 +80,18 @@ function ArticlesTable() {
                 />
               </div> */}
       {/* Edit Course */}
-      {/* {articleToEdit && (
+      {articleToEdit && (
         <Modal
-          title={`Edit ${articleToEdit.displayName}`}
+          title={`Edit ${articleToEdit.title}`}
           onClose={() => setArticleToEdit(null)}
+          large
         >
-          <TattooArtistsForm
+          <ArticleForm
             articleToEdit={articleToEdit}
             onClose={() => setArticleToEdit(null)}
           />
         </Modal>
-      )} */}
+      )}
     </>
   );
 }

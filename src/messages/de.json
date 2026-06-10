@@ -512,7 +512,10 @@
       "createFailed": "Artikel konnte nicht erstellt werden",
 
       "deleted": "Artikel \"{title}\" wurde erfolgreich gelöscht!",
-      "deleteFailed": "Artikel konnte nicht gelöscht werden. Bitte versuche es später erneut."
+      "deleteFailed": "Artikel konnte nicht gelöscht werden. Bitte versuche es später erneut.",
+
+      "editSuccess": "{name} erfolgreich bearbeitet",
+      "editFailed":"Artikel konnte nicht bearbeitet werden. Bitte später erneut versuchen."
     }
   }
 }
