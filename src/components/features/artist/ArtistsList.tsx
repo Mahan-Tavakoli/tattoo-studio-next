@@ -48,7 +48,6 @@ function ArtistsList() {
                 alt={artist.displayName}
                 fill
                 preload
-                blurDataURL="/images/placeholder.png"
                 className="object-cover transition-transform duration-700 group-hover/card:scale-110 group-hover/card:blur-sm grayscale "
               />
 

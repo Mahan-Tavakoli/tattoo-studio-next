@@ -3,11 +3,16 @@
 import Image, { ImageProps } from "next/image";
 import { useState } from "react";
 
+
+const DEFAULT_BLUR =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+
+
 type BlurImageProps = ImageProps & {
   blurDataURL?: string;
 };
 
-function BlurImage({ blurDataURL, className, ...props }: BlurImageProps) {
+function BlurImage({ blurDataURL = DEFAULT_BLUR, className, ...props }: BlurImageProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   return (
@@ -19,7 +24,7 @@ function BlurImage({ blurDataURL, className, ...props }: BlurImageProps) {
         ${isLoading ? "scale-105 blur-lg opacity-70" : "scale-100 blur-0 opacity-100"}
       `}
       onLoad={() => setIsLoading(false)}
-      placeholder={blurDataURL ? "blur" : "empty"}
+      placeholder="blur"
       blurDataURL={blurDataURL}
     />
   );

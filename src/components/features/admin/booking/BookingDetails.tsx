@@ -25,14 +25,12 @@ function BookingDetails() {
 
   const { client, uploads } = singleBooking || {};
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (singleBookingIsError) {
       toast.error(t("loadError"));
     }
   }, [singleBookingIsError, t]);
 
-  
   if (singleBookingIsLoading) {
     return (
       <div className="p-6 space-y-6 animate-pulse">
@@ -44,8 +42,6 @@ function BookingDetails() {
       </div>
     );
   }
-
-
 
   if (singleBookingIsError) {
     return (
@@ -150,7 +146,6 @@ function BookingDetails() {
                         alt="reference"
                         fill
                         preload
-                        blurDataURL="/images/placeholder.png"
                         className="object-cover hover:scale-105 transition-transform duration-500"
                       />
                     </button>

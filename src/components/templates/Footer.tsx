@@ -17,7 +17,6 @@ function Footer() {
                 alt="Logo"
                 fill
                 preload
-                blurDataURL="/images/placeholder.png"
                 className="object-cover"
               />
             </div>

@@ -65,7 +65,6 @@ function ArtistDetailsView() {
                 alt={artistBySlug.displayName}
                 fill
                 preload
-                blurDataURL="/images/placeholder.png"
                 className="object-cover grayscale"
               />
             </div>

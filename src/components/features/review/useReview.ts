@@ -10,6 +10,7 @@ export default function useReview() {
     queryKey: ["reviews"],
     queryFn: getReviewsApi,
     placeholderData: (prev) => prev,
+    staleTime: 1000 * 60 * 60 * 24 /* 24 hours */
   });
 
   const reviews = data?.reviews || [];

@@ -86,7 +86,6 @@ function Header() {
                 alt="Logo"
                 fill
                 preload
-                blurDataURL="/images/placeholder.png"
                 className="object-cover"
               />
             </button>

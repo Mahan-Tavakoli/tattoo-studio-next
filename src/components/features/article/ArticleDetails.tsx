@@ -71,7 +71,6 @@ function ArticleDetails() {
           alt={title}
           fill
           preload
-          blurDataURL="/images/placeholder.png"
           className="object-cover grayscale"
         />
 
@@ -285,7 +284,6 @@ function ArticleDetails() {
                 alt={article.title}
                 fill
                 preload
-                blurDataURL="/images/placeholder.png"
                 className="object-cover transition-transform duration-700 group-hover:scale-110 group-hover:blur-sm grayscale"
               />
 

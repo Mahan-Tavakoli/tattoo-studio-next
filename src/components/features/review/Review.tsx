@@ -12,6 +12,7 @@ import ReviewSkeleton from "@/components/templates/skeleton/skeletons/home/Revie
 import { useTranslations } from "next-intl";
 import "swiper/css";
 import "swiper/css/autoplay";
+import BlurImage from "@/components/templates/skeleton/BlurImage";
 
 function Review() {
   const { reviews, reviewsIsLoading, reviewsIsError } = useReview();
@@ -82,7 +83,7 @@ function Review() {
                   {/* Header */}
                   <div className="px-4 py-2 flex items-center justify-between border-b border-snow/20">
                     <div className="flex items-center gap-x-2">
-                      <Image
+                      <BlurImage
                         src={review?.authorPhotoUrl}
                         alt={review?.authorName}
                         width={35}
