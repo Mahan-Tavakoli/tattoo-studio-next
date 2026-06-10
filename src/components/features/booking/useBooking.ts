@@ -42,7 +42,7 @@ export default function useBooking() {
     isLoading: bookingIsLoading,
     isError: bookingIsError,
   } = useQuery({
-    queryKey: ["booking"],
+    queryKey: ["bookings"],
     queryFn: getAllBookingsApi,
   });
 
@@ -67,8 +67,10 @@ export default function useBooking() {
     mutationFn: updateBookingStatusApi,
     onSuccess: (data) => {
       console.log("onSuccessData =>", data);
-      queryClient.invalidateQueries({ queryKey: ["booking", bookingId] });
-      queryClient.invalidateQueries({ queryKey: ["single-booking"] });
+      queryClient.invalidateQueries({ queryKey: ["bookings"] });
+      queryClient.invalidateQueries({
+        queryKey: ["single-booking", bookingId],
+      });
       toast.success(t("toast.statusUpdated"));
     },
     onError: () => {
@@ -81,8 +83,10 @@ export default function useBooking() {
     useMutation({
       mutationFn: createTattooScheduleApi,
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["booking"] });
-        queryClient.invalidateQueries({ queryKey: ["single-booking"] });
+        queryClient.invalidateQueries({ queryKey: ["bookings"] });
+        queryClient.invalidateQueries({
+          queryKey: ["single-booking", bookingId],
+        });
         toast.success(t("toast.tattooScheduled"));
       },
     });
@@ -95,7 +99,10 @@ export default function useBooking() {
     mutationFn: walkInBookingAppointmentApi,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["booking"],
+        queryKey: ["bookings"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["single-booking", bookingId],
       });
       toast.success(t("toast.walkInRecorded"));
     },
@@ -112,9 +119,11 @@ export default function useBooking() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["booking"],
+        queryKey: ["bookings"],
       });
-
+      queryClient.invalidateQueries({
+        queryKey: ["single-booking", bookingId],
+      });
       toast.success(t("toast.imagesUploaded"));
     },
 
@@ -132,7 +141,7 @@ export default function useBooking() {
         queryClient.invalidateQueries({
           queryKey: ["single-booking", bookingId],
         });
-        queryClient.invalidateQueries({ queryKey: ["booking"] });
+        queryClient.invalidateQueries({ queryKey: ["bookings"] });
         toast.success(t("toast.clientCheckedIn"));
       },
 

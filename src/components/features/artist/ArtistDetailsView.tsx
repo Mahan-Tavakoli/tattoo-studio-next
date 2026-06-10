@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LuAtSign, LuInstagram, LuMapPin } from "react-icons/lu";
-import { GrLocationPin } from "react-icons/gr";
+import { LuInstagram } from "react-icons/lu";
 import useArtist from "./useArtist";
-import Image from "next/image";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
 import ArtistDetailsSkeleton from "@/components/templates/skeleton/skeletons/tattoo-artist/ArtistDetailsSkeleton";
 import { toast } from "react-toastify";

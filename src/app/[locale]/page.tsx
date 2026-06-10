@@ -2,7 +2,6 @@ import { HomePageContent } from "@/components/constants/Constants";
 import Review from "@/components/features/review/Review";
 import StudioIntro from "@/components/templates/home/StudioIntro";
 import BlurImage from "@/components/templates/skeleton/BlurImage";
-import { MdArrowRightAlt } from "react-icons/md";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import HeroSection from "@/components/templates/home/HeroSection";
@@ -33,7 +32,7 @@ function Home() {
                   alt={c.titleKey}
                   fill
                   preload
-                  blurDataURL="/images/placeholder.png"
+                  
                   className="object-cover transition-transform duration-500 group-hover:blur-sm grayscale"
                 />
 

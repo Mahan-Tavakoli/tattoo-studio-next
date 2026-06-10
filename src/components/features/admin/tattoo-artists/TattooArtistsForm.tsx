@@ -30,6 +30,7 @@ function TattooArtistsForm({ onClose, artistToEdit }: TattooArtistFormProps) {
     createNewArtistIsPending,
     editArtist,
     editArtistIsPending,
+    allTags,
   } = useArtist();
 
   const {
@@ -58,12 +59,17 @@ function TattooArtistsForm({ onClose, artistToEdit }: TattooArtistFormProps) {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields } = useFieldArray({
     control,
     name: "worksMeta",
   });
 
   const works = watch("works");
+
+  const tagOptions = allTags.map((tag) => ({
+    value: tag,
+    label: tag,
+  }));
 
   useEffect(() => {
     if (artistToEdit?.id) {
@@ -243,6 +249,7 @@ function TattooArtistsForm({ onClose, artistToEdit }: TattooArtistFormProps) {
                 isMulti
                 placeholder="Add tags"
                 className="mt-2"
+                options={tagOptions}
                 // styles={{
                 //   control: (base) => ({
                 //     ...base,

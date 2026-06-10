@@ -86,19 +86,19 @@ export const HomePageContent = [
     id: 2,
     titleKey: "lookbook",
     linkHref: "/lookbook",
-    imgSrc: "/images/gallery/IMG_0257.PNG",
+    imgSrc: "/images/gallery/IMG_0258.jpg",
   },
   {
     id: 3,
     titleKey: "articles",
     linkHref: "/articles",
-    imgSrc: "/images/gallery/IMG_0258.jpg",
+    imgSrc: "/images/gallery/IMG_0265.jpg",
   },
   {
     id: 4,
     titleKey: "contact",
     linkHref: "/contact",
-    imgSrc: "/images/gallery/IMG_0257.PNG",
+    imgSrc: "/images/gallery/IMG_0266.jpg",
   },
 ];
 

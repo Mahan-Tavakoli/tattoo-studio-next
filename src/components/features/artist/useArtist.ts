@@ -9,6 +9,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import { useMemo } from "react";
 import { toast } from "react-toastify";
 
 export default function useArtist() {
@@ -147,6 +148,13 @@ export default function useArtist() {
   const artistData = singleArtistById || null;
   const artistLookbookWorks = singleArtistById?.works || [];
 
+  // tags
+  const allTags = useMemo(() => {
+    const tags = artistsLookbookItems.flatMap((artist) => artist.latestWorks.flatMap((work) => work.tags)
+  )
+  return Array.from(new Set(tags))
+  }, [artistsLookbookItems])
+
   return {
     // Single public artist
     artistBySlug,
@@ -181,5 +189,8 @@ export default function useArtist() {
     singleArtistIsLoading,
     singleArtistIsError,
     artistLookbookWorks,
+
+    // tags
+    allTags
   };
 }
