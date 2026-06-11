@@ -37,7 +37,9 @@ function Modal({ onClose, children, title, large = false }: ModalProps) {
   }, [escFunction]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-onyx/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
+    <div
+      className={`fixed inset-0 bg-onyx/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${large ? "z-100" : "z-50"}`}
+    >
       <div
         ref={ref}
         className={`
@@ -53,7 +55,6 @@ function Modal({ onClose, children, title, large = false }: ModalProps) {
                 w-[95vw]
                 max-w-6xl
                 h-[90vh]
-                z-100!
               `
               : `
                 w-[calc(100vw-25%)]

@@ -10,7 +10,7 @@ interface ArtistLookbookRowProps {
 function ArtistLookbookRow({ work, index }: ArtistLookbookRowProps) {
   return (
     <Table.Row>
-      <td>{index + 1}</td>
+      <td>{index}</td>
       <td>{work.title}</td>
       <td>
         <div className="relative w-10 h-10 mx-auto">

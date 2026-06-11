@@ -1,30 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useArticle from "../../article/useArticle";
-import { ArticleInfo } from "@/components/schema & types/article/article.types";
 import { toast } from "react-toastify";
 import Table from "@/components/ui/Table";
 import ArticlesRow from "./ArticlesRow";
 import { useTranslations } from "next-intl";
-import Modal from "@/components/ui/Modal";
-import ArticleForm from "./ArticleForm";
-import useLocalizedField from "@/components/hook/useLocalizedField";
 import usePagination from "@/components/hook/usePagination";
 import Pagination from "@/components/templates/admin/Pagination";
 
 function ArticlesTable() {
   const t = useTranslations("admin.article.table");
-  const localizedField = useLocalizedField();
   const { allArticles, allArticlesIsError, allArticlesIsLoading } =
     useArticle();
 
   const { currentPage, setCurrentPage, totalPages, paginatedData } =
     usePagination(allArticles || []);
-
-  const [articleToEdit, setArticleToEdit] = useState<ArticleInfo | null>(null);
-
-  const title = String(localizedField(articleToEdit ?? {}, "title")) || "";
 
   useEffect(() => {
     if (allArticlesIsError) {
@@ -47,7 +38,6 @@ function ArticlesTable() {
           <th>{t("title")}</th>
           <th>{t("status")}</th>
           <th>{t("details")}</th>
-          <th>{t("operation")}</th>
         </Table.Header>
         <Table.Body>
           {allArticlesIsLoading ? (
@@ -70,7 +60,6 @@ function ArticlesTable() {
                 key={article.id}
                 article={article}
                 index={(currentPage - 1) * 6 + index + 1}
-                onEdit={() => setArticleToEdit(article)}
               />
             ))
           )}
@@ -82,20 +71,6 @@ function ArticlesTable() {
         onPageChange={setCurrentPage}
         totalPages={totalPages}
       />
-
-      {/* Edit Course */}
-      {articleToEdit && (
-        <Modal
-          title={`Edit ${title}`}
-          onClose={() => setArticleToEdit(null)}
-          large
-        >
-          <ArticleForm
-            articleToEdit={articleToEdit}
-            onClose={() => setArticleToEdit(null)}
-          />
-        </Modal>
-      )}
     </>
   );
 }

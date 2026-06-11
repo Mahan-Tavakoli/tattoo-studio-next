@@ -1,15 +1,13 @@
 import { ArticleInfo } from "@/components/schema & types/article/article.types";
 import Table from "@/components/ui/Table";
 import Link from "next/link";
-import { CiEdit } from "react-icons/ci";
 
 interface ArticlesRowProps {
   index: number;
-  onEdit: () => void;
   article: ArticleInfo;
 }
 
-function ArticlesRow({ article, index, onEdit }: ArticlesRowProps) {
+function ArticlesRow({ article, index }: ArticlesRowProps) {
   //   const { editArtistStatus, editArtistStatusIsPending } = useArticle();
 
   //   const handleActiveToggle = () => {
@@ -21,7 +19,7 @@ function ArticlesRow({ article, index, onEdit }: ArticlesRowProps) {
 
   return (
     <Table.Row>
-      <td>{index + 1}</td>
+      <td>{index}</td>
       <td>{article.author?.displayName || "Admin"}</td>
       <td>{article.title}</td>
       <td>
@@ -78,19 +76,10 @@ function ArticlesRow({ article, index, onEdit }: ArticlesRowProps) {
       <td>
         <Link
           href={`/admin/articles/${article.id}`}
-          className="btn text-xs mx-auto"
+          className="btn text-xs mx-auto items-center justify-center"
         >
           View Details
         </Link>
-      </td>
-      <td className="flex justify-center items-center gap-x-4">
-        <button
-          className="flex items-center justify-between w-24 text-xs btn"
-          onClick={onEdit}
-        >
-          <span>Edit</span>
-          <CiEdit className="size-5" />
-        </button>
       </td>
     </Table.Row>
   );

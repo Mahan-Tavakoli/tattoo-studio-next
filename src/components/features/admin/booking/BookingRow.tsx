@@ -22,7 +22,7 @@ function BookingRow({ booking, index, onEdit, onCheckIn }: BookingRowProps) {
   const t = useTranslations("admin.bookings.row");
   return (
     <Table.Row>
-      <td>{index + 1}</td>
+      <td>{index}</td>
       <td>
         {booking.client.firstName} {booking.client.lastName}
       </td>

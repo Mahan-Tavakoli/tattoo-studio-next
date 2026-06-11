@@ -227,7 +227,7 @@ function ArticleForm({ onClose, articleToEdit }: ArticleFormProps) {
         <button
           type="submit"
           disabled={createArticleIsPending || editArticleIsPending}
-          className="submit-btn"
+          className="submit-btn w-full"
         >
           {createArticleIsPending || editArticleIsPending ? (
             <>

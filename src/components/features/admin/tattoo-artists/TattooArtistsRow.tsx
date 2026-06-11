@@ -26,7 +26,7 @@ function TattooArtistsRow({ artist, index, onEdit }: TattooArtistsRowProps) {
 
   return (
     <Table.Row>
-      <td>{index + 1}</td>
+      <td>{index}</td>
       <td>
         <Link
           href={`/tattoo-artists/${artist?.slug}`}

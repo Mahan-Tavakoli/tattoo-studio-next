@@ -22,7 +22,7 @@ function GuestArtistRow({
   return (
     <>
       <Table.Row>
-        <td>{index + 1}</td>
+        <td>{index}</td>
         <td>{guestArtist.name}</td>
         <td>
           <a
