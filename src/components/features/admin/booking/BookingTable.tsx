@@ -9,10 +9,14 @@ import Modal from "@/components/ui/Modal";
 import UpdateBookingStatusForm from "./UpdateBookingStatusForm";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
+import usePagination from "@/components/hook/usePagination";
+import Pagination from "@/components/templates/admin/Pagination";
 
 function BookingTable() {
   const t = useTranslations("admin.bookings.table");
   const { bookings, bookingIsLoading, bookingIsError } = useBooking();
+  const { currentPage, paginatedData, setCurrentPage, totalPages } =
+    usePagination(bookings || []);
 
   const [bookingToUpdateStatus, setBookingToUpdateStatus] =
     useState<BookingInfo | null>(null);
@@ -64,12 +68,11 @@ function BookingTable() {
               </td>
             </Table.Row>
           ) : (
-            bookings.map((booking, index) => (
+            paginatedData.map((booking, index) => (
               <BookingRow
                 key={booking.id}
                 booking={booking}
-                //index={(currentPage - 1) * 6 + index}
-                index={index}
+                index={(currentPage - 1) * 6 + index + 1}
                 onEdit={() => setBookingToUpdateStatus(booking)}
                 onCheckIn={() => setCheckInClientBooking(booking)}
               />
@@ -77,13 +80,13 @@ function BookingTable() {
           )}
         </Table.Body>
       </Table>
-      {/* <div className="flex justify-center mt-4">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={goToPage}
-                />
-              </div> */}
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        totalPages={totalPages}
+      />
 
       {/* Edit Status */}
       {bookingToUpdateStatus && (

@@ -3,6 +3,8 @@
 import { ArtistInfo } from "@/components/schema & types/artist/artist.types";
 import Table from "@/components/ui/Table";
 import ArtistLookbookRow from "./ArtistLookbookRow";
+import usePagination from "@/components/hook/usePagination";
+import Pagination from "@/components/templates/admin/Pagination";
 
 interface ArtistLookbookTableProps {
   artistData: ArtistInfo | null;
@@ -13,6 +15,9 @@ function ArtistLookbookTable({
   artistData,
   isLoading,
 }: ArtistLookbookTableProps) {
+  const { currentPage, paginatedData, setCurrentPage, totalPages } =
+    usePagination(artistData?.works || []);
+
   return (
     <>
       <Table>
@@ -38,7 +43,7 @@ function ArtistLookbookTable({
               </td>
             </Table.Row>
           ) : (
-            artistData?.works.map((work, index) => (
+            paginatedData.map((work, index) => (
               <ArtistLookbookRow
                 key={work.id}
                 work={work}
@@ -49,13 +54,12 @@ function ArtistLookbookTable({
           )}
         </Table.Body>
       </Table>
-      {/* <div className="flex justify-center mt-4">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={goToPage}
-                />
-              </div> */}
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        totalPages={totalPages}
+      />
     </>
   );
 }

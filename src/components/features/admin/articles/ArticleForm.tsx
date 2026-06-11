@@ -1,6 +1,11 @@
 "use client";
 
-import { Controller, FieldError, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldError,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import useArticle from "../../article/useArticle";
@@ -18,6 +23,7 @@ import { useTranslations } from "next-intl";
 import DotsLoader from "@/components/ui/DotsLoader";
 import { ArticleInfo } from "@/components/schema & types/article/article.types";
 import { useEffect } from "react";
+import useLocalizedField from "@/components/hook/useLocalizedField";
 
 interface ArticleFormProps {
   onClose: () => void;
@@ -26,6 +32,7 @@ interface ArticleFormProps {
 
 function ArticleForm({ onClose, articleToEdit }: ArticleFormProps) {
   const t = useTranslations("admin.article.form");
+  const localizedField = useLocalizedField();
   const {
     createArticle,
     createArticleIsPending,
@@ -71,14 +78,14 @@ function ArticleForm({ onClose, articleToEdit }: ArticleFormProps) {
   useEffect(() => {
     if (articleToEdit?.id) {
       reset({
-        title: articleToEdit.title,
-        excerpt: articleToEdit.excerpt,
-        content: articleToEdit.content,
+        title: String(localizedField(articleToEdit, "title")) || "",
+        excerpt: String(localizedField(articleToEdit, "excerpt")) || "",
+        content: String(localizedField(articleToEdit, "content")) || "",
         status: articleToEdit.status,
         tags: articleToEdit.tags,
       });
     }
-  }, [reset, articleToEdit]);
+  }, [reset, articleToEdit?.id, localizedField]);
 
   const onSubmit: SubmitHandler<CreateArticleSchemaType> = async (data) => {
     console.log("date =>", data);
@@ -212,16 +219,23 @@ function ArticleForm({ onClose, articleToEdit }: ArticleFormProps) {
       </div>
 
       {/* SUBMIT */}
-      <div className="flex justify-end gap-3">
-        <button type="button" className="btn" onClick={onClose}>
+      <div className="flex justify-center gap-3">
+        <button type="button" className="submit-btn" onClick={onClose}>
           {t("cancel")}
         </button>
 
-        <button type="submit" disabled={createArticleIsPending} className="btn">
-          {createArticleIsPending ? (
+        <button
+          type="submit"
+          disabled={createArticleIsPending || editArticleIsPending}
+          className="submit-btn"
+        >
+          {createArticleIsPending || editArticleIsPending ? (
             <>
-              {t("creating")} <DotsLoader />
+              {articleToEdit ? t("updating") : t("creating")}
+              <DotsLoader />
             </>
+          ) : articleToEdit ? (
+            t("updateArticle")
           ) : (
             t("createArticle")
           )}

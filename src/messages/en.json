@@ -27,9 +27,10 @@
   },
 
   "notFound": {
-    "title": "Page Not Found",
-    "description": "The page you're looking for doesn't exist or may have been moved.",
-    "goBack": "Go Back"
+    "code": "Error 404",
+    "heading": "This page is uncharted ink",
+    "description": "The page you're looking for doesn't exist",
+    "backHome": "Back to home"
   },
 
   "admin": {
@@ -78,8 +79,10 @@
 
         "cancel": "Cancel",
 
-        "creating": "Creating...",
-        "createArticle": "Create Article"
+        "createArticle": "Create Article",
+        "updateArticle": "Update Article",
+        "creating": "Creating",
+        "updating": "Updating"
       },
 
       "details": {
@@ -520,7 +523,7 @@
       "deleteFailed": "Deleting article failed, try again later",
 
       "editSuccess": "{name} edited successfully",
-      "editFailed":"Edit article failed, try again later"
+      "editFailed": "Edit article failed, try again later"
     }
   }
 }

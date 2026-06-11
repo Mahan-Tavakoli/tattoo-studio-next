@@ -8,9 +8,14 @@ import Modal from "@/components/ui/Modal";
 import TattooArtistsRow from "./TattooArtistsRow";
 import TattooArtistsForm from "./TattooArtistsForm";
 import { toast } from "react-toastify";
+import usePagination from "@/components/hook/usePagination";
+import Pagination from "@/components/templates/admin/Pagination";
 
 function TattooArtistsTable() {
   const { allArtists, allArtistsIsError, allArtistsIsLoading } = useArtist();
+
+  const { currentPage, paginatedData, setCurrentPage, totalPages } =
+    usePagination(allArtists || []);
 
   const [artistToEdit, setArtistToEdit] = useState<ArtistInfo | null>(null);
 
@@ -53,7 +58,7 @@ function TattooArtistsTable() {
               </td>
             </Table.Row>
           ) : (
-            allArtists.map((artist, index) => (
+            paginatedData.map((artist, index) => (
               <TattooArtistsRow
                 key={artist.id}
                 artist={artist}
@@ -65,13 +70,12 @@ function TattooArtistsTable() {
           )}
         </Table.Body>
       </Table>
-      {/* <div className="flex justify-center mt-4">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={goToPage}
-                />
-              </div> */}
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        totalPages={totalPages}
+      />
       {/* Edit Course */}
       {artistToEdit && (
         <Modal

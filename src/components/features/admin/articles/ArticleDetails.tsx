@@ -9,19 +9,18 @@ import formattedDate from "@/components/utils/formatter";
 import Link from "next/link";
 import { CiCalendar, CiClock2, CiEdit, CiTrash } from "react-icons/ci";
 import { HiOutlineDocumentText, HiOutlineTag } from "react-icons/hi";
-import Image from "next/image";
 import { BsArrowLeft } from "react-icons/bs";
 import Modal from "@/components/ui/Modal";
 import ConfirmDelete from "@/components/ui/ConfirmDelete";
 import { useTranslations } from "next-intl";
 import ArticleForm from "./ArticleForm";
-
-/* -------------------------------------------------------------------------- */
-/*                               MAIN COMPONENT                               */
-/* -------------------------------------------------------------------------- */
+import useLocalizedField from "@/components/hook/useLocalizedField";
+import BlurImage from "@/components/templates/skeleton/BlurImage";
 
 function ArticleDetails() {
   const t = useTranslations("admin.article.details");
+  const localizedField = useLocalizedField();
+
   const {
     articleData,
     singleArticleDataIsLoading,
@@ -31,35 +30,29 @@ function ArticleDetails() {
   } = useArticle();
 
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
 
   const article = articleData;
 
-  /* -------------------------------------------------------------------------- */
-  /*                                  METRICS                                   */
-  /* -------------------------------------------------------------------------- */
+  const title = String(localizedField(article ?? {}, "title")) || "";
+  const excerpt = String(localizedField(article ?? {}, "excerpt")) || "";
+  const content = String(localizedField(article ?? {}, "content")) || "";
 
   const wordCount = useMemo(() => {
-    if (!article?.content) return 0;
+    if (!content) return 0;
 
-    return article.content.trim().split(/\s+/).length;
-  }, [article]);
+    return content.trim().split(/\s+/).length;
+  }, [content]);
 
   const readingTime = useMemo(() => {
     return Math.ceil(wordCount / 200);
   }, [wordCount]);
 
-  /* -------------------------------------------------------------------------- */
-  /*                               LOADING STATE                                */
-  /* -------------------------------------------------------------------------- */
-
-    useEffect(() => {
+  useEffect(() => {
     if (singleArticleDataIsError) {
       toast.error(t("loadError"));
     }
   }, [singleArticleDataIsError, t]);
-
-
 
   if (singleArticleDataIsLoading) {
     return (
@@ -81,12 +74,6 @@ function ArticleDetails() {
     );
   }
 
-  /* -------------------------------------------------------------------------- */
-  /*                                ERROR STATE                                 */
-  /* -------------------------------------------------------------------------- */
-
-
-
   if (singleArticleDataIsError || !article) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
@@ -102,16 +89,10 @@ function ArticleDetails() {
   return (
     <>
       <div className="p-4 md:p-6 space-y-6">
-        {/* ------------------------------------------------------------------ */}
-        {/* HEADER */}
-        {/* ------------------------------------------------------------------ */}
-
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl md:text-3xl font-semibold">
-                {article.title}
-              </h1>
+              <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
 
               <StatusBadge
                 status={article.status}
@@ -134,15 +115,14 @@ function ArticleDetails() {
           {/* ACTIONS */}
 
           <div className="flex items-center gap-3">
-            <Link
-              href={`/admin/article/edit/${article.id}`}
+            <button
               className="btn flex items-center gap-x-2 text-sm"
               onClick={() => setIsEditOpen(true)}
             >
               <span>{t("edit")}</span>
 
               <CiEdit className="size-5" />
-            </Link>
+            </button>
 
             <button
               className="btn bg-red-950 hover:bg-red-900 text-sm flex items-center gap-x-2"
@@ -154,10 +134,6 @@ function ArticleDetails() {
             </button>
           </div>
         </div>
-
-        {/* ------------------------------------------------------------------ */}
-        {/* METRICS */}
-        {/* ------------------------------------------------------------------ */}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           <MetricCard
@@ -187,10 +163,6 @@ function ArticleDetails() {
           />
         </div>
 
-        {/* ------------------------------------------------------------------ */}
-        {/* CONTENT */}
-        {/* ------------------------------------------------------------------ */}
-
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           {/* LEFT SIDE */}
 
@@ -199,9 +171,9 @@ function ArticleDetails() {
 
             <Card title={t("coverImage")}>
               <div className="relative w-full h-100 overflow-hidden rounded-2xl">
-                <Image
+                <BlurImage
                   src={article.coverUrl}
-                  alt={article.title}
+                  alt={title}
                   fill
                   className="object-cover"
                 />
@@ -211,14 +183,14 @@ function ArticleDetails() {
             {/* EXCERPT */}
 
             <Card title={t("coverImage")}>
-              <p className="leading-8 text-snow/70">{article.excerpt}</p>
+              <p className="leading-8 text-snow/70">{excerpt}</p>
             </Card>
 
             {/* CONTENT */}
 
             <Card title={t("articleContent")}>
               <div className="space-y-5 text-snow/80 leading-8 whitespace-pre-line">
-                {article.content}
+                {content}
               </div>
             </Card>
           </div>
@@ -341,10 +313,6 @@ function ArticleDetails() {
           </div>
         </div>
 
-        {/* ------------------------------------------------------------------ */}
-        {/* BACK BUTTON */}
-        {/* ------------------------------------------------------------------ */}
-
         <div>
           <Link href="/admin/article" className="btn text-sm">
             <BsArrowLeft className="size-5" />
@@ -353,17 +321,13 @@ function ArticleDetails() {
         </div>
       </div>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* DELETE MODAL */}
-      {/* ------------------------------------------------------------------ */}
-
       {isDeleteOpen && (
         <Modal
           onClose={() => setIsDeleteOpen(false)}
           title={t("deleteArticle")}
         >
           <ConfirmDelete
-            resourceName={`Article ${article.title}`}
+            resourceName={`Article ${title}`}
             disabled={deleteArticleIsPending}
             onClose={() => setIsDeleteOpen(false)}
             onConfirm={() => {
@@ -379,26 +343,22 @@ function ArticleDetails() {
 
       {/* edit modal */}
       {isEditOpen && (
-              <Modal
-                title={`Edit ${article.title}`}
-                onClose={() => setIsEditOpen(false)}
-                large
-              >
-                <ArticleForm
-                  articleToEdit={article}
-                  onClose={() => setIsEditOpen(false)}
-                />
-              </Modal>
-            )}
+        <Modal
+          title={`Edit ${title}`}
+          onClose={() => setIsEditOpen(false)}
+          large
+        >
+          <ArticleForm
+            articleToEdit={article}
+            onClose={() => setIsEditOpen(false)}
+          />
+        </Modal>
+      )}
     </>
   );
 }
 
 export default ArticleDetails;
-
-/* -------------------------------------------------------------------------- */
-/*                               HELPER COMPONENTS                            */
-/* -------------------------------------------------------------------------- */
 
 function Card({
   title,

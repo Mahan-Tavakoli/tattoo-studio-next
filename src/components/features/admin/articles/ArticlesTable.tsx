@@ -9,27 +9,32 @@ import ArticlesRow from "./ArticlesRow";
 import { useTranslations } from "next-intl";
 import Modal from "@/components/ui/Modal";
 import ArticleForm from "./ArticleForm";
+import useLocalizedField from "@/components/hook/useLocalizedField";
+import usePagination from "@/components/hook/usePagination";
+import Pagination from "@/components/templates/admin/Pagination";
 
 function ArticlesTable() {
   const t = useTranslations("admin.article.table");
+  const localizedField = useLocalizedField();
   const { allArticles, allArticlesIsError, allArticlesIsLoading } =
     useArticle();
-  console.log("allArticles =>", allArticles);
+
+  const { currentPage, setCurrentPage, totalPages, paginatedData } =
+    usePagination(allArticles || []);
+
   const [articleToEdit, setArticleToEdit] = useState<ArticleInfo | null>(null);
 
+  const title = String(localizedField(articleToEdit ?? {}, "title")) || "";
 
   useEffect(() => {
-  if (allArticlesIsError) {
-    toast.error(t("loadingError"));
-  }
-}, [allArticlesIsError, t]);
-
+    if (allArticlesIsError) {
+      toast.error(t("loadingError"));
+    }
+  }, [allArticlesIsError, t]);
 
   if (allArticlesIsError) {
     return (
-      <div className="text-red-500 text-sm">
-         {t("loadingErrorDescription")}
-      </div>
+      <div className="text-red-500 text-sm">{t("loadingErrorDescription")}</div>
     );
   }
 
@@ -60,29 +65,28 @@ function ArticlesTable() {
               </td>
             </Table.Row>
           ) : (
-            allArticles.map((article, index) => (
+            paginatedData.map((article, index) => (
               <ArticlesRow
                 key={article.id}
                 article={article}
-                //   index={(currentPage - 1) * 6 + index}
-                index={index}
+                index={(currentPage - 1) * 6 + index + 1}
                 onEdit={() => setArticleToEdit(article)}
               />
             ))
           )}
         </Table.Body>
       </Table>
-      {/* <div className="flex justify-center mt-4">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={goToPage}
-                />
-              </div> */}
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        totalPages={totalPages}
+      />
+
       {/* Edit Course */}
       {articleToEdit && (
         <Modal
-          title={`Edit ${articleToEdit.title}`}
+          title={`Edit ${title}`}
           onClose={() => setArticleToEdit(null)}
           large
         >

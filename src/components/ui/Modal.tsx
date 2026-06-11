@@ -53,7 +53,7 @@ function Modal({ onClose, children, title, large = false }: ModalProps) {
                 w-[95vw]
                 max-w-6xl
                 h-[90vh]
-                z-1000
+                z-100!
               `
               : `
                 w-[calc(100vw-25%)]

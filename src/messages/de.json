@@ -27,9 +27,10 @@
   },
 
   "notFound": {
-    "title": "Seite nicht gefunden",
-    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
-    "goBack": "Zurück"
+    "code": "Fehler 404",
+    "heading": "Diese Seite ist unbekanntes Terrain",
+    "description": "Die gesuchte Seite existiert nicht",
+    "backHome": "Zur Startseite"
   },
 
   "admin": {
@@ -78,8 +79,10 @@
 
         "cancel": "Abbrechen",
 
-        "creating": "Wird erstellt...",
-        "createArticle": "Artikel erstellen"
+        "createArticle": "Artikel erstellen",
+        "updateArticle": "Artikel aktualisieren",
+        "creating": "Wird erstellt",
+        "updating": "Wird aktualisiert"
       },
 
       "details": {
@@ -515,7 +518,7 @@
       "deleteFailed": "Artikel konnte nicht gelöscht werden. Bitte versuche es später erneut.",
 
       "editSuccess": "{name} erfolgreich bearbeitet",
-      "editFailed":"Artikel konnte nicht bearbeitet werden. Bitte später erneut versuchen."
+      "editFailed": "Artikel konnte nicht bearbeitet werden. Bitte später erneut versuchen."
     }
   }
 }

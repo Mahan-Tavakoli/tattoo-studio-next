@@ -10,6 +10,8 @@ import ConfirmDelete from "@/components/ui/ConfirmDelete";
 import { GuestArtistInfo } from "@/components/schema & types/guest-artist/guest-artist.types";
 import UpdateGuestArtistForm from "./UpdateGuestArtistForm";
 import { useTranslations } from "next-intl";
+import usePagination from "@/components/hook/usePagination";
+import Pagination from "@/components/templates/admin/Pagination";
 
 function GuestArtistTable() {
   const t = useTranslations("admin.guestArtists.table");
@@ -21,7 +23,10 @@ function GuestArtistTable() {
     deleteGuestArtist,
     deleteGuestArtistIsPending,
   } = useGuestArtist();
-  console.log("guestArtists =>", guestArtists);
+
+  const { currentPage, paginatedData, setCurrentPage, totalPages } =
+    usePagination(guestArtists || []);
+
   const [guestArtistToEdit, setGuestArtistToEdit] =
     useState<GuestArtistInfo | null>(null);
   const [guestArtistToDelete, setGuestArtistToDelete] =
@@ -69,12 +74,11 @@ function GuestArtistTable() {
               </td>
             </Table.Row>
           ) : (
-            guestArtists.map((guestArtist, index) => (
+            paginatedData.map((guestArtist, index) => (
               <GuestArtistRow
                 key={guestArtist.id}
                 guestArtist={guestArtist}
-                //index={(currentPage - 1) * 6 + index}
-                index={index}
+                index={(currentPage - 1) * 6 + index + 1}
                 onEdit={() => setGuestArtistToEdit(guestArtist)}
                 onDelete={() => setGuestArtistToDelete(guestArtist)}
               />
@@ -82,13 +86,12 @@ function GuestArtistTable() {
           )}
         </Table.Body>
       </Table>
-      {/* <div className="flex justify-center mt-4">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={goToPage}
-                />
-              </div> */}
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        totalPages={totalPages}
+      />
 
       {/* Edit Course */}
       {guestArtistToEdit && (
