@@ -8,7 +8,7 @@ export default function NotFound() {
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-carbon-black px-6 py-20 text-center">
       {/* Ghost 404 background number */}
       <span
-        className="pointer-events-none absolute select-none text-[240px] font-bold leading-none tracking-tighter text-snow/30"
+        className="pointer-events-none absolute select-none text-[240px] font-bold leading-none tracking-tighter text-snow/5"
         aria-hidden="true"
       >
         404
@@ -48,10 +48,10 @@ export default function NotFound() {
       <div className="mx-auto mb-5 h-px w-8 bg-snow/30" />
 
       {/* Heading */}
-      <h1 className="mb-3 text-3xl font-medium text-snow">{t("heading")}</h1>
+      <h1 className="mb-3 text-3xl font-medium text-snow/75">{t("heading")}</h1>
 
       {/* Subtext */}
-      <p className="mb-8 max-w-xs text-sm leading-relaxed text-snow/50">
+      <p className="mb-8 max-w-xs text-base leading-relaxed text-snow/75">
         {t("description")}
       </p>
 
