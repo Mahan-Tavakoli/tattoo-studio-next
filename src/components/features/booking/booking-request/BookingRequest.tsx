@@ -9,7 +9,7 @@ import SelectBox from "@/components/ui/SelectBox";
 import TextAreaField from "@/components/ui/TextAreaField";
 import { FieldError, useFormContext } from "react-hook-form";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import useConsultSlot from "../../consultSlot/useConsultSlot";
+import useConsultSlot from "../../admin/booking/consult-slot/useConsultSlot";
 import { useState } from "react";
 import { PublicBudgetRange } from "@/components/constants/Constants";
 import useArtist from "../../artist/useArtist";

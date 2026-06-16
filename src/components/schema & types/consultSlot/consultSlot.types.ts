@@ -10,7 +10,7 @@ export interface PublicConsultAvailabiltyResponse {
 
 // admin consult slot
 export interface ConsultSlotsProps {
-  date: string;
+  dates: string[];
   maxCount: number;
 }
 

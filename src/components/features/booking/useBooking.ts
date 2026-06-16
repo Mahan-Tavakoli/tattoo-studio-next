@@ -1,5 +1,4 @@
 import bookingAppointmentApi, {
-  checkInBookingApi,
   createTattooScheduleApi,
   getAllBookingsApi,
   getBookingByIdApi,
@@ -132,35 +131,7 @@ export default function useBooking() {
     },
   });
 
-  // check in booking
-  const { isPending: checkInBookingIsPending, mutate: checkInBooking } =
-    useMutation({
-      mutationFn: checkInBookingApi,
-
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["single-booking", bookingId],
-        });
-        queryClient.invalidateQueries({ queryKey: ["bookings"] });
-        toast.success(t("toast.clientCheckedIn"));
-      },
-
-      onError: () => {
-        toast.error(t("toast.clientCheckInFailed"));
-      },
-    });
-
-  // get appointments
-  /*   const {
-    data: appointmentsData,
-    isLoading: appointmentsIsLoading,
-    isError: appointmentsIsError,
-  } = useQuery({
-    queryFn: getAppointmentsApi,
-    queryKey: ["appointments"],
-  });
-
-  const appointments = appointmentsData || []; */
+  
 
   return {
     // public booking
@@ -190,14 +161,5 @@ export default function useBooking() {
     //  schedule tattoo
     scheduleTattoo,
     scheduleTattooIsPending,
-
-    // check in
-    checkInBooking,
-    checkInBookingIsPending,
-
-    // appointments
-    /*     appointments,
-    appointmentsIsLoading,
-    appointmentsIsError, */
   };
 }

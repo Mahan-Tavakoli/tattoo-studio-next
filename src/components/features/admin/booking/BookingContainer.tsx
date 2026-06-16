@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { PiPlus } from "react-icons/pi";
 import BookingTable from "./BookingTable";
 import { useTranslations } from "next-intl";
+import ConsultSlotForm from "./consult-slot/ConsultSlotForm";
 
 function BookingContainer() {
   const t = useTranslations("admin.bookings");
@@ -34,9 +35,8 @@ function BookingContainer() {
       <BookingTable />
       {/* Add New Category */}
       {isOpen && (
-        <Modal title="Consult Availability" onClose={handleClose}>
-          <h1>Consult Slot</h1>
-          {/* <TattooArtistsForm onClose={handleClose} /> */}
+        <Modal title={t("consultAvailability")} onClose={handleClose}>
+          <ConsultSlotForm onClose={handleClose} />
         </Modal>
       )}
     </div>

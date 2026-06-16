@@ -68,13 +68,6 @@ export function createTattooScheduleApi({
     .then(({ data }: AxiosResponse<TattooScheduledProps>) => data);
 }
 
-// check-in
-export function checkInBookingApi(bookingId: string) {
-  return http
-    .post(`/admin/booking-requests/${bookingId}/check-in`)
-    .then(({ data }) => data);
-}
-
 // walk-in booking
 export function walkInBookingAppointmentApi(
   newWalkInBooking: FormData,
@@ -100,7 +93,3 @@ export function walkInBookingUploads({
     .post(`/public/booking/${uploadToken}/uploads`, images)
     .then(({ data }: AxiosResponse<UploadFormInputs>) => data);
 }
-
-/* export function getAppointmentsApi() {
-  return http.get("/admin/appointments").then(({ data }) => data);
-} */

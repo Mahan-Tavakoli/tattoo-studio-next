@@ -50,6 +50,7 @@ export interface BookingInfo {
   bookingType: string;
   consultDate: Date;
   consultSlotId: string;
+  checkedInAt: Date | null;
   client: ClientInfoProps;
 }
 
