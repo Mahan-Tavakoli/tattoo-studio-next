@@ -204,6 +204,28 @@
         "noImages": "Keine Bilder hochgeladen",
 
         "backToBookings": "Zurück zu den Buchungen"
+      },
+      "consultSlot": {
+        "title": "Beratungsverfügbarkeit",
+
+        "form": {
+          "dates": "Daten",
+          "maxCount": "Maximale Anzahl",
+
+          "create": "Beratungstermin erstellen",
+          "creating": "Wird erstellt"
+        },
+
+        "validation": {
+          "dateRangeRequired": "Bitte wähle einen Datumsbereich aus",
+          "maxCountRequired": "Die maximale Anzahl ist erforderlich",
+          "maxCountPositive": "Die maximale Anzahl muss größer als 0 sein"
+        },
+
+        "toast": {
+          "created": "Beratungstermin erfolgreich erstellt",
+          "createFailed": "Der Beratungstermin konnte nicht erstellt werden. Bitte versuche es später erneut."
+        }
       }
     },
     "guestArtists": {
@@ -302,6 +324,47 @@
           "updated": "Die Arbeitsplatz-Konfiguration wurde erfolgreich aktualisiert!",
           "updateFailed": "Die Arbeitsplatz-Konfiguration konnte nicht aktualisiert werden. Bitte versuche es später erneut."
         }
+      }
+    },
+    "appointment": {
+      "title": "Termine",
+
+      "filters": {
+        "date": "Datum",
+        "day": "Tag",
+        "week": "Woche",
+        "month": "Monat",
+        "year": "Jahr"
+      },
+
+      "table": {
+        "index": "#",
+        "client": "Kunde",
+        "date": "Datum",
+        "status": "Status",
+        "details": "Details",
+        "operation": "Aktionen",
+
+        "empty": "Keine Termine gefunden",
+
+        "loadError": "Termine konnten nicht geladen werden",
+        "loadErrorDescription": "Beim Laden der Termine ist ein Fehler aufgetreten",
+
+        "checkIn": "Einchecken"
+      },
+
+      "row": {
+        "details": "Details",
+        "checkedIn": "Eingecheckt"
+      },
+
+      "modal": {
+        "checkIn": "Einchecken"
+      },
+
+      "toast": {
+        "clientCheckedIn": "Kunde erfolgreich eingecheckt",
+        "clientCheckInFailed": "Der Kunde konnte nicht eingecheckt werden. Bitte versuche es später erneut."
       }
     }
   },

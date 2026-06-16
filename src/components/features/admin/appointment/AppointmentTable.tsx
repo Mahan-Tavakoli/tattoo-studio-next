@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import useAppointment from "./useAppointment";
 import usePagination from "@/components/hook/usePagination";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import Table from "@/components/ui/Table";
 import Pagination from "@/components/templates/admin/Pagination";
@@ -18,7 +18,7 @@ interface AppointmentTableProps {
 }
 
 function AppointmentTable({ date, period }: AppointmentTableProps) {
-  // const t = useTranslations("admin.appointment.table");
+  const t = useTranslations("admin.appointment");
   const {
     appointments,
     appointmentsIsError,
@@ -26,21 +26,33 @@ function AppointmentTable({ date, period }: AppointmentTableProps) {
     checkInBooking,
     checkInBookingIsPending,
   } = useAppointment({ date, period });
-  console.log("appointments =>", appointments);
+
+  /* filter appointment based on status */
+  const filteredAppointments = useMemo(
+    () =>
+      appointments?.items?.filter((appointment) => {
+        const status = appointment.booking.status;
+
+        return status === "CONSULT_APPROVED" || status === "TATTOO_SCHEDULED";
+      }) ?? [],
+    [appointments],
+  );
+
+  /* pagination hook */
   const { currentPage, setCurrentPage, totalPages, paginatedData } =
-    usePagination(appointments?.items ?? []);
+    usePagination(filteredAppointments);
 
   const [checkInClientAppointment, setCheckInClientAppointment] =
     useState<AppointmentInfo | null>(null);
 
   useEffect(() => {
     if (appointmentsIsError) {
-      toast.error("error");
+      toast.error(t("table.loadError"));
     }
   }, [appointmentsIsError]);
 
   if (appointmentsIsError) {
-    return <div className="text-red-500 text-sm">Error</div>;
+    return <div className="text-red-500 text-sm">{t("table.loadError")}</div>;
   }
 
   return (
@@ -48,11 +60,11 @@ function AppointmentTable({ date, period }: AppointmentTableProps) {
       <Table>
         <Table.Header>
           <th className="py-2">#</th>
-          <th>Client</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Details</th>
-          <th>Operation</th>
+          <th>{t("table.client")}</th>
+          <th>{t("table.date")}</th>
+          <th>{t("table.status")}</th>
+          <th>{t("table.details")}</th>
+          <th>{t("table.operation")}</th>
         </Table.Header>
         <Table.Body>
           {appointmentsIsLoading ? (
@@ -66,7 +78,7 @@ function AppointmentTable({ date, period }: AppointmentTableProps) {
           ) : appointments?.items?.length === 0 ? (
             <Table.Row>
               <td colSpan={4} className="py-4">
-                empty
+                {t("table.empty")}
               </td>
             </Table.Row>
           ) : (
@@ -91,7 +103,7 @@ function AppointmentTable({ date, period }: AppointmentTableProps) {
       {/* check in */}
       {checkInClientAppointment && (
         <Modal
-          title="Check In"
+          title={t("modal.checkIn")}
           onClose={() => setCheckInClientAppointment(null)}
         >
           <ConfirmCheckIn

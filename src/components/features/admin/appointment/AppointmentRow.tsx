@@ -17,7 +17,6 @@ function AppointmentRow({
   index,
   onCheckIn,
 }: AppointmentRowProps) {
-  //const t = useTranslations("admin.appointment.row");
   return (
     <Table.Row>
       <td>{index}</td>

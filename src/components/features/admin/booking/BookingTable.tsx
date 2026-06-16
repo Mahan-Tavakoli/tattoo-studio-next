@@ -21,9 +21,6 @@ function BookingTable() {
   const [bookingToUpdateStatus, setBookingToUpdateStatus] =
     useState<BookingInfo | null>(null);
 
-  const [checkInClientBooking, setCheckInClientBooking] =
-    useState<BookingInfo | null>(null);
-
   useEffect(() => {
     if (bookingIsError) {
       toast.error(t("loadError"));
@@ -74,7 +71,6 @@ function BookingTable() {
                 booking={booking}
                 index={(currentPage - 1) * 6 + index + 1}
                 onEdit={() => setBookingToUpdateStatus(booking)}
-                onCheckIn={() => setCheckInClientBooking(booking)}
               />
             ))
           )}
@@ -98,16 +94,6 @@ function BookingTable() {
             booking={bookingToUpdateStatus}
             onClose={() => setBookingToUpdateStatus(null)}
           />
-        </Modal>
-      )}
-
-      {/* Check in */}
-      {checkInClientBooking && (
-        <Modal
-          onClose={() => setCheckInClientBooking(null)}
-          title={t("clientCheckIn")}
-        >
-          {t("checkIn")}
         </Modal>
       )}
     </>

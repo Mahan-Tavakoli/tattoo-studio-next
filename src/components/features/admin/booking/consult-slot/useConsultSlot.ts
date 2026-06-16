@@ -4,9 +4,11 @@ import getConsultAvailabilityApi, {
 } from "@/components/services/consultSlotService";
 import { formatMonth } from "@/components/utils/formatter";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
 
 export default function useConsultSlot(month?: Date) {
+  const t = useTranslations("admin.bookings.consultSlot.toast");
   const queryClient = useQueryClient();
 
   // public availability
@@ -28,13 +30,15 @@ export default function useConsultSlot(month?: Date) {
       mutationFn: createNewConsultSlotApi,
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ["consult-slots", "public-consult"],
+          queryKey: ["consult-slots"],
         });
-        toast.success("Consult slot created successfully");
+        queryClient.invalidateQueries({ queryKey: ["public-consult"] });
+
+        toast.success(t("created"));
       },
 
       onError: () => {
-        toast.error("Consult slot isn't created, try again later");
+        toast.error(t("createFailed"));
       },
     });
 

@@ -14,11 +14,10 @@ import { useTranslations } from "next-intl";
 interface BookingRowProps {
   index: number;
   onEdit: () => void;
-  onCheckIn: () => void;
   booking: BookingInfo;
 }
 
-function BookingRow({ booking, index, onEdit, onCheckIn }: BookingRowProps) {
+function BookingRow({ booking, index, onEdit }: BookingRowProps) {
   const t = useTranslations("admin.bookings.row");
   return (
     <Table.Row>
@@ -64,21 +63,12 @@ function BookingRow({ booking, index, onEdit, onCheckIn }: BookingRowProps) {
               </span>
             </span>
           ) : (
-            <>
-              <button
-                className="flex items-center justify-center size-9 rounded-xl border border-snow/10 hover:bg-black bg-onyx text-snow/75 text-center transition-all duration-300 hover:border-snow/25"
-                onClick={onCheckIn}
-              >
-                <CircleCheck className="size-5" />
-              </button>
-
-              <button
-                className="flex items-center justify-center size-9 rounded-xl border border-snow/10 hover:bg-black bg-onyx text-snow/75 text-center transition-all duration-300 hover:border-snow/25"
-                onClick={onEdit}
-              >
-                <CiEdit className="size-5" />
-              </button>
-            </>
+            <button
+              className="flex items-center justify-center size-9 rounded-xl border border-snow/10 hover:bg-black bg-onyx text-snow/75 text-center transition-all duration-300 hover:border-snow/25"
+              onClick={onEdit}
+            >
+              <CiEdit className="size-5" />
+            </button>
           )}
         </div>
       </td>

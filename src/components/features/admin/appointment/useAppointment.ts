@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useMemo } from "react";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface UseAppointmentProps {
   date?: Date;
@@ -18,6 +19,7 @@ export default function useAppointment({
   period = "day",
   timezone = "Europe/Berlin",
 }: UseAppointmentProps = {}) {
+  const t = useTranslations("admin.appointments.toast");
   const queryClient = useQueryClient();
   const params = useParams();
   const formattedDate = useMemo(() => formatDate(date), [date]);
@@ -45,13 +47,11 @@ export default function useAppointment({
         queryClient.invalidateQueries({ queryKey: ["bookings"] });
         queryClient.invalidateQueries({ queryKey: ["appointments"] });
 
-        //toast.success(t("toast.clientCheckedIn"));
-        toast.success("success");
+        toast.success(t("clientCheckedIn"));
       },
 
       onError: () => {
-        //toast.error(t("toast.clientCheckInFailed"));
-        toast.error("error");
+        toast.error(t("clientCheckInFailed"));
       },
     });
 

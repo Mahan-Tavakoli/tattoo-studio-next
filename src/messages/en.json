@@ -205,6 +205,28 @@
         "noImages": "No images uploaded",
 
         "backToBookings": "Back to Bookings"
+      },
+      "consultSlot": {
+        "title": "Consult Availability",
+
+        "form": {
+          "dates": "Dates",
+          "maxCount": "Max Count",
+
+          "create": "Create Consult Slot",
+          "creating": "Creating"
+        },
+
+        "validation": {
+          "dateRangeRequired": "Please select a date range",
+          "maxCountRequired": "Maximum count is required",
+          "maxCountPositive": "Maximum count must be greater than 0"
+        },
+
+        "toast": {
+          "created": "Consult slot created successfully",
+          "createFailed": "Consult slot could not be created. Please try again later."
+        }
       }
     },
     "guestArtists": {
@@ -303,6 +325,47 @@
           "updated": "Station configuration updated successfully!",
           "updateFailed": "Failed to update station configuration. Please try again later."
         }
+      }
+    },
+    "appointment": {
+      "title": "Appointments",
+
+      "filters": {
+        "date": "Date",
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "year": "Year"
+      },
+
+      "table": {
+        "index": "#",
+        "client": "Client",
+        "date": "Date",
+        "status": "Status",
+        "details": "Details",
+        "operation": "Operation",
+
+        "empty": "No appointments found",
+
+        "loadError": "Failed to load appointments",
+        "loadErrorDescription": "An error occurred while loading appointments",
+
+        "checkIn": "Check In"
+      },
+
+      "row": {
+        "details": "Details",
+        "checkedIn": "Checked In"
+      },
+
+      "modal": {
+        "checkIn": "Check In"
+      },
+
+      "toast": {
+        "clientCheckedIn": "Client checked in successfully",
+        "clientCheckInFailed": "Failed to check in client. Please try again later."
       }
     }
   },

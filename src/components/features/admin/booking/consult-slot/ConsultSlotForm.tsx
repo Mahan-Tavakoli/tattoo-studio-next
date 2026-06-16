@@ -10,19 +10,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import DatePickerField from "@/components/ui/DatePickerField";
 import InputField from "@/components/ui/InputField";
 import DotsLoader from "@/components/ui/DotsLoader";
+import { getDatesInRange } from "@/components/utils/formatter";
+import { useTranslations } from "next-intl";
 
 interface ConsultSlotFormProps {
   onClose: () => void;
 }
 
 function ConsultSlotForm({ onClose }: ConsultSlotFormProps) {
-  //const t = useTranslations("admin.bookings.updateStatus");
+  const t = useTranslations("admin.bookings.consultSlot");
   const { createConsultSlot, createConsultSlotIsPending } = useConsultSlot();
 
   const {
     register,
     handleSubmit,
-    watch,
     control,
     formState: { errors, isValid },
     reset,
@@ -32,10 +33,13 @@ function ConsultSlotForm({ onClose }: ConsultSlotFormProps) {
   });
 
   const onSubmit: SubmitHandler<ConsultSlotFormValues> = (data) => {
+    const dates = getDatesInRange(data.dateRange.from, data.dateRange.to);
+
     const newConsultSlot = {
-      dates: data.dates,
+      dates: dates,
       maxCount: data.maxCount,
     };
+
     createConsultSlot(newConsultSlot);
     reset();
     onClose();
@@ -50,16 +54,18 @@ function ConsultSlotForm({ onClose }: ConsultSlotFormProps) {
         {/* Dates */}
         <DatePickerField<ConsultSlotFormValues>
           control={control}
-          errors={errors.dates as any}
-          label="Dates"
-          name="dates"
+          errors={errors.dateRange as any}
+          label={t("form.dates")}
+          name="dateRange"
           disablePast
           excludeDays={[0]}
           required
+          inline
+          mode="range"
         />
         {/* Max Count */}
         <InputField<ConsultSlotFormValues>
-          label="Max Count"
+          label={t("form.maxCount")}
           name="maxCount"
           errors={errors.maxCount}
           register={register}
@@ -75,10 +81,10 @@ function ConsultSlotForm({ onClose }: ConsultSlotFormProps) {
       >
         {createConsultSlotIsPending ? (
           <>
-            creating <DotsLoader />
+            {t("form.creating")} <DotsLoader />
           </>
         ) : (
-          "Create Consult Slot"
+          t("form.create")
         )}
       </button>
     </form>

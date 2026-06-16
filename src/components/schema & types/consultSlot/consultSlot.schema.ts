@@ -1,9 +1,18 @@
 import { z } from "zod";
 
 export const consultSlotSchema = z.object({
-  dates: z
-    .array(z.string())
-    .min(1, "At least one date is required"),
+  dateRange: z
+    .object({
+      from: z.date({
+        message: "Start date is required",
+      }),
+      to: z.date({
+        message: "End date is required",
+      }),
+    })
+    .refine((value) => value.from && value.to, {
+      message: "Please select a complete date range",
+    }),
 
   maxCount: z.coerce
     .number()
@@ -11,6 +20,4 @@ export const consultSlotSchema = z.object({
     .positive("Maximum count must be greater than 0"),
 });
 
-export type ConsultSlotFormValues = z.infer<
-  typeof consultSlotSchema
->;
+export type ConsultSlotFormValues = z.infer<typeof consultSlotSchema>;

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import {
   bookingStatusCancelReasonMap,
   bookingStatusMap,
@@ -48,4 +49,18 @@ export function formatBookingStatus(value?: string | null): string {
 export function formatBookingStatusCancelReason(value?: string | null): string {
   if (!value) return "-";
   return bookingStatusCancelReasonMap[value] || value;
+}
+
+export function getDatesInRange(start: Date, end: Date) {
+  const dates: string[] = [];
+
+  const current = new Date(start);
+
+  while (current <= end) {
+    dates.push(format(current, "yyyy-MM-dd"));
+
+    current.setDate(current.getDate() + 1);
+  }
+
+  return dates;
 }

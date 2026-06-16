@@ -5,12 +5,14 @@ import { useForm } from "react-hook-form";
 
 import AppointmentTable from "./AppointmentTable";
 import DatePickerField from "@/components/ui/DatePickerField";
+import { useTranslations } from "next-intl";
 
 type FilterForm = {
   date: Date;
 };
 
 function AppointmentContainer() {
+  const t = useTranslations("admin.appointment");
   const [period, setPeriod] = useState("day");
 
   const { control, watch } = useForm<FilterForm>({
@@ -25,7 +27,7 @@ function AppointmentContainer() {
     <div className="container">
       <div className="flex items-center justify-between">
         <h1 className="md:text-xl sm:max-md:text-base text-sm font-bold">
-          Appointments
+          {t("title")}
         </h1>
       </div>
 
@@ -33,7 +35,7 @@ function AppointmentContainer() {
       <div className="flex gap-4 mt-6 items-center justify-between bg-alabaster w-120 mx-auto p-4 text-onyx rounded-md">
         <div className="w-60">
           <DatePickerField
-            label="Date"
+            label={t("filters.date")}
             name="date"
             control={control}
             errors={undefined}
@@ -47,19 +49,16 @@ function AppointmentContainer() {
           onChange={(e) => setPeriod(e.target.value)}
           className="border border-onyx/50 rounded-lg px-3 py-3 bg-transparent"
         >
-          <option value="day">Day</option>
-          <option value="week">Week</option>
-          <option value="month">Month</option>
-          <option value="year">Year</option>
+          <option value="day">{t("filters.day")}</option>
+          <option value="week">{t("filters.week")}</option>
+          <option value="month">{t("filters.month")}</option>
+          <option value="year">{t("filters.year")}</option>
         </select>
       </div>
 
       <div className="w-full h-[0.5px] my-10 bg-snow/30" />
 
-      <AppointmentTable
-        date={selectedDate}
-        period={period}
-      />
+      <AppointmentTable date={selectedDate} period={period} />
     </div>
   );
 }
