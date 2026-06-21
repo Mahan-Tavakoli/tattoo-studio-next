@@ -1,9 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Users, CheckCircle, Clock, Send, AlertTriangle } from "lucide-react";
+import {
+  Mail,
+  Users,
+  CheckCircle,
+  Clock,
+  Send,
+  AlertTriangle,
+} from "lucide-react";
 import useCampaigns from "./useCampaigns";
-import { CampaignAudience } from "@/components/services/campaignService";
+import { CampaignAudience } from "@/components/schema & types/campaign/campaign.types";
 
 const AUDIENCES: {
   value: CampaignAudience;
@@ -40,10 +47,16 @@ export default function CampaignsContainer() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
 
-  const canSend = subject.trim().length > 0 && body.trim().length > 0 && !sendIsPending;
+  const canSend =
+    subject.trim().length > 0 && body.trim().length > 0 && !sendIsPending;
 
   const handleSend = () => {
-    sendCampaign({ subject, body, audience });
+    const payload = {
+      subject,
+      body,
+      audience,
+    };
+    sendCampaign(payload);
     setShowConfirm(false);
   };
 
@@ -73,13 +86,17 @@ export default function CampaignsContainer() {
             </div>
             <div>
               <h2 className="text-lg font-bold mb-1">Campaign Sent</h2>
-              <p className="text-sm text-snow/50">Your campaign has been dispatched</p>
+              <p className="text-sm text-snow/50">
+                Your campaign has been dispatched
+              </p>
             </div>
 
             <div className="w-full border border-snow/10 rounded-md divide-y divide-snow/10">
               <div className="flex justify-between px-5 py-3 text-sm">
                 <span className="text-snow/50">Queued</span>
-                <span className="font-bold text-dried-mustard">{sendResult.queued}</span>
+                <span className="font-bold text-dried-mustard">
+                  {sendResult.queued}
+                </span>
               </div>
               <div className="flex justify-between px-5 py-3 text-sm">
                 <span className="text-snow/50">Skipped (no email)</span>
@@ -92,7 +109,9 @@ export default function CampaignsContainer() {
               {sendResult.errors.length > 0 && (
                 <div className="flex justify-between px-5 py-3 text-sm">
                   <span className="text-snow/50">Errors</span>
-                  <span className="font-medium text-red-400">{sendResult.errors.length}</span>
+                  <span className="font-medium text-red-400">
+                    {sendResult.errors.length}
+                  </span>
                 </div>
               )}
             </div>
@@ -101,7 +120,9 @@ export default function CampaignsContainer() {
               <div className="w-full bg-red-500/10 border border-red-500/20 rounded-md p-4 text-xs text-red-400 text-left">
                 <p className="font-bold mb-2">Batch errors:</p>
                 {sendResult.errors.map((e, i) => (
-                  <p key={i} className="opacity-80">• {e}</p>
+                  <p key={i} className="opacity-80">
+                    • {e}
+                  </p>
                 ))}
               </div>
             )}
@@ -129,7 +150,6 @@ export default function CampaignsContainer() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8">
         {/* Left — Compose */}
         <div className="flex flex-col gap-y-8">
-
           {/* Audience */}
           <section>
             <p className="text-sm font-semibold text-snow/70 mb-4 uppercase tracking-widest">
@@ -143,13 +163,17 @@ export default function CampaignsContainer() {
                   className={`text-left p-4 rounded-lg border transition-all duration-200 flex flex-col gap-y-2 cursor-pointer ${
                     audience === a.value
                       ? "border-dried-mustard bg-dried-mustard/5"
-                      : "border-snow/15 hover:border-snow/30 bg-snow/[0.02]"
+                      : "border-snow/15 hover:border-snow/30 bg-snow/2"
                   }`}
                 >
-                  <div className={`${audience === a.value ? "text-dried-mustard" : "text-snow/50"}`}>
+                  <div
+                    className={`${audience === a.value ? "text-dried-mustard" : "text-snow/50"}`}
+                  >
                     {a.icon}
                   </div>
-                  <p className={`text-sm font-semibold ${audience === a.value ? "text-snow" : "text-snow/70"}`}>
+                  <p
+                    className={`text-sm font-semibold ${audience === a.value ? "text-snow" : "text-snow/70"}`}
+                  >
                     {a.label}
                   </p>
                   <p className="text-xs text-snow/40 leading-relaxed">
@@ -170,7 +194,7 @@ export default function CampaignsContainer() {
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               placeholder="e.g. Summer flash day — book your spot!"
-              className="w-full bg-snow/[0.03] border border-snow/15 rounded-lg px-4 py-3 text-sm text-snow placeholder:text-snow/25 focus:outline-none focus:border-dried-mustard/60 transition-colors"
+              className="w-full bg-snow/3 border border-snow/15 rounded-lg px-4 py-3 text-sm text-snow placeholder:text-snow/25 focus:outline-none focus:border-dried-mustard/60 transition-colors"
             />
           </section>
 
@@ -189,7 +213,7 @@ export default function CampaignsContainer() {
               onChange={(e) => setBody(e.target.value)}
               placeholder={"<p>Hey! We have a special event coming up…</p>"}
               rows={10}
-              className="w-full bg-snow/[0.03] border border-snow/15 rounded-lg px-4 py-3 text-sm text-snow placeholder:text-snow/25 focus:outline-none focus:border-dried-mustard/60 transition-colors resize-none font-mono"
+              className="w-full bg-snow/3 border border-snow/15 rounded-lg px-4 py-3 text-sm text-snow placeholder:text-snow/25 focus:outline-none focus:border-dried-mustard/60 transition-colors resize-none font-mono"
             />
           </section>
 
@@ -229,13 +253,17 @@ export default function CampaignsContainer() {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-snow/50">Subject</span>
-                <span className="font-medium text-right max-w-[180px] truncate">
-                  {subject || <span className="text-snow/30 italic">not set</span>}
+                <span className="font-medium text-right max-w-45 truncate">
+                  {subject || (
+                    <span className="text-snow/30 italic">not set</span>
+                  )}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-snow/50">Message</span>
-                <span className={`font-medium ${body.trim() ? "text-dried-mustard" : "text-snow/30 italic"}`}>
+                <span
+                  className={`font-medium ${body.trim() ? "text-dried-mustard" : "text-snow/30 italic"}`}
+                >
                   {body.trim() ? "Ready" : "not set"}
                 </span>
               </div>
@@ -246,7 +274,8 @@ export default function CampaignsContainer() {
             <div className="flex items-start gap-x-2 text-xs text-snow/35 leading-relaxed">
               <AlertTriangle className="size-4 shrink-0 mt-0.5" />
               <span>
-                Campaigns are sent immediately and cannot be undone. Double-check your subject and message before sending.
+                Campaigns are sent immediately and cannot be undone.
+                Double-check your subject and message before sending.
               </span>
             </div>
           </div>
@@ -263,11 +292,13 @@ export default function CampaignsContainer() {
               </div>
               <div>
                 <p className="font-bold text-sm">Send Campaign?</p>
-                <p className="text-xs text-snow/40 mt-0.5">This cannot be undone</p>
+                <p className="text-xs text-snow/40 mt-0.5">
+                  This cannot be undone
+                </p>
               </div>
             </div>
 
-            <div className="bg-snow/[0.03] border border-snow/10 rounded-md p-4 text-sm flex flex-col gap-y-2">
+            <div className="bg-snow/3 border border-snow/10 rounded-md p-4 text-sm flex flex-col gap-y-2">
               <div className="flex justify-between">
                 <span className="text-snow/50">Audience</span>
                 <span className="font-medium capitalize">
@@ -276,7 +307,9 @@ export default function CampaignsContainer() {
               </div>
               <div className="flex justify-between">
                 <span className="text-snow/50">Subject</span>
-                <span className="font-medium text-right max-w-[180px] truncate">{subject}</span>
+                <span className="font-medium text-right max-w-45 truncate">
+                  {subject}
+                </span>
               </div>
             </div>
 

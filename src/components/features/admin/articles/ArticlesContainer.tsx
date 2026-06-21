@@ -8,7 +8,7 @@ import ArticleForm from "./ArticleForm";
 import { useTranslations } from "next-intl";
 
 function ArticlesContainer() {
-  const t = useTranslations("admin.article")
+  const t = useTranslations("admin.article");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClose = useCallback(() => {
@@ -19,7 +19,7 @@ function ArticlesContainer() {
     <div className="container">
       <div className="flex items-center justify-between">
         <h1 className="md:text-xl sm:max-md:text-base text-sm font-bold">
-          {t('title')}
+          {t("title")}
         </h1>
         <div className="flex items-center">
           <button

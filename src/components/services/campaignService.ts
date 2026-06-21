@@ -1,23 +1,12 @@
 import { AxiosResponse } from "axios";
 import http from "./httpService";
-
-export type CampaignAudience = "all" | "completed" | "active";
-
-export interface SendCampaignPayload {
-  subject: string;
-  body: string;
-  audience: CampaignAudience;
-}
-
-export interface SendCampaignResult {
-  queued: number;
-  skipped: number;
-  batches: number;
-  errors: string[];
-}
+import {
+  SendCampaignPayload,
+  SendCampaignResult,
+} from "../schema & types/campaign/campaign.types";
 
 export function sendCampaignApi(
-  payload: SendCampaignPayload
+  payload: SendCampaignPayload,
 ): Promise<SendCampaignResult> {
   return http
     .post("/admin/campaigns/send", payload)

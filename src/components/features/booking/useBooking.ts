@@ -131,8 +131,6 @@ export default function useBooking() {
     },
   });
 
-  
-
   return {
     // public booking
     bookingAppointmentIsPending,

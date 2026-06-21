@@ -1,12 +1,16 @@
-import AdminSignInApi, { getMeApi, logoutApi } from "@/components/services/authService";
+import AdminSignInApi, {
+  getMeApi,
+  logoutApi,
+} from "@/components/services/authService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { setCookie, deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 export default function useAuth() {
   const queryClient = useQueryClient();
-
+  const router = useRouter();
   // Sign In
 
   const { isPending, mutateAsync: signIn } = useMutation({
@@ -16,7 +20,7 @@ export default function useAuth() {
 
       const user = await getMeApi();
 
-  queryClient.setQueryData(["user"], user);
+      queryClient.setQueryData(["user"], user);
 
       toast.success("Welcome back Admin!");
     },
@@ -43,6 +47,7 @@ export default function useAuth() {
     onSuccess: () => {
       deleteCookie("access_token");
       queryClient.setQueryData(["user"], null);
+      router.push("/");
       toast.success("Logged out successfully.");
     },
 

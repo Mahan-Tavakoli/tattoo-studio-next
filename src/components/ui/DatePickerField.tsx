@@ -260,7 +260,7 @@ function DatePickerField<T extends Record<string, any>>({
                 </div>
               ) : (
                 isOpen && (
-                  <div className="mb-2 z-50 p-4 bg-onyx border border-alabaster/10 rounded-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <div className="absolute top-full left-0 mt-2 z-100 p-4 bg-onyx border border-alabaster/10 rounded-2xl">
                     {calendar}
                   </div>
                 )

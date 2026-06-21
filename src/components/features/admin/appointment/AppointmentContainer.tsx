@@ -7,9 +7,9 @@ import AppointmentTable from "./AppointmentTable";
 import DatePickerField from "@/components/ui/DatePickerField";
 import { useTranslations } from "next-intl";
 
-type FilterForm = {
+interface FilterForm {
   date: Date;
-};
+}
 
 function AppointmentContainer() {
   const t = useTranslations("admin.appointment");
@@ -32,8 +32,8 @@ function AppointmentContainer() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-4 mt-6 items-center justify-between bg-alabaster w-120 mx-auto p-4 text-onyx rounded-md">
-        <div className="w-60">
+      <div className="flex gap-4 mt-6 items-center justify-between bg-alabaster max-w-120 mx-auto p-4 text-onyx rounded-md">
+        <div className="max-w-60">
           <DatePickerField
             label={t("filters.date")}
             name="date"
