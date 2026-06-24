@@ -1,10 +1,11 @@
 {
   "header": {
     "home": "Startseite",
-    "tattooArtists": "Artists",
+    "tattooArtists": "Künstler",
     "lookbook": "Lookbook",
     "booking": "Termin buchen",
     "guestArtist": "Gastkünstler",
+    "product": "Produkt",
     "articles": "Artikel",
     "aboutUs": "Über uns",
     "contact": "Kontakt",
@@ -19,10 +20,14 @@
 
   "navigation": {
     "home": "Startseite",
-    "artists": "Artists",
+    "tattooArtists": "Künstler",
     "lookbook": "Lookbook",
     "booking": "Buchung",
+    "guestArtist": "Gastkünstler",
+    "product": "Produkt",
     "articles": "Artikel",
+    "aboutUs": "Über uns",
+    "contact": "Kontakt",
     "more": "Mehr"
   },
 
@@ -378,7 +383,7 @@
     "artists": "Artists",
     "lookbook": "Lookbook",
     "articles": "Artikel",
-    "contact": "Kontakt",
+    "product": "Produkt",
 
     "videoFallback": "Ihr Browser unterstützt das Video-Tag nicht."
   },

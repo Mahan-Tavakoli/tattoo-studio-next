@@ -1,47 +1,88 @@
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import {
-  BookCheck,
   BookText,
   CalendarClock,
   ClipboardCheck,
   Home,
+  Images,
+  Info,
   LayoutDashboard,
   Mail,
   Palette,
+  Phone,
+  Store,
+  UserPlus,
   Users,
   Wallet,
 } from "lucide-react";
 
-export interface NavItem {
+export interface MenuItem {
   id: number;
   titleKey: string;
   icon?: React.ReactNode;
   href: string;
 }
 
-export const headerMenu: NavItem[] = [
-  { id: 1, titleKey: "home", href: "/" },
-  { id: 2, titleKey: "tattooArtists", href: "/tattoo-artists" },
-  { id: 3, titleKey: "lookbook", href: "/lookbook" },
-  { id: 4, titleKey: "booking", href: "/booking" },
-  { id: 5, titleKey: "guestArtist", href: "/guest" },
-  { id: 6, titleKey: "articles", href: "/articles" },
-  { id: 7, titleKey: "aboutUs", href: "/about" },
-  { id: 8, titleKey: "contact", href: "/contact" },
-];
-
-export const navMenu: NavItem[] = [
-  { id: 1, titleKey: "home", href: "/", icon: <Home /> },
-  { id: 2, titleKey: "artists", href: "/tattoo-artists", icon: <Users /> },
-  { id: 3, titleKey: "lookbook", href: "/lookbook", icon: <Palette /> },
-  { id: 4, titleKey: "booking", href: "/booking", icon: <CalendarClock /> },
+export const menuItems: MenuItem[] = [
+  {
+    id: 1,
+    titleKey: "home",
+    href: "/",
+    icon: <Home className="size-5" />,
+  },
+  {
+    id: 2,
+    titleKey: "tattooArtists",
+    href: "/tattoo-artists",
+    icon: <Users className="size-5" />,
+  },
+  {
+    id: 3,
+    titleKey: "lookbook",
+    href: "/lookbook",
+    icon: <Images className="size-5" />,
+  },
+  {
+    id: 4,
+    titleKey: "booking",
+    href: "/booking",
+    icon: <CalendarClock className="size-5" />,
+  },
   {
     id: 5,
+    titleKey: "guestArtist",
+    href: "/guest",
+    icon: <UserPlus className="size-5" />,
+  },
+  {
+    id: 6,
+    titleKey: "product",
+    href: "/product",
+    icon: <Store className="size-5" />,
+  },
+  {
+    id: 7,
     titleKey: "articles",
     href: "/articles",
     icon: <BookText className="size-5" />,
   },
+  {
+    id: 8,
+    titleKey: "aboutUs",
+    href: "/about",
+    icon: <Info className="size-5" />,
+  },
+  {
+    id: 9,
+    titleKey: "contact",
+    href: "/contact",
+    icon: <Phone className="size-5" />,
+  },
 ];
+
+export const headerMenu = menuItems.map(({ icon, ...item }) => item);
+
+export const navMenu = menuItems;
 
 export const socialMedia = [
   {
@@ -96,13 +137,13 @@ export const HomePageContent = [
   },
   {
     id: 4,
-    titleKey: "contact",
-    linkHref: "/contact",
+    titleKey: "product",
+    linkHref: "/product",
     imgSrc: "/images/gallery/IMG_0266.jpg",
   },
 ];
 
-export const AdminSidebarItems: NavItem[] = [
+export const AdminSidebarItems: MenuItem[] = [
   {
     id: 1,
     titleKey: "dashboard",

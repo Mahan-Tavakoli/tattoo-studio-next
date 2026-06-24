@@ -5,6 +5,7 @@
     "lookbook": "Lookbook",
     "booking": "Booking",
     "guestArtist": "Guest Artist",
+    "product": "Product",
     "articles": "Articles",
     "aboutUs": "About Us",
     "contact": "Contact",
@@ -19,10 +20,14 @@
 
   "navigation": {
     "home": "Home",
-    "artists": "Artists",
+    "tattooArtists": "Tattoo Artists",
     "lookbook": "Lookbook",
     "booking": "Booking",
+    "guestArtist": "Guest Artist",
+    "product": "Product",
     "articles": "Articles",
+    "aboutUs": "About Us",
+    "contact": "Contact",
     "more": "More"
   },
 
@@ -379,7 +384,7 @@
     "artists": "Artists",
     "lookbook": "Lookbook",
     "articles": "Articles",
-    "contact": "Contact",
+    "product": "Product",
 
     "videoFallback": "Your browser does not support the video tag."
   },

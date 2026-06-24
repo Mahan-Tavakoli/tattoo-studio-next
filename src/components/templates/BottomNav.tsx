@@ -1,13 +1,13 @@
 "use client";
 
-import { NavItem } from "@/components/constants/Constants";
 import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { usePathname, Link } from "@/i18n/navigation";
+import { MenuItem } from "../constants/Constants";
 
-function BottomNav({ items }: { items: NavItem[] }) {
+function BottomNav({ items }: { items: MenuItem[] }) {
   const pathname = usePathname();
   const navT = useTranslations("navigation");
   const adminT = useTranslations("admin");
