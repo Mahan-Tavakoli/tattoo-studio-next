@@ -18,12 +18,12 @@ export interface PurchaseInfo {
   buyerName: string;
   buyerEmail: string;
   delivery: DeliveryType;
-  shippingName: string;
-  shippingLine1: string;
-  shippingLine2: string;
-  shippingPostalCode: string;
-  shippingCity: string;
-  shippingCountry: string;
+  shippingName?: string;
+  shippingLine1?: string;
+  shippingLine2?: string;
+  shippingPostalCode?: string;
+  shippingCity?: string;
+  shippingCountry?: string;
 }
 
 export interface PurchaseResponse {

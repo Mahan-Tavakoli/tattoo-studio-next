@@ -59,7 +59,7 @@ export default function ProductList() {
 
       {purchaseInfo && (
         <Modal title="Purchase" onClose={() => setPurchaseInfo(null)}>
-          <PurchaseForm />
+          <PurchaseForm product={purchaseInfo} />
         </Modal>
       )}
     </>

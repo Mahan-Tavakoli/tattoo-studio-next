@@ -1,5 +1,5 @@
 export const badgeStyles = {
-  HALF_DAY: "bg-snow/10 text-snow",
-  FULL_DAY: "bg-snow text-black",
-  CUSTOM: "bg-transparent border border-snow/30 text-snow",
+  HALF_DAY: "bg-carbon-black text-snow border border-snow/20",
+  FULL_DAY: "bg-snow text-onyx",
+  CUSTOM: "bg-onyx border border-snow/30 text-snow",
 };
