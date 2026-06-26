@@ -5,9 +5,11 @@ import getProductsApi, {
   makePurchaseVoucherApi,
 } from "@/components/services/productService";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
 
 export default function useProducts() {
+  const t = useTranslations("product");
   // get all products
   const {
     isLoading: productsIsLoading,
@@ -26,15 +28,13 @@ export default function useProducts() {
       mutationFn: makePurchaseVoucherApi,
 
       onSuccess: (data: PurchaseResponse) => {
-        toast.success("Redirecting to secure checkout...");
+        toast.success(t("toast.redirecting"));
 
         window.location.href = data.stripePaymentUrl;
       },
 
       onError: () => {
-        toast.error(
-          "Failed to start voucher purchase. Please try again later.",
-        );
+        toast.error(t("toast.purchaseFailed"));
       },
     });
 

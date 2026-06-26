@@ -23,9 +23,6 @@ async function Products() {
     <section className="py-16 px-[5%]">
       <div className="container mx-auto">
         <div className="container mx-auto py-15">
-          <h1 className="text-3xl font-bold mb-10 md:text-4xl tracking-tight">
-            Products
-          </h1>
           <HydrationBoundary state={dehydrate(queryClient)}>
             <ProductList />
           </HydrationBoundary>

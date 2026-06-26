@@ -6,17 +6,36 @@ import useProducts from "./useProducts";
 import { ProductInfo } from "@/components/schema & types/product/product.types";
 import Modal from "@/components/ui/Modal";
 import PurchaseForm from "./PurchaseForm";
+import ProductCardSkeleton from "@/components/templates/skeleton/skeletons/product/ProductCardSkeleton";
+import { useTranslations } from "next-intl";
 
 export default function ProductList() {
+  const t = useTranslations("product");
   const { products, productsIsLoading, productsIsError } = useProducts();
   const [purchaseInfo, setPurchaseInfo] = useState<ProductInfo | null>(null);
 
   if (productsIsLoading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div className="mx-auto mb-20 max-w-3xl text-center animate-pulse">
+          <div className="mx-auto h-4 w-40 rounded bg-snow/10" />
+
+          <div className="mx-auto mt-6 h-12 w-96 rounded bg-snow/10" />
+
+          <div className="mx-auto mt-6 h-5 w-full max-w-xl rounded bg-snow/10" />
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
+      </>
+    );
   }
 
   if (productsIsError) {
-    return <div>Failed to load products.</div>;
+    return <div>{t("loadError")}</div>;
   }
 
   const order = {
@@ -33,18 +52,14 @@ export default function ProductList() {
     <>
       <div className="mx-auto mb-20 max-w-3xl text-center">
         <p className="mb-4 uppercase tracking-[0.3em] text-snow/50">
-          Gift Vouchers
+          {t("hero.badge")}
         </p>
 
         <h1 className="text-5xl font-black tracking-tight">
-          Give the Gift of Ink
+          {t("hero.title")}
         </h1>
 
-        <p className="mt-6 text-lg text-snow/70">
-          Surprise someone with a tattoo voucher they can use toward their next
-          piece. Perfect for birthdays, anniversaries, holidays, and special
-          occasions.
-        </p>
+        <p className="mt-6 text-lg text-snow/70">{t("hero.description")}</p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-3">
@@ -58,7 +73,7 @@ export default function ProductList() {
       </div>
 
       {purchaseInfo && (
-        <Modal title="Purchase" onClose={() => setPurchaseInfo(null)}>
+        <Modal title={t("modal.title")} onClose={() => setPurchaseInfo(null)}>
           <PurchaseForm product={purchaseInfo} />
         </Modal>
       )}

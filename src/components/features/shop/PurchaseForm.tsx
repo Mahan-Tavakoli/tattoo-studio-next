@@ -11,27 +11,26 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "@/components/ui/InputField";
 import ReadOnlyField from "@/components/ui/ReadOnlyField";
-import RadioInput from "@/components/ui/RadioInput";
 import DotsLoader from "@/components/ui/DotsLoader";
 import SelectBox from "@/components/ui/SelectBox";
+import { useTranslations } from "next-intl";
 
 interface PurchaseFormProps {
   product: ProductInfo;
 }
 
-const DeliveryOptions = [
-  { id: 1, value: "EMAIL", label: "Email Voucher" },
-  { id: 2, value: "EMAIL_AND_POST", label: "Email + Printed Voucher by Post" },
-];
-
 function PurchaseForm({ product }: PurchaseFormProps) {
+  const t = useTranslations("product");
   const { makePurchase, makePurchaseIsPending } = useProducts();
   const schema = useMemo(
     () => createPurchaseSchema(product.type),
     [product.type],
   );
-  const defaultAmount =
-    product.finalPriceCents != null ? product.finalPriceCents / 100 : 100;
+
+  const DeliveryOptions = [
+    { id: 1, value: "EMAIL", label: t("delivery.email") },
+    { id: 2, value: "EMAIL_AND_POST", label: t("delivery.post") },
+  ];
 
   const {
     register,
@@ -42,7 +41,10 @@ function PurchaseForm({ product }: PurchaseFormProps) {
     resolver: zodResolver(schema),
     defaultValues: {
       productId: product.id,
-      amount: defaultAmount,
+      amount:
+        product.type === "CUSTOM"
+          ? undefined
+          : (product.finalPriceCents ?? 0) / 100,
       buyerName: "",
       buyerEmail: "",
       delivery: "EMAIL",
@@ -59,129 +61,143 @@ function PurchaseForm({ product }: PurchaseFormProps) {
 
   const onSubmit = (data: PurchaseFormData) => {
     console.log("purchaseData =>", data);
-    const payload = {
-      ...data,
-      amountCents: data.amount * 100,
+    const newPurchase = {
+      productId: data.productId,
+      buyerName: data.buyerName,
+      buyerEmail: data.buyerEmail,
+      delivery: data.delivery,
+
+      ...(product.type === "CUSTOM" && {
+        amountCents: data.amount * 100,
+      }),
+
+      ...(data.delivery === "EMAIL_AND_POST" && {
+        shippingName: data.shippingName,
+        shippingLine1: data.shippingLine1,
+        shippingLine2: data.shippingLine2,
+        shippingPostalCode: data.shippingPostalCode,
+        shippingCity: data.shippingCity,
+        shippingCountry: data.shippingCountry,
+      }),
     };
-    console.log("payload =>", payload);
-    makePurchase(payload);
+    console.log("newPurchase >", newPurchase);
+    makePurchase(newPurchase);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="">
-      <div className="rounded-2xl border border-snow/20 p-6 flex flex-col gap-y-4">
-        <h3 className="text-xl font-semibold">Voucher Details</h3>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <h3 className="text-xl font-semibold">{t("purchase.title")}</h3>
 
-        <p className="my-2">{product.name}</p>
+      <p className="mt-2 mb-6">{product.name}</p>
 
-        {product.type === "CUSTOM" ? (
+      {product.type === "CUSTOM" ? (
+        <InputField<PurchaseFormData>
+          name="amount"
+          label={t("purchase.amountMinimum")}
+          register={register}
+          errors={errors.amount}
+          type="tel"
+          required
+        />
+      ) : (
+        <ReadOnlyField
+          label={t("purchase.voucherValue")}
+          value={`€${((product.finalPriceCents ?? 0) / 100).toFixed(0)}`}
+        />
+      )}
+
+      <InputField<PurchaseFormData>
+        name="buyerName"
+        label={t("purchase.fullName")}
+        register={register}
+        errors={errors.buyerName}
+        required
+      />
+
+      <InputField<PurchaseFormData>
+        name="buyerEmail"
+        type="email"
+        label={t("purchase.email")}
+        errors={errors.buyerEmail}
+        register={register}
+        required
+      />
+
+      <SelectBox<PurchaseFormData>
+        name="delivery"
+        label={t("purchase.delivery")}
+        register={register}
+        errors={errors.delivery}
+        options={DeliveryOptions}
+        //defaultValue={DeliveryOptions[0].value}
+        required
+      />
+
+      {delivery === "EMAIL_AND_POST" && (
+        <>
           <InputField<PurchaseFormData>
-            name="amount"
-            label="Voucher Amount (€)"
+            name="shippingName"
+            label={t("purchase.recipient")}
+            errors={errors.shippingName}
             register={register}
-            errors={errors.amount}
+            required
+          />
+
+          <InputField<PurchaseFormData>
+            name="shippingLine1"
+            label={t("purchase.address1")}
+            errors={errors.shippingLine1}
+            register={register}
+            required
+          />
+
+          <InputField<PurchaseFormData>
+            name="shippingLine2"
+            label={t("purchase.address2")}
+            errors={errors.shippingLine2}
+            register={register}
+            required
+          />
+
+          <InputField<PurchaseFormData>
+            name="shippingPostalCode"
+            label={t("purchase.postalCode")}
+            errors={errors.shippingPostalCode}
+            register={register}
             type="tel"
             required
           />
-        ) : (
-          <ReadOnlyField
-            label="Voucher Value"
-            value={`€${((product.finalPriceCents ?? 0) / 100).toFixed(0)}`}
+          <InputField<PurchaseFormData>
+            name="shippingCity"
+            label={t("purchase.city")}
+            errors={errors.shippingCity}
+            register={register}
+            required
           />
-        )}
 
-        <InputField<PurchaseFormData>
-          name="buyerName"
-          label="Full Name"
-          register={register}
-          errors={errors.buyerName}
-          required
-        />
+          <InputField<PurchaseFormData>
+            name="shippingCountry"
+            label={t("purchase.country")}
+            errors={errors.shippingCountry}
+            register={register}
+            required
+          />
+        </>
+      )}
 
-        <InputField<PurchaseFormData>
-          name="buyerEmail"
-          type="email"
-          label="Email Address"
-          errors={errors.buyerEmail}
-          register={register}
-          required
-        />
-
-        <SelectBox<PurchaseFormData>
-          name="delivery"
-          label="Delivery Method"
-          register={register}
-          errors={errors.delivery}
-          options={DeliveryOptions}
-          //defaultValue={DeliveryOptions[0].value}
-          required
-        />
-
-        {delivery === "EMAIL_AND_POST" && (
+      <button
+        type="submit"
+        className="submit-btn items-center justify-center flex w-full"
+        disabled={makePurchaseIsPending || !isValid}
+      >
+        {makePurchaseIsPending ? (
           <>
-            <InputField<PurchaseFormData>
-              name="shippingName"
-              label="Recipient Name"
-              errors={errors.shippingName}
-              register={register}
-              required
-            />
-
-            <InputField<PurchaseFormData>
-              name="shippingLine1"
-              label="Address Line 1"
-              errors={errors.shippingLine1}
-              register={register}
-              required
-            />
-
-            <InputField<PurchaseFormData>
-              name="shippingLine2"
-              label="Address Line 2 (Optional)"
-              errors={errors.shippingLine2}
-              register={register}
-              required
-            />
-
-            <InputField<PurchaseFormData>
-              name="shippingPostalCode"
-              label="Postal Code"
-              errors={errors.shippingPostalCode}
-              register={register}
-              required
-            />
-            <InputField<PurchaseFormData>
-              name="shippingCity"
-              label="City"
-              errors={errors.shippingCity}
-              register={register}
-              required
-            />
-
-            <InputField<PurchaseFormData>
-              name="shippingCountry"
-              label="Country"
-              errors={errors.shippingCountry}
-              register={register}
-              required
-            />
+            {t("purchase.redirecting")} <DotsLoader />
           </>
+        ) : (
+          t("purchase.checkout")
         )}
-
-        <button
-          type="submit"
-          className="submit-btn items-center justify-center flex w-full"
-          //disabled={makePurchaseIsPending || isValid}
-        >
-          {makePurchaseIsPending ? (
-            <>
-              Redirecting <DotsLoader />
-            </>
-          ) : (
-            "Continue to Secure Checkout"
-          )}
-        </button>
-      </div>
+      </button>
     </form>
   );
 }

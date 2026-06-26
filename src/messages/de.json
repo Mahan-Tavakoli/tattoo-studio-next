@@ -588,5 +588,94 @@
       "editSuccess": "{name} erfolgreich bearbeitet",
       "editFailed": "Artikel konnte nicht bearbeitet werden. Bitte später erneut versuchen."
     }
+  },
+  "product": {
+    "hero": {
+      "badge": "Geschenkgutscheine",
+      "title": "Verschenke ein Tattoo-Erlebnis",
+      "description": "Überrasche jemanden mit einem Tattoo-Gutschein, der für das nächste Tattoo eingelöst werden kann. Perfekt für Geburtstage, Jubiläen, Feiertage und besondere Anlässe."
+    },
+
+    "loading": "Geschenkgutscheine werden geladen...",
+    "loadError": "Produkte konnten nicht geladen werden.",
+
+    "modal": {
+      "title": "Gutschein kaufen"
+    },
+
+    "card": {
+      "voucherValue": "Gutscheinwert",
+      "custom": "Individuell",
+      "chooseAmount": "Eigenen Betrag wählen",
+      "purchase": "Gutschein kaufen"
+    },
+
+    "purchase": {
+      "title": "Gutschein-Details",
+
+      "amount": "Gutscheinbetrag (€)",
+      "amountMinimum": "Gutscheinbetrag (€) • Mindestbetrag 100 €",
+      "voucherValue": "Gutscheinwert",
+
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail-Adresse",
+
+      "delivery": "Versandart",
+
+      "recipient": "Name des Empfängers",
+      "address1": "Adresszeile 1",
+      "address2": "Adresszeile 2 (optional)",
+      "postalCode": "Postleitzahl",
+      "city": "Ort",
+      "country": "Land",
+
+      "checkout": "Sicher zur Kasse",
+      "redirecting": "Weiterleitung"
+    },
+
+    "delivery": {
+      "email": "Gutschein per E-Mail",
+      "post": "E-Mail + gedruckter Gutschein per Post"
+    },
+
+    "toast": {
+      "redirecting": "Weiterleitung zum sicheren Checkout...",
+      "purchaseFailed": "Der Gutscheinkauf konnte nicht gestartet werden. Bitte versuche es später erneut."
+    },
+
+    "meta": {
+      "halfDay": {
+        "badge": "Kleines Geschenk",
+        "subtitle": "Tattoo-Geschenkgutschein",
+        "description": "Ein besonderes Geschenk für jemanden, der sein nächstes Tattoo plant.",
+        "features": [
+          "Digitaler Gutscheinversand",
+          "Bei jedem Künstler einlösbar",
+          "Für zukünftige Buchungen gültig"
+        ]
+      },
+
+      "fullDay": {
+        "badge": "Am beliebtesten",
+        "subtitle": "Premium Tattoo-Geschenkgutschein",
+        "description": "Die perfekte Wahl für Geburtstage, Feiertage und besondere Anlässe.",
+        "features": [
+          "Digitaler Gutscheinversand",
+          "Bei jedem Künstler einlösbar",
+          "Flexible Terminvereinbarung"
+        ]
+      },
+
+      "custom": {
+        "badge": "Flexibel",
+        "subtitle": "Eigenen Betrag wählen",
+        "description": "Erstelle einen personalisierten Gutschein mit einem Betrag deiner Wahl.",
+        "features": [
+          "Individueller Gutscheinbetrag",
+          "Persönliches Geschenk",
+          "Studioweit einlösbar"
+        ]
+      }
+    }
   }
 }

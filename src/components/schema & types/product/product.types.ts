@@ -14,7 +14,7 @@ export interface ProductInfo {
 
 export interface PurchaseInfo {
   productId: string;
-  amountCents: number;
+  amountCents?: number;
   buyerName: string;
   buyerEmail: string;
   delivery: DeliveryType;

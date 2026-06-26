@@ -593,5 +593,95 @@
       "editSuccess": "{name} edited successfully",
       "editFailed": "Edit article failed, try again later"
     }
+  },
+
+  "product": {
+    "hero": {
+      "badge": "Gift Vouchers",
+      "title": "Give the Gift of Ink",
+      "description": "Surprise someone with a tattoo voucher they can use toward their next piece. Perfect for birthdays, anniversaries, holidays, and special occasions."
+    },
+
+    "loading": "Loading gift vouchers...",
+    "loadError": "Failed to load products.",
+
+    "modal": {
+      "title": "Purchase Voucher"
+    },
+
+    "card": {
+      "voucherValue": "Voucher Value",
+      "custom": "Custom",
+      "chooseAmount": "Choose your own amount",
+      "purchase": "Purchase Voucher"
+    },
+
+    "purchase": {
+      "title": "Voucher Details",
+
+      "amount": "Voucher Amount (€)",
+      "amountMinimum": "Voucher Amount (€) • Minimum €100",
+      "voucherValue": "Voucher Value",
+
+      "fullName": "Full Name",
+      "email": "Email Address",
+
+      "delivery": "Delivery Method",
+
+      "recipient": "Recipient Name",
+      "address1": "Address Line 1",
+      "address2": "Address Line 2 (Optional)",
+      "postalCode": "Postal Code",
+      "city": "City",
+      "country": "Country",
+
+      "checkout": "Continue to Secure Checkout",
+      "redirecting": "Redirecting"
+    },
+
+    "delivery": {
+      "email": "Email Voucher",
+      "post": "Email + Printed Voucher by Post"
+    },
+
+    "toast": {
+      "redirecting": "Redirecting to secure checkout...",
+      "purchaseFailed": "Failed to start voucher purchase. Please try again later."
+    },
+
+    "meta": {
+      "halfDay": {
+        "badge": "Starter Gift",
+        "subtitle": "Tattoo Gift Voucher",
+        "description": "A meaningful gift for someone planning their next tattoo.",
+        "features": [
+          "Digital voucher delivery",
+          "Redeemable with any artist",
+          "Valid toward future bookings"
+        ]
+      },
+
+      "fullDay": {
+        "badge": "Most Popular",
+        "subtitle": "Premium Tattoo Gift Voucher",
+        "description": "The perfect choice for birthdays, holidays, and special occasions.",
+        "features": [
+          "Digital voucher delivery",
+          "Redeemable with any artist",
+          "Flexible booking options"
+        ]
+      },
+
+      "custom": {
+        "badge": "Flexible",
+        "subtitle": "Choose Your Own Amount",
+        "description": "Create a personalized voucher with a value that fits your budget.",
+        "features": [
+          "Custom voucher amount",
+          "Personalized gift",
+          "Redeemable studio-wide"
+        ]
+      }
+    }
   }
 }

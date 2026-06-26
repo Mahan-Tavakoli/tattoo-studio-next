@@ -6,7 +6,7 @@ export const createPurchaseSchema = (productType: ProductType) =>
     .object({
       productId: z.string().min(1),
 
-      amount: z.number().positive(),
+      amount: z.number({ message: "Please enter a voucher amount" }).positive(),
 
       buyerName: z
         .string()
@@ -29,8 +29,8 @@ export const createPurchaseSchema = (productType: ProductType) =>
       // CUSTOM voucher validation
       if (productType === "CUSTOM" && data.amount < 100) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["amountCents"],
+          code: "custom",
+          path: ["amount"],
           message: "Minimum voucher amount is €100",
         });
       }
@@ -69,7 +69,7 @@ export const createPurchaseSchema = (productType: ProductType) =>
       requiredFields.forEach((field) => {
         if (!field.value?.trim()) {
           ctx.addIssue({
-            code: z.ZodIssueCode.custom,
+            code: "custom",
             path: [field.key],
             message: field.message,
           });

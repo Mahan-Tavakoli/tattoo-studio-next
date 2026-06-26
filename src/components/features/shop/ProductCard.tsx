@@ -1,8 +1,9 @@
 import { Gift, Check } from "lucide-react";
 import { ProductInfo } from "@/components/schema & types/product/product.types";
-import { productMeta } from "./productMeta";
+import { getProductMeta } from "./productMeta";
 import clsx from "clsx";
 import { badgeStyles } from "@/components/templates/product/productBadgeStyle";
+import { useTranslations } from "next-intl";
 
 interface ProductCardProps {
   product: ProductInfo;
@@ -10,7 +11,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onPurchase }: ProductCardProps) {
-  const meta = productMeta[product.type];
+  const t = useTranslations("product");
+  const meta = getProductMeta(t)[product.type];
 
   const price =
     product.finalPriceCents != null
@@ -53,13 +55,17 @@ export default function ProductCard({ product, onPurchase }: ProductCardProps) {
           <>
             <div className="text-5xl font-black tracking-tight">€{price}</div>
 
-            <p className="mt-2 text-sm text-snow/60">Voucher Value</p>
+            <p className="mt-2 text-sm text-snow/60">
+              {t("card.voucherValue")}
+            </p>
           </>
         ) : (
           <>
-            <div className="text-4xl font-black">Custom</div>
+            <div className="text-4xl font-black">{t("card.custom")}</div>
 
-            <p className="mt-2 text-sm text-snow/60">Choose your own amount</p>
+            <p className="mt-2 text-sm text-snow/60">
+              {t("card.chooseAmount")}
+            </p>
           </>
         )}
       </div>
@@ -81,7 +87,7 @@ export default function ProductCard({ product, onPurchase }: ProductCardProps) {
           transition-all duration-200 border border-snow/20 hover:border-snow/30"
         onClick={onPurchase}
       >
-        Purchase Voucher
+        {t("card.purchase")}
       </button>
     </article>
   );
