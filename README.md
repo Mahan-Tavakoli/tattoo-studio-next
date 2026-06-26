@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Block 13 Tattoo Studio
+
+Website for **Block 13 Tattoo Studio** — a professional tattoo studio based in Germany. The platform supports booking appointments, browsing the lookbook, managing artists, selling products and gift cards, and running a full admin panel.
+
+**Live site:** [block13tattoo.com](https://www.block13tattoo.com)
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 · Shadcn UI |
+| State / Data | TanStack React Query v5 |
+| Forms | React Hook Form · Zod |
+| i18n | next-intl (English · German) |
+| Animation | Framer Motion |
+| Images | Cloudinary |
+| Package Manager | pnpm |
+
+## Pages
+
+- **Home** — hero, highlights, artist showcase
+- **Lookbook** — gallery with lightbox
+- **Tattoo Artists** — artist profiles
+- **Booking** — appointment scheduling with date picker
+- **Products** — merchandise and gift cards
+- **Articles** — blog / news
+- **FAQ · Contact · Terms of Service**
+- **Admin panel** — appointments, artists, products, campaigns, guest artists, reviews
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js >= 20
+- pnpm
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Mahaan10/tattoo-studio-next.git
+cd tattoo-studio-next
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy the example file and fill in your values:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_API_URL` | Backend API base URL (e.g. `http://localhost:3100`) |
 
-To learn more about Next.js, take a look at the following resources:
+### Development
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000).
 
-## Deploy on Vercel
+### Production Build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm build
+pnpm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## i18n
+
+Supported locales: **`de`** (default) · **`en`**
+
+Translation files live in `src/messages/`.
+
+## Project Structure
+
+```
+src/
+├── app/
+│   └── [locale]/          # All routes under locale segment
+│       ├── booking/
+│       ├── lookbook/
+│       ├── tattoo-artists/
+│       ├── admin/
+│       └── ...
+├── components/
+│   ├── features/          # Feature-specific components
+│   ├── services/          # Axios API services
+│   └── schema & types/    # Zod schemas and TS types
+├── i18n/                  # next-intl config
+├── messages/              # en.json / de.json
+└── lib/                   # Shared utilities
+```
+
+## Deployment
+
+The app is deployed on **Vercel**. `vercel.json` is included in the repo.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Security
+
+See [SECURITY.md](SECURITY.md).
+
+## License
+
+MIT — see [LICENSE](LICENSE).
