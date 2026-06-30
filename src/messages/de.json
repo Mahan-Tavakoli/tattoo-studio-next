@@ -193,6 +193,8 @@
         "client": "Kunde",
         "bookingInfo": "Buchungsinformationen",
         "tattooDetails": "Tattoo-Details",
+        "tattooSession": "Tattoo-Termin",
+        "paymentInformation": "Zahlungsinformationen",
 
         "name": "Name",
         "email": "E-Mail",
@@ -201,6 +203,19 @@
         "status": "Status",
         "budget": "Budget",
         "consultDate": "Beratungstermin",
+
+        "scheduledDate": "Geplanter Termin",
+        "artist": "Künstler",
+        "duration": "Dauer",
+        "notes": "Sitzungsnotizen",
+        "notScheduled": "Noch kein Tattoo-Termin geplant",
+
+        "agreedPrice": "Vereinbarter Preis",
+        "paidAmount": "Bezahlt",
+        "remainingAmount": "Restbetrag",
+        "paymentStatus": "Zahlungsstatus",
+        "paidInFull": "Vollständig bezahlt",
+        "paymentPending": "Zahlung ausstehend",
 
         "placement": "Körperstelle / Placement",
         "description": "Beschreibung",

@@ -194,6 +194,8 @@
         "client": "Client",
         "bookingInfo": "Booking Information",
         "tattooDetails": "Tattoo Details",
+        "tattooSession": "Tattoo Session",
+        "paymentInformation": "Payment Information",
 
         "name": "Name",
         "email": "Email",
@@ -202,6 +204,19 @@
         "status": "Status",
         "budget": "Budget",
         "consultDate": "Consult Date",
+
+        "scheduledDate": "Scheduled Date",
+        "artist": "Artist",
+        "duration": "Duration",
+        "notes": "Session Notes",
+        "notScheduled": "Not scheduled yet",
+
+        "agreedPrice": "Agreed Price",
+        "paidAmount": "Paid",
+        "remainingAmount": "Remaining",
+        "paymentStatus": "Payment Status",
+        "paidInFull": "Paid in Full",
+        "paymentPending": "Payment Pending",
 
         "placement": "Placement",
         "description": "Description",
