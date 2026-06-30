@@ -21,7 +21,6 @@ import InputField from "@/components/ui/InputField";
 import DotsLoader from "@/components/ui/DotsLoader";
 import { useTranslations } from "next-intl";
 
-
 export const STATUS_TRANSITIONS: Record<
   /* BookingStatus */ any,
   /* BookingStatus */ any[]
@@ -62,7 +61,7 @@ function UpdateBookingStatusForm({
     reset,
   } = useForm<UpdateStatusFormValues>({
     mode: "onChange",
-    resolver: zodResolver(UpdateStatusValidationSchema),
+    resolver: zodResolver(UpdateStatusValidationSchema) as any,
     defaultValues: {
       status: undefined,
     },
@@ -97,7 +96,10 @@ function UpdateBookingStatusForm({
         // stationId: data.stationId!,
         durationNote: data.durationNote!,
         notes: data.notes || "",
+        agreedPriceCents:
+          data.agreedPriceCents && Math.round(data.agreedPriceCents * 100),
       };
+
       scheduleTattoo(
         { bookingId: booking.id, newTattooSchedule },
         {
@@ -186,6 +188,16 @@ function UpdateBookingStatusForm({
             />
           )}
 
+          {/* Price cents */}
+          <InputField<UpdateStatusFormValues>
+            name="agreedPriceCents"
+            label="Price (€)"
+            errors={errors.agreedPriceCents}
+            register={register}
+            required
+            type="tel"
+          />
+
           {/* <input name="stationId" />
           <input name="durationNote" /> */}
 
@@ -216,8 +228,8 @@ function UpdateBookingStatusForm({
       >
         {updateBookingStatusIsPending || scheduleTattooIsPending ? (
           <>
-  {t("updating")} <DotsLoader />
-</>
+            {t("updating")} <DotsLoader />
+          </>
         ) : (
           t("updateStatus")
         )}

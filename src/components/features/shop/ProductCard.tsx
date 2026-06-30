@@ -3,7 +3,7 @@ import { ProductInfo } from "@/components/schema & types/product/product.types";
 import { getProductMeta } from "./productMeta";
 import clsx from "clsx";
 import { badgeStyles } from "@/components/templates/product/productBadgeStyle";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface ProductCardProps {
   product: ProductInfo;
@@ -11,6 +11,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onPurchase }: ProductCardProps) {
+  const locale = useLocale()
   const t = useTranslations("product");
   const meta = getProductMeta(t)[product.type];
 
@@ -45,7 +46,7 @@ export default function ProductCard({ product, onPurchase }: ProductCardProps) {
           {meta.subtitle}
         </p>
 
-        <h2 className="mt-3 text-2xl font-bold">{product.nameEn}</h2>
+        <h2 className="mt-3 text-2xl font-bold">{locale === "de" ? product.nameDe : product.nameEn}</h2>
 
         <p className="mt-3 text-snow/70">{meta.description}</p>
       </div>

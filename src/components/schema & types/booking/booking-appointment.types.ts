@@ -52,6 +52,9 @@ export interface BookingInfo {
   consultSlotId: string;
   checkedInAt: Date | null;
   client: ClientInfoProps;
+  approvedAt: Date | null;
+  completedAt: Date | null;
+  cancelledAt: Date | null;
 }
 
 export interface BookingResponse {
@@ -59,6 +62,34 @@ export interface BookingResponse {
   page: number;
   limit: number;
   items: BookingInfo[];
+}
+
+export interface TattooSessions {
+  id: string;
+  bookingRequestId: string;
+  artistId: string;
+  stationId: null;
+  scheduledDate: Date;
+  durationNote: string;
+  completedAt: Date | null;
+  notes: string;
+  createdAt: Date;
+  updatedAt: Date;
+  artist: {
+    id: string;
+    displayName: string;
+  };
+}
+
+export interface BookingPayments {
+  id: string;
+  grossCents: number;
+  currency: string;
+  method: string;
+  source: string;
+  status: string;
+  paidAt: Date;
+  note: string;
 }
 
 export interface SingleBookingResponse extends BookingInfo {
@@ -70,7 +101,17 @@ export interface SingleBookingResponse extends BookingInfo {
     secureUrl: string;
   }[];
   assignments: [];
-  reviewedByAdmin: null;
+  reviewedByAdmin: {
+    id: string;
+    email: string;
+    displayName: string;
+  };
+  tattooSessions: TattooSessions[];
+  agreedPriceCents: number | null;
+  paidCents: number;
+  remainingCents: number | null;
+  fullyPaid: boolean;
+  payments: BookingPayments[];
 }
 
 export const BOOKING_STATUS = [
@@ -107,6 +148,7 @@ export interface TattooScheduledProps {
   stationId?: string;
   durationNote: string;
   notes?: string;
+  agreedPriceCents?: number;
 }
 
 export interface WalkInResponseProps {

@@ -3,8 +3,12 @@
 import CountdownRedirect from "@/components/templates/voucher/CountdownRedirect";
 import { CircleCheckBig } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 function VoucherSuccessPage() {
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get("session_Id");
+  // need to be a route like for verifying the session_Id!!
   return (
     <div className="min-h-screen flex items-center justify-center px-[5%] py-16">
       <div className="container mx-auto max-w-xl flex flex-col items-center justify-center py-15">

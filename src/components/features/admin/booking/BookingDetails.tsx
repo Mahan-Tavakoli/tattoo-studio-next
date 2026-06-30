@@ -1,8 +1,11 @@
 "use client";
 
-import formattedDate, { formatBudgetRange } from "@/components/utils/formatter";
+import formattedDate, {
+  formatBudgetRange,
+  formatEuro,
+} from "@/components/utils/formatter";
 import useBooking from "../../booking/useBooking";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { CiEdit } from "react-icons/ci";
@@ -25,6 +28,7 @@ function BookingDetails() {
 
   const { client, uploads } = singleBooking || {};
 
+  const tattooSession = singleBooking?.tattooSessions?.[0];
   useEffect(() => {
     if (singleBookingIsError) {
       toast.error(t("loadError"));
@@ -105,15 +109,81 @@ function BookingDetails() {
                   )
                 }
               />
-              <Info
-                label={t("budget")}
-                value={formatBudgetRange(singleBooking?.budgetRange)}
-              />
+
               <Info
                 label={t("consultDate")}
                 value={formattedDate(singleBooking?.consultDate)}
               />
+
+              <Info
+                label={t("budget")}
+                value={formatBudgetRange(singleBooking?.budgetRange)}
+              />
+
+              {singleBooking?.approvedAt && (
+                <Info
+                  label="Approved At"
+                  value={formattedDate(singleBooking.approvedAt)}
+                />
+              )}
+
+              {singleBooking?.completedAt && (
+                <Info
+                  label="Completed At"
+                  value={formattedDate(singleBooking.completedAt)}
+                />
+              )}
+
+              {singleBooking?.cancelledAt && (
+                <Info
+                  label="Cancelled At"
+                  value={formattedDate(singleBooking.cancelledAt)}
+                />
+              )}
             </Card>
+
+            {/* Tattoo Scheduled */}
+            {tattooSession && (
+              <Card title="Tattoo Schedule">
+                <Info
+                  label="Scheduled Date"
+                  value={formattedDate(tattooSession.scheduledDate)}
+                />
+
+                <Info label="Artist" value={tattooSession.artist.displayName} />
+
+                <Info
+                  label="Agreed Price"
+                  value={formatEuro(singleBooking?.agreedPriceCents)}
+                />
+
+                <Info
+                  label="Paid"
+                  value={formatEuro(singleBooking?.paidCents)}
+                />
+
+                <Info
+                  label="Remaining"
+                  value={formatEuro(singleBooking?.remainingCents)}
+                />
+
+                <Info
+                  label="Payment Status"
+                  value={
+                    singleBooking?.fullyPaid ? "✅ Paid" : "⏳ Outstanding"
+                  }
+                />
+
+                <TextBlock
+                  label="Estimated Duration"
+                  value={tattooSession.durationNote}
+                />
+
+                {tattooSession.notes && (
+                  <TextBlock label="Notes" value={tattooSession.notes} />
+                )}
+              </Card>
+            )}
 
             {/* LONG TEXT FIELDS */}
             <Card title={t("tattooDetails")}>
@@ -143,7 +213,7 @@ function BookingDetails() {
                     >
                       <BlurImage
                         src={img.secureUrl}
-                        alt="reference"
+                        alt={`Reference image ${i + 1}`}
                         fill
                         preload
                         className="object-cover hover:scale-105 transition-transform duration-500"
@@ -195,7 +265,7 @@ export default BookingDetails;
 
 /* ---------- UI COMPONENTS ---------- */
 
-function Card({ title, children }: any) {
+function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="bg-onyx shadow-sm rounded-2xl p-5">
       <h2 className="text-md font-semibold mb-4">{title}</h2>
@@ -204,7 +274,7 @@ function Card({ title, children }: any) {
   );
 }
 
-function Info({ label, value }: any) {
+function Info({ label, value }: { label: ReactNode; value: ReactNode }) {
   return (
     <div className="flex justify-between text-sm border-b pb-1 border-snow/20">
       <span className="text-snow/50">{label}</span>
@@ -213,7 +283,7 @@ function Info({ label, value }: any) {
   );
 }
 
-function TextBlock({ label, value }: any) {
+function TextBlock({ label, value }: { label: ReactNode; value?: ReactNode }) {
   if (!value) return null;
 
   return (

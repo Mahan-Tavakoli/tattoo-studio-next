@@ -64,3 +64,12 @@ export function getDatesInRange(start: Date, end: Date) {
 
   return dates;
 }
+
+export function formatEuro(cents?: number | null) {
+  if (cents == null) return "-";
+
+  return new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "EUR",
+  }).format(cents / 100);
+}
