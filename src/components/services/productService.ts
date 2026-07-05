@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import http from "./httpService";
 import {
+  PaymentStatusResponse,
   ProductInfo,
   PurchaseInfo,
   PurchaseResponse,
@@ -18,4 +19,16 @@ export function makePurchaseVoucherApi(
   return http
     .post("/vouchers/purchase", newPurchase)
     .then(({ data }: AxiosResponse<PurchaseResponse>) => data);
+}
+
+export function checkPaymentStatus(
+  sessionId: string,
+): Promise<PaymentStatusResponse> {
+  return http
+    .get("/payments/status", {
+      params: {
+        sessionId,
+      },
+    })
+    .then(({ data }: AxiosResponse<PaymentStatusResponse>) => data);
 }

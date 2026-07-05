@@ -2,15 +2,18 @@
 
 import { PurchaseResponse } from "@/components/schema & types/product/product.types";
 import getProductsApi, {
+  checkPaymentStatus,
   makePurchaseVoucherApi,
 } from "@/components/services/productService";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
 
-export default function useProducts() {
+export default function useProducts(sessionId?: string) {
   const t = useTranslations("product");
-  // get all products
+  const queryClient = useQueryClient();
+
+  // Get all products
   const {
     isLoading: productsIsLoading,
     isError: productsIsError,
@@ -22,13 +25,14 @@ export default function useProducts() {
 
   const products = productsData ?? [];
 
-  // Purchase Voucher
+  // Purchase voucher
   const { isPending: makePurchaseIsPending, mutate: makePurchase } =
     useMutation({
       mutationFn: makePurchaseVoucherApi,
 
       onSuccess: (data: PurchaseResponse) => {
         toast.success(t("toast.redirecting"));
+        queryClient.invalidateQueries({ queryKey: ["products"] });
 
         window.location.href = data.stripePaymentUrl;
       },
@@ -38,8 +42,19 @@ export default function useProducts() {
       },
     });
 
+  // Check payment status
+  const {
+    data: paymentStatus,
+    isLoading: paymentStatusIsLoading,
+    isError: paymentStatusIsError,
+  } = useQuery({
+    queryKey: ["payment-status", sessionId],
+    queryFn: () => checkPaymentStatus(sessionId!),
+    enabled: !!sessionId,
+  });
+
   return {
-    // all products
+    // Products
     products,
     productsIsLoading,
     productsIsError,
@@ -47,5 +62,10 @@ export default function useProducts() {
     // Purchase
     makePurchase,
     makePurchaseIsPending,
+
+    // Payment status
+    paymentStatus,
+    paymentStatusIsLoading,
+    paymentStatusIsError,
   };
 }

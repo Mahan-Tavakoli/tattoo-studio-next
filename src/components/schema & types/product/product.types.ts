@@ -35,3 +35,8 @@ export interface PurchaseResponse {
 
   stripePaymentUrl: string;
 }
+
+export interface PaymentStatusResponse {
+  status: string;
+  context: string;
+}
