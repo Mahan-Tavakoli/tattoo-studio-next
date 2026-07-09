@@ -1,4 +1,5 @@
 import Providers from "@/components/providers/Providers";
+import UtmProvider from "@/components/providers/UtmProvider";
 import Footer from "@/components/templates/Footer";
 import Header from "@/components/templates/Header";
 import Navigation from "@/components/templates/Navigation";
@@ -28,6 +29,7 @@ async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <Providers>
+        <UtmProvider />
         <main className="container max-w-screen 2xl:max-w-screen-2xl 2xl:mx-auto overflow-x-hidden 2xl:relative bg-carbon-black text-snow min-h-dvh">
           <Header />
           {children}

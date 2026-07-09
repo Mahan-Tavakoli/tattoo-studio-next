@@ -17,6 +17,15 @@ import { getBookingByIdApi } from "@/components/services/bookingService";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { getCookie } from "cookies-next/client";
+import { IntakeSources } from "@/components/schema & types/booking/booking-appointment.types";
+
+const SOURCE_MAP: Record<string, IntakeSources> = {
+  direct: "DIRECT",
+  instagram: "INSTAGRAM",
+  facebook: "FACEBOOK",
+  google: "GOOGLE",
+  tiktok: "TIKTOK",
+};
 
 function BookingContainer() {
   const t = useTranslations("booking");
@@ -25,8 +34,11 @@ function BookingContainer() {
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
 
   const token = getCookie("access_token");
-
+  const rawSource = getCookie("utm_source")?.toString().toLowerCase();
   const isWalkIn = Boolean(token);
+
+  const source: IntakeSources =
+    rawSource && rawSource in SOURCE_MAP ? SOURCE_MAP[rawSource] : "DIRECT";
 
   const {
     bookingAppointment,
@@ -148,6 +160,8 @@ function BookingContainer() {
           formData.append("images", f);
         });
       }
+
+      formData.append("source", source);
 
       await bookingAppointment(formData);
       reset();

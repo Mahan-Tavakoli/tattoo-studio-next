@@ -161,3 +161,14 @@ export interface WalkInResponseProps {
 export interface UploadFormInputs {
   images: File[];
 }
+
+export const INTAKE_SOURCES = [
+  "DIRECT",
+  "INSTAGRAM",
+  "FACEBOOK",
+  "GOOGLE",
+  "TIKTOK",
+  "OTHER",
+] as const;
+
+export type IntakeSources = (typeof INTAKE_SOURCES)[number];
