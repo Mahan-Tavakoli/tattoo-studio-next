@@ -32,7 +32,7 @@ function AppointmentContainer() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-4 mt-6 items-center justify-between bg-alabaster max-w-120 mx-auto p-4 text-onyx rounded-md">
+      <div className="flex gap-4 mt-6 items-center justify-between max-w-120 mx-auto p-4 rounded-md">
         <div className="max-w-60">
           <DatePickerField
             label={t("filters.date")}
@@ -41,13 +41,14 @@ function AppointmentContainer() {
             errors={undefined}
             required
             excludeDays={[0]}
+            isDark
           />
         </div>
 
         <select
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
-          className="border border-onyx/50 rounded-lg px-3 py-3 bg-transparent"
+          className="border border-alabaster/50 rounded-lg px-3 py-3 bg-transparent"
         >
           <option value="day">{t("filters.day")}</option>
           <option value="week">{t("filters.week")}</option>

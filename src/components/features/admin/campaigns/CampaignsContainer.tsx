@@ -10,7 +10,12 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import useCampaigns from "./useCampaigns";
-import { CampaignAudience } from "@/components/schema & types/campaign/campaign.types";
+import {
+  ACTIVE_PERIODS,
+  ActivePeriod,
+  CampaignAudience,
+  SendCampaignPayload,
+} from "@/components/schema & types/campaign/campaign.types";
 
 const AUDIENCES: {
   value: CampaignAudience;
@@ -25,15 +30,9 @@ const AUDIENCES: {
     icon: <Users className="size-5" />,
   },
   {
-    value: "completed",
-    label: "Completed",
-    description: "Clients with at least one finished tattoo",
-    icon: <CheckCircle className="size-5" />,
-  },
-  {
     value: "active",
-    label: "Active",
-    description: "Clients currently in the booking pipeline",
+    label: "Active Clients",
+    description: "Clients active within a selected period",
     icon: <Clock className="size-5" />,
   },
 ];
@@ -42,22 +41,28 @@ export default function CampaignsContainer() {
   const { sendCampaign, sendIsPending, sendResult, reset } = useCampaigns();
 
   const [audience, setAudience] = useState<CampaignAudience>("all");
-  const [subject, setSubject] = useState("");
-  const [body, setBody] = useState("");
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
+  const [activePeriod, setActivePeriod] = useState<ActivePeriod>("month");
+  const [subject, setSubject] = useState<string>("");
+  const [body, setBody] = useState<string>("");
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
 
   const canSend =
     subject.trim().length > 0 && body.trim().length > 0 && !sendIsPending;
 
   const handleSend = () => {
-    const payload = {
+    const payload: SendCampaignPayload = {
       subject,
       body,
       audience,
     };
-    sendCampaign(payload);
+
+    if (audience === "active") {
+      payload.activePeriod = activePeriod;
+    }
     setShowConfirm(false);
+    setShowPreview(false);
+    sendCampaign(payload);
   };
 
   const handleReset = () => {
@@ -65,6 +70,7 @@ export default function CampaignsContainer() {
     setSubject("");
     setBody("");
     setAudience("all");
+    setActivePeriod("month");
   };
 
   // Result screen
@@ -155,11 +161,17 @@ export default function CampaignsContainer() {
             <p className="text-sm font-semibold text-snow/70 mb-4 uppercase tracking-widest">
               Audience
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {AUDIENCES.map((a) => (
                 <button
                   key={a.value}
-                  onClick={() => setAudience(a.value)}
+                  onClick={() => {
+                    setAudience(a.value);
+
+                    if (a.value === "active") {
+                      setActivePeriod("month");
+                    }
+                  }}
                   className={`text-left p-4 rounded-lg border transition-all duration-200 flex flex-col gap-y-2 cursor-pointer ${
                     audience === a.value
                       ? "border-dried-mustard bg-dried-mustard/5"
@@ -183,7 +195,32 @@ export default function CampaignsContainer() {
               ))}
             </div>
           </section>
+          {/* for active clients */}
+          {audience === "active" && (
+            <section>
+              <label className="text-sm font-semibold text-snow/70 mb-2 block uppercase tracking-widest">
+                Active Within
+              </label>
 
+              <select
+                value={activePeriod}
+                onChange={(e) =>
+                  setActivePeriod(e.target.value as ActivePeriod)
+                }
+                className="w-full bg-snow/3 border border-snow/15 rounded-lg px-4 py-3 text-sm text-snow focus:outline-none focus:border-dried-mustard/60"
+              >
+                {ACTIVE_PERIODS.map((period) => (
+                  <option
+                    key={period.value}
+                    value={period.value}
+                    className="bg-carbon-black"
+                  >
+                    {period.label}
+                  </option>
+                ))}
+              </select>
+            </section>
+          )}
           {/* Subject */}
           <section>
             <label className="text-sm font-semibold text-snow/70 mb-2 block uppercase tracking-widest">
@@ -251,6 +288,18 @@ export default function CampaignsContainer() {
                   {AUDIENCES.find((a) => a.value === audience)?.label}
                 </span>
               </div>
+
+              {audience === "active" && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-snow/50">Period</span>
+                  <span className="font-medium">
+                    {
+                      ACTIVE_PERIODS.find((p) => p.value === activePeriod)
+                        ?.label
+                    }
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between text-sm">
                 <span className="text-snow/50">Subject</span>
                 <span className="font-medium text-right max-w-45 truncate">
@@ -305,6 +354,18 @@ export default function CampaignsContainer() {
                   {AUDIENCES.find((a) => a.value === audience)?.label}
                 </span>
               </div>
+
+              {audience === "active" && (
+                <div className="flex justify-between">
+                  <span className="text-snow/50">Period</span>
+                  <span className="font-medium">
+                    {
+                      ACTIVE_PERIODS.find((p) => p.value === activePeriod)
+                        ?.label
+                    }
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-snow/50">Subject</span>
                 <span className="font-medium text-right max-w-45 truncate">
