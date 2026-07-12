@@ -1,7 +1,7 @@
 "use client";
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ClientInfo from "./client/ClientInfo";
 import {
   BookingAppointmentSchema,
@@ -15,7 +15,7 @@ import { formatDate } from "@/components/utils/formatter";
 import DotsLoader from "@/components/ui/DotsLoader";
 import { getBookingByIdApi } from "@/components/services/bookingService";
 import { toast } from "react-toastify";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { getCookie } from "cookies-next/client";
 import { IntakeSources } from "@/components/schema & types/booking/booking-appointment.types";
 
@@ -29,6 +29,7 @@ const SOURCE_MAP: Record<string, IntakeSources> = {
 
 function BookingContainer() {
   const t = useTranslations("booking");
+  const locale = useLocale();
   const [step, setStep] = useState<number>(1);
   const [uploadToken, setUploadToken] = useState<string | null>(null);
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
@@ -69,36 +70,43 @@ function BookingContainer() {
     formState: { isValid },
   } = methods;
 
+  const closeQrModal = useCallback(() => {
+    setUploadToken(null);
+    setActiveBookingId(null);
+    reset();
+    setStep(1);
+  }, [reset]);
+
   // ── DETECT MOBILE UPLOAD LONG POLLING ENGINE ───────────────────────
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
+    if (!uploadToken || !activeBookingId) return;
 
-    if (uploadToken && activeBookingId) {
-      // Begin background validation check execution
-      intervalId = setInterval(async () => {
-        try {
-          const bookingDetail = await getBookingByIdApi(activeBookingId);
+    let cancelled = false;
 
-          // Check if references have landed in the backend attachment array
-          if (
-            bookingDetail &&
-            bookingDetail.uploads &&
-            bookingDetail.uploads.length > 0
-          ) {
-            toast.success(t("container.uploadSuccess"));
-            clearInterval(intervalId);
-            closeQrModal(); // Auto-shutdown view modal panel safely
-          }
-        } catch (err) {
-          console.error("Error pooling upload synchronization updates:", err);
+    // Poll the backend until the customer's mobile references land, then
+    // auto-close the QR modal.
+    const intervalId = setInterval(async () => {
+      try {
+        const bookingDetail = await getBookingByIdApi(activeBookingId);
+
+        if (cancelled) return;
+
+        // Check if references have landed in the backend attachment array.
+        if (bookingDetail?.uploads && bookingDetail.uploads.length > 0) {
+          toast.success(t("container.uploadSuccess"));
+          clearInterval(intervalId);
+          closeQrModal();
         }
-      }, 3000); // Evaluates updates loop every 3 seconds
-    }
+      } catch (err) {
+        console.error("Error polling upload synchronization updates:", err);
+      }
+    }, 3000); // Evaluates updates loop every 3 seconds
 
     return () => {
-      if (intervalId) clearInterval(intervalId);
+      cancelled = true;
+      clearInterval(intervalId);
     };
-  }, [uploadToken, activeBookingId]);
+  }, [uploadToken, activeBookingId, closeQrModal, t]);
 
   const nextStep = async (fields: any[]) => {
     const isValid = await trigger(fields);
@@ -121,7 +129,6 @@ function BookingContainer() {
     formData.append("placement", data.bookingRequest.placement || "");
 
     if (isWalkIn) {
-      console.log("data =>", data);
       formData.append(
         "tattooDate",
         data.bookingRequest.tattooDate.toISOString(),
@@ -169,18 +176,19 @@ function BookingContainer() {
     }
   };
 
-  const closeQrModal = () => {
-    setUploadToken(null);
-    setActiveBookingId(null);
-    reset();
-    setStep(1);
-  };
+  // Base URL the customer's phone must reach to open the upload page. Prefer an
+  // explicitly configured public site URL; otherwise fall back to the origin the
+  // reception tablet is already served from. Never hardcode a host.
+  const siteBaseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
+    (typeof window !== "undefined" ? window.location.origin : "");
 
-  // Environment switching layout matching local interface configuration targets
-  const targetHostBase = "http://192.168.1.60:3000";
-  const customerMobileUploadUrl = uploadToken
-    ? `${targetHostBase}/upload-reference?token=${uploadToken}`
-    : "";
+  const customerMobileUploadUrl =
+    uploadToken && siteBaseUrl
+      ? `${siteBaseUrl}/${locale}/upload-reference?token=${encodeURIComponent(
+          uploadToken,
+        )}`
+      : "";
 
   return (
     <div className="pt-15 px-4 flex justify-center">
