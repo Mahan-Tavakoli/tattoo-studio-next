@@ -2,15 +2,6 @@
   "name": "tattoo-gallery-next",
   "version": "0.1.0",
   "private": true,
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
-      "msw",
-      "sharp",
-      "unrs-resolver"
-    ]
-  },
   "engines": {
     "node": ">=20.0.0"
   },
