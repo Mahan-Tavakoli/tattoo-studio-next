@@ -156,6 +156,8 @@ export interface WalkInResponseProps {
   uploadToken: string;
   clientId: string;
   tattooDate: Date;
+  startsAt: string;
+  endsAt: string;
   budgetRange: string;
 }
 export interface UploadFormInputs {

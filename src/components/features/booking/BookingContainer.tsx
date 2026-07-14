@@ -11,7 +11,7 @@ import BookingRequest from "./booking-request/BookingRequest";
 import useBooking from "./useBooking";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormStepper from "@/components/ui/FormStepper";
-import { formatDate } from "@/components/utils/formatter";
+import { formatDate, mergeDateAndTime } from "@/components/utils/formatter";
 import DotsLoader from "@/components/ui/DotsLoader";
 import { getBookingByIdApi } from "@/components/services/bookingService";
 import { toast } from "react-toastify";
@@ -126,17 +126,37 @@ function BookingContainer() {
         "tattooDate",
         data.bookingRequest.tattooDate.toISOString(),
       );
+
       formData.append("artistId", data.bookingRequest.artistId);
+
       formData.append("budgetRange", data.bookingRequest.budgetRange);
+
       if (data.bookingRequest.stationId)
         formData.append("stationId", data.bookingRequest.stationId);
+
       if (data.bookingRequest.durationNote)
         formData.append("durationNote", data.bookingRequest.durationNote);
+
       if (data.bookingRequest.sizeDescription)
         formData.append("sizeDescription", data.bookingRequest.sizeDescription);
+
       if (data.bookingRequest.styleNotes)
         formData.append("styleNotes", data.bookingRequest.styleNotes);
 
+      const startsAt = mergeDateAndTime(
+        data.bookingRequest.tattooDate,
+        data.bookingRequest.startsAt,
+      );
+
+      const endsAt = mergeDateAndTime(
+        data.bookingRequest.tattooDate,
+        data.bookingRequest.endsAt,
+      );
+
+      formData.append("startsAt", startsAt);
+      formData.append("endsAt", endsAt);
+
+      console.log("formData =>", formData);
       try {
         const response = await walkInAppointment(formData);
         if (response && response.uploadToken) {

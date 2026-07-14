@@ -154,6 +154,10 @@ export const WalkInRequestValidationSchema = z.object({
     message: "validation.tattooDateRequired",
   }),
 
+  startsAt: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
+
+  endsAt: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
+
   artistId: z
     .string({
       message: "validation.artistRequired",

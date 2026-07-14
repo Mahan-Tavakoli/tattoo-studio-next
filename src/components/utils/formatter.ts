@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import {
   bookingStatusCancelReasonMap,
   bookingStatusMap,
@@ -72,4 +72,15 @@ export function formatEuro(cents?: number | null) {
     style: "currency",
     currency: "EUR",
   }).format(cents / 100);
+}
+
+export function mergeDateAndTime(date: Date, time: string) {
+  const [hours, minutes] = time.split(":").map(Number);
+
+  return set(date, {
+    hours,
+    minutes,
+    seconds: 0,
+    milliseconds: 0,
+  }).toISOString();
 }

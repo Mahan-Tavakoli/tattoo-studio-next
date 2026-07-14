@@ -14,6 +14,7 @@ import { useState } from "react";
 import { PublicBudgetRange } from "@/components/constants/Constants";
 import useArtist from "../../artist/useArtist";
 import { useTranslations } from "next-intl";
+import TimePickerField from "@/components/ui/TimePickerField";
 
 interface BookingRequestProps {
   onBack: () => void;
@@ -212,6 +213,22 @@ function BookingRequest({ onBack, isWalkIn }: BookingRequestProps) {
             errors={bookingErrors?.artistId}
             options={artistOptions}
             translationNameSpace="booking"
+            required
+          />
+
+          <TimePickerField
+            label="Start Time"
+            name="bookingRequest.startsAt"
+            control={control}
+            errors={bookingErrors?.startsAt}
+            required
+          />
+
+          <TimePickerField
+            label="End Time"
+            name="bookingRequest.endsAt"
+            control={control}
+            errors={bookingErrors?.endsAt}
             required
           />
 
