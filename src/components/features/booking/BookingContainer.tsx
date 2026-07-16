@@ -196,11 +196,23 @@ function BookingContainer() {
     setStep(1);
   };
 
-  // Environment switching layout matching local interface configuration targets
-  const targetHostBase = process.env.NEXT_PUBLIC_API_URL;
-  const customerMobileUploadUrl = uploadToken
-    ? `${targetHostBase}/upload-reference?token=${uploadToken}`
-    : "";
+  // Base URL the customer's phone must reach to open the upload page. This must
+  // be the FRONTEND's own origin (the /upload-reference route lives here, not on
+  // the API). Prefer an explicitly configured public site URL; otherwise fall
+  // back to the origin the reception tablet is already served from. Never
+  // hardcode a host, and never point at the backend API.
+  const siteBaseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
+    (typeof window !== "undefined" ? window.location.origin : "");
+
+  // The route is served under [locale] (next-intl localePrefix defaults to
+  // "always"), so the locale segment is required to avoid a redirect/404.
+  const customerMobileUploadUrl =
+    uploadToken && siteBaseUrl
+      ? `${siteBaseUrl}/${locale}/upload-reference?token=${encodeURIComponent(
+          uploadToken,
+        )}`
+      : "";
 
   return (
     <div className="pt-15 px-4 flex justify-center">
