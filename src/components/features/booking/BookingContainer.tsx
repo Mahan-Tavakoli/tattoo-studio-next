@@ -15,7 +15,7 @@ import { formatDate, mergeDateAndTime } from "@/components/utils/formatter";
 import DotsLoader from "@/components/ui/DotsLoader";
 import { getBookingByIdApi } from "@/components/services/bookingService";
 import { toast } from "react-toastify";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { getCookie } from "cookies-next/client";
 import { IntakeSources } from "@/components/schema & types/booking/booking-appointment.types";
 
@@ -29,6 +29,7 @@ const SOURCE_MAP: Record<string, IntakeSources> = {
 
 function BookingContainer() {
   const t = useTranslations("booking");
+  const locale = useLocale();
   const [step, setStep] = useState<number>(1);
   const [uploadToken, setUploadToken] = useState<string | null>(null);
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
