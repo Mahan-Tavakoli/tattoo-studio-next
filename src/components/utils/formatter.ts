@@ -24,11 +24,13 @@ export function formattedTime(isoString: Date) {
   });
 }
 
-export function formatDate(date: Date) {
+export function formatDate(date?: Date) {
+  if (!date) return "";
   return date.toISOString().split("T")[0];
 }
 
-export function formatMonth(date: Date) {
+export function formatMonth(date?: Date) {
+  if (!date) return "";
   return date.toISOString().slice(0, 7);
 }
 

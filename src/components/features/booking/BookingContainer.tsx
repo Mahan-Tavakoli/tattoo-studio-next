@@ -36,6 +36,10 @@ function BookingContainer() {
 
   const token = getCookie("access_token");
   const rawSource = getCookie("utm_source")?.toString().toLowerCase();
+  const utmCampaign = getCookie("utm_campaign")?.toString();
+const utmAdset = getCookie("utm_adset")?.toString();
+const utmAd = getCookie("utm_ad")?.toString();
+
   const isWalkIn = Boolean(token);
 
   const source: IntakeSources =
@@ -183,6 +187,10 @@ function BookingContainer() {
       }
 
       formData.append("source", source);
+
+      if(utmCampaign) formData.append("utmCampaign", utmCampaign)
+      if(utmAdset) formData.append("utmAdset", utmAdset)
+      if(utmAd) formData.append("utmAd", utmAd)  
 
       await bookingAppointment(formData);
       reset();

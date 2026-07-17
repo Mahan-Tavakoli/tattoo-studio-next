@@ -7,12 +7,17 @@ export interface ClientInfoProps {
 }
 
 export interface BookingRequestProps {
-  bookingType: string;
+  bookingType: BookingType;
   consultDate: string;
   description: string;
   budgetRange: string;
   placement?: string;
   file: string[];
+
+  utmCampaign?: string;
+  utmAdset?: string;
+  utmAd?: string;
+  source?: IntakeSources;
 }
 
 // export interface MedicalDeclarationProps {
@@ -174,3 +179,11 @@ export const INTAKE_SOURCES = [
 ] as const;
 
 export type IntakeSources = (typeof INTAKE_SOURCES)[number];
+
+export const BOOKING_TYPES = [
+  "CONSULTATION",
+  "APPOINTMENT",
+  "COVER_UP",
+] as const;
+
+export type BookingType = (typeof BOOKING_TYPES)[number];

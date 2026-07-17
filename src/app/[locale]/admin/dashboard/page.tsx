@@ -1,9 +1,7 @@
+import AnalyticContainer from "@/components/features/admin/analytic/AnalyticContainer";
+
 function AdminDashboard() {
-  return (
-    <div>
-      <h1>AdminDashboard</h1>
-    </div>
-  );
+  return <AnalyticContainer />;
 }
 
 export default AdminDashboard;

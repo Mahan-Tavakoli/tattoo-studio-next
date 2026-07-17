@@ -93,6 +93,8 @@ function DatePickerField<T extends Record<string, any>>({
           };
 
           const handleSelect = (val: any) => {
+            if (!val) return;
+
             onChange(val);
 
             if (mode === "single") {
