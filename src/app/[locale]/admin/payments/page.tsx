@@ -1,9 +1,7 @@
+import PaymentsContainer from "@/components/features/admin/payment/PaymentsContainer";
+
 function AdminPayments() {
-  return (
-    <div>
-      <h1>AdminPayments</h1>
-    </div>
-  );
+  return <PaymentsContainer />;
 }
 
 export default AdminPayments;

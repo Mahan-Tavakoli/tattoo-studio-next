@@ -16,8 +16,9 @@ interface SelectBoxProps<T extends Record<string, any>> {
   options: SelectBoxOptions[];
   required?: boolean;
   disabled?: boolean;
-  defaultValue?: string;
+  //defaultValue?: string;
   translationNameSpace?: string;
+  isDark?: boolean;
 }
 
 function SelectBox<T extends Record<string, any>>({
@@ -28,8 +29,9 @@ function SelectBox<T extends Record<string, any>>({
   errors,
   required,
   disabled = false,
-  defaultValue,
+  //defaultValue,
   translationNameSpace,
+  isDark,
 }: SelectBoxProps<T>) {
   const t = useTranslations(translationNameSpace);
 
@@ -42,24 +44,42 @@ function SelectBox<T extends Record<string, any>>({
       <select
         {...register(name)}
         id={label}
-        defaultValue={defaultValue ? defaultValue : ""}
-        className="block w-full px-3 pb-2.5 pt-4 text-sm bg-transparent border border-onyx/50 hover:border-onyx/75 focus:border-onyx transition-all duration-300 appearance-none focus:outline-none peer rounded-lg text-onyx select-arrow"
+        //defaultValue={defaultValue ? defaultValue : ""}
+        className={`block w-full appearance-none rounded-lg border bg-transparent px-3 pb-2.5 pt-4 text-sm transition-all duration-300 outline-none peer select-arrow ${
+          isDark
+            ? "border-alabaster/50 text-snow hover:border-alabaster/75 focus:border-alabaster"
+            : "border-onyx/50 text-onyx hover:border-onyx/75 focus:border-onyx"
+        }`}
         disabled={disabled}
       >
-        <option value="" disabled hidden></option>
+        {/* <option value="" disabled hidden></option> */}
         {options.map((option) => (
           <option
             key={option.id}
-            value={option.value ? option.value : option.id}
+            // value={option.value ? option.value : option.id}
+            value={option.value ?? option.id}
+            className={isDark ? "bg-carbon-black text-snow" : ""}
           >
-            {option.label ? option.label : option.displayName}
+            {/* {option.label ? option.label : option.displayName} */}
+            {option.label ?? option.displayName}
           </option>
         ))}
       </select>
 
       <label
         htmlFor={label}
-        className="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-1.5 z-10 origin-left bg-alabaster opacity-75 peer-focus:opacity-100 px-2 peer-focus:px-2 peer-focus:text-onyx peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1.5 peer-focus:scale-75 peer-focus:-translate-y-4 inset-s-1 space-x-1"
+        className={`absolute inset-s-1 top-1.5 z-10 origin-left -translate-y-4 scale-75 px-2 text-sm text-body opacity-75 transition-all duration-300
+    peer-placeholder-shown:top-1/2
+    peer-placeholder-shown:-translate-y-1/2
+    peer-placeholder-shown:scale-100
+    peer-focus:top-1.5
+    peer-focus:-translate-y-4
+    peer-focus:scale-75
+    ${
+      isDark
+        ? "bg-carbon-black peer-focus:text-alabaster"
+        : "bg-alabaster peer-focus:text-onyx"
+    }`}
       >
         <span>{label}</span>
         {required && <span className="text-red-700 text-sm">*</span>}

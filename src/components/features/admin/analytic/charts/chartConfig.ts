@@ -61,14 +61,9 @@ export const bookingTypeConfig = {
     color: colors.violet,
   },
 
-  TOUCH_UP: {
-    label: "Touch Up",
-    color: colors.emerald,
-  },
-
-  REMOVAL: {
-    label: "Removal",
-    color: colors.red,
+  WALK_IN: {
+    label: "Walk In",
+    color: colors.alabaster,
   },
 } satisfies ChartConfig;
 
